@@ -3051,27 +3051,34 @@ body {
     radial-gradient(ellipse 48% 58% at 6% 94%,  var(--ot-bloom-accent-faint) 0%, transparent 58%);
 }
 
-/* Floating media plate (Spotlight / Drench / Poster): a 1px brand-tinted ring +
- * a chromatic brand bloom shadow with a faint accent second layer. */
-.hero-bloom-plate {
-  position: relative;
-  z-index: 1;
-  background: var(--ot-surface);
+/* Spotlight: a wide content panel leads, paired with a deliberately small,
+ * secondary image — both float on the plain canvas ground (the section itself
+ * never takes the full-bleed color fill Overlap/Diagonal use). */
+
+/* Content panel: grows to fill the lead role, not a fixed split — a 1px
+ * brand-tinted ring + chromatic bloom shadow keeps it reading as a floating
+ * card even when its fill matches the canvas ground (color="canvas"). */
+.hero-spotlight-card {
   box-shadow:
     0 0 0 1px var(--ot-bloom-brand-border),
     0 18px 50px var(--ot-bloom-brand-faint),
-    0 8px 24px oklch(from var(--ot-accent) l c h / 0.10);
+    0 6px 20px oklch(from var(--ot-canvas) l c h / 0.35);
 }
 
-/* Soft halo behind the Spotlight plate so the object reads as genuinely lit. */
-.hero-bloom-halo {
-  position: absolute;
-  inset: -8%;
-  z-index: 0;
-  pointer-events: none;
-  background: radial-gradient(ellipse at 50% 45%, var(--ot-bloom-brand-ring) 0%, transparent 70%);
-  filter: blur(40px);
-  opacity: 0.65;
+/* The photo itself: a crisp chromatic bloom shadow, no rotation. */
+.hero-spotlight-frame {
+  box-shadow:
+    0 0 0 1px var(--ot-bloom-brand-border),
+    0 20px 55px var(--ot-bloom-brand-faint),
+    0 8px 24px oklch(from var(--ot-accent) l c h / 0.08);
+}
+
+/* Offset frame: a second bordered plate set directly behind the photo (fixed
+ * translate in JSX, not a rotation) so its edge peeks out on two sides — a
+ * layered-plate cue distinct from Overlap's corner-pinned card. */
+.hero-spotlight-frame-offset {
+  background: var(--ot-surface);
+  border: 1px solid var(--ot-bloom-brand-border);
 }
 
 /* Editorial Overlap — the headline plate carries the card chromatic depth so it
@@ -3080,6 +3087,18 @@ body {
   box-shadow:
     0 18px 50px var(--ot-bloom-brand-faint),
     0 6px 20px oklch(from var(--ot-canvas) l c h / 0.45);
+}
+
+/* A very gradual top-to-bottom darkening across the plate — neutral shading for
+ * depth, not a brand/token color, so it reads the same on brand/canvas/surface
+ * fills alike. Sits behind the z-10 content wrapper. */
+.hero-overlap-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(to bottom, oklch(0% 0 0 / 0) 0%, oklch(0% 0 0 / 0.22) 100%);
 }
 
 /* Diagonal Split — the text always sits on an OPAQUE color panel; the panel's
