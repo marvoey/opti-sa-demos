@@ -17,7 +17,9 @@ function ensureInitialized() {
   if (initialized) return
   const key = process.env.OPTIMIZELY_GRAPH_SINGLE_KEY
   if (!key) throw new Error('OPTIMIZELY_GRAPH_SINGLE_KEY is not set')
-  config({ apiKey: key })
+  // SDK v3 selects Rich Text as `json` only by default; several adapters still
+  // read `.html` (ImageBlock, VideoBlock, DisclosureBlock, PractitionerProfile).
+  config({ apiKey: key, fragment: { richTextFormat: 'both' } })
   initialized = true
 }
 
