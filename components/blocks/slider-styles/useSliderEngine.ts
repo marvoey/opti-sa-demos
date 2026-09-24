@@ -53,14 +53,19 @@ type Options = {
    *  its own tighter transition budget (e.g. Story Rail's ~450ms rail shift)
    *  can tune it without affecting every other style sharing this hook. */
   scrollDuration?: number
+  /** Embla's snap alignment. Every SliderBlock style peeks from one side only
+   *  (align: 'start' — the default). The Row/Column carousel's symmetric
+   *  "peek both sides" look needs the active slide centered in its (inset)
+   *  viewport instead. */
+  align?: 'start' | 'center'
 }
 
-export function useSliderEngine({ slideCount, loop, autoPlayMs, ariaLabel, headlines, scrollDuration }: Options): SliderEngine {
+export function useSliderEngine({ slideCount, loop, autoPlayMs, ariaLabel, headlines, scrollDuration, align }: Options): SliderEngine {
   const reducedMotion = usePrefersReducedMotion()
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop:      loop === 'loop',
-    align:     'start',
+    align:     align ?? 'start',
     watchDrag: slideCount > 1,
     // Embla's animation is physics-based, not a literal CSS cubic-bezier — this
     // is a tuned approximation of the ~700ms kinetic ease-out the design spec
@@ -95,8 +100,11 @@ export function useSliderEngine({ slideCount, loop, autoPlayMs, ariaLabel, headl
   const scrollToIndex = useCallback((index: number, manual: boolean) => {
     if (!emblaApi) return
     emblaApi.scrollTo(index)
-    setAnnouncement(manual ? (headlines[index] ?? null) : null)
-  }, [emblaApi, headlines])
+    // Falls back to a generic "Slide X of Y" when there's no per-slide title
+    // to announce (e.g. Row/Column carousels, whose slides are arbitrary
+    // composed content with no headline field).
+    setAnnouncement(manual ? (headlines[index] ?? `Slide ${index + 1} of ${slideCount}`) : null)
+  }, [emblaApi, headlines, slideCount])
 
   const goTo = useCallback((index: number) => {
     scrollToIndex(loop === 'loop' ? wrap(index) : clamp(index), true)

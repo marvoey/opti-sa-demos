@@ -160,6 +160,15 @@ To set the default:
 
 Once set, shared block previews will load in the Visual Builder iframe using this site's preview URL.
 
+### Multilingual sites — translate the ThemeManager per language
+
+The ThemeManager item whose **Front-end Domain** matches your site must be **created (translated) in every language you want to use**, then published in each one. Only language versions carry the translated site chrome:
+
+- **Translated per language:** Primary Navigation (the whole nav tree, labels and links), CTA Label, Logo Alt Text, Copyright, Site Name, Default Meta Description, and Organization Summary.
+- **Shared across languages** (edited in the default language only): Front-end Domain, logo, colors and theme axes, CTA URL, Footer Block reference, and all integration IDs.
+
+If a language has no ThemeManager version, the site still renders, falling back to the English (default-locale) theme, so colors and integrations stay intact. The header, nav, and SEO defaults then show in English on that language's pages. The referenced **Footer** block works the same way: translate it in each language for a localized footer, otherwise English is used.
+
 ## CMP Content Preview
 
 This app can render a live preview of a blog authored in **Optimizely Content Marketing Platform (CMP)**, so a marketer editing in CMP sees it laid out in this site's blog UI before it's ever published to the CMS. When an editor clicks **Preview** in CMP, CMP fires a `content_preview_requested` webhook at this app; the app renders the payload through the same [`BlogPage`](components/pages/BlogPage.tsx) component the CMS uses and hands the URL back to CMP, which embeds it in its preview pane.

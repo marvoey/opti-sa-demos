@@ -17,22 +17,13 @@ import Footer from '@/components/layout/Footer'
 import Script from 'next/script'
 import { redirect } from 'next/navigation'
 import { ExternalPreviewLinkPanel } from '@/components/preview/ExternalPreviewLinkPanel'
+import { buildExternalPreviewUrl, contentPathname, toPathname } from '@/lib/external-preview'
 
 export const dynamic  = 'force-dynamic'
 export const revalidate = 0
 
 type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
-
-// Resolves an absolute or relative URL to just the pathname.
-function toPathname(raw: string | null | undefined): string | null {
-  if (!raw) return null
-  try {
-    return raw.startsWith('http') ? new URL(raw).pathname : raw
-  } catch {
-    return raw.startsWith('/') ? raw : null
-  }
 }
 
 async function PreviewPage({ searchParams }: Props) {
@@ -230,38 +221,20 @@ async function PreviewPage({ searchParams }: Props) {
     : content
 
   // ── External Preview Link panel ──────────────────────────────────────────────
-  // Shown in the CMS editor preview when a blog page has enableExternalPreview
-  // set to true. Generates a shareable URL that enables draft mode for an
-  // external reviewer without requiring a CMS login.
-  let externalPreviewUrl: string | null = null
-
-  if (
-    !isExperience &&
-    content?.__typename === 'OT_BlogPage' &&
-    content?.enableExternalPreview === true
-  ) {
-    const previewToken = sp('preview_token')
-    if (previewToken) {
-      const baseUrl = await getRequestBaseUrl()
-      // Prefer the hierarchical (ancestor-resolved) URL; fall back to default
-      const slug = toPathname(
-        content._metadata?.url?.hierarchical ?? content._metadata?.url?.default
-      )
-
-      if (baseUrl && slug) {
-        const qs = new URLSearchParams({
-          preview_token: previewToken,
-          key:           sp('key'),
-          ver:           sp('ver'),
-          loc:           sp('loc'),
-          ctx:           slug,
-          ext_preview:   '1',
-        })
-        externalPreviewUrl = `${baseUrl}/api/draft?${qs}`
-      }
-    }
-  }
-  // ─────────────────────────────────────────────────────────────────────────────
+  // Shown in the CMS editor preview when any page type (experience or _page)
+  // has enableExternalPreview set to true. Generates a shareable URL that
+  // enables draft mode for an external reviewer without requiring a CMS login.
+  // Blog and Campaign pages redirect to the slug route above, which renders
+  // its own panel; this covers the types /preview renders directly.
+  const externalPreviewUrl = buildExternalPreviewUrl({
+    enabled:      content?.enableExternalPreview,
+    baseUrl:      await getRequestBaseUrl(),
+    previewToken: sp('preview_token'),
+    key:          sp('key'),
+    ver:          sp('ver'),
+    loc:          sp('loc'),
+    path:         contentPathname(content),
+  })
 
   // Resolve which header variant the site is configured to use. Sidebar is
   // deliberately excluded — it would overlay the Visual Builder canvas.
