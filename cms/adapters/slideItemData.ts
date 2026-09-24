@@ -1,4 +1,5 @@
 import type { SlideData } from '@/components/blocks/SliderBlock'
+import { richTextJson } from '@/lib/richTextJson'
 
 /**
  * Maps one OT_SlideItem content object into the flat SlideData shape every
@@ -12,7 +13,7 @@ export function buildSlideItemFromContent(item: any, src: (ref: any) => string |
     eyebrow:            item?.eyebrow  ?? undefined,
     headline:           item?.headline ?? undefined,
     // CMS delivers rich text as { json }; showcase/mock data may pass a plain string.
-    body:               item?.body?.json ?? (typeof item?.body === 'string' ? item.body : undefined),
+    body:               richTextJson(item?.body) ?? (typeof item?.body === 'string' ? item.body : undefined),
     buttonLabel:        item?.buttonLabel        ?? undefined,
     buttonUrl:          item?.buttonUrl?.default  ?? item?.buttonUrl  ?? undefined,
     secondaryLabel:      item?.secondaryLabel      ?? undefined,

@@ -1005,14 +1005,14 @@
   resolved "https://registry.yarnpkg.com/@opentelemetry/api/-/api-1.9.1.tgz#c1b0346de336ba55af2d5a7970882037baedec05"
   integrity sha512-gLyJlPHPZYdAk1JENA9LeHejZe1Ti77/pTeFm/nMXmQH/HFZlcS/O2XJB+L8fkbrNSqhdtlvjBVjxwUYanNH5Q==
 
-"@optimizely/cms-cli@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@optimizely/cms-cli/-/cms-cli-2.2.0.tgz#6929501371565e268959a4fbe7f5910c12cb3a11"
-  integrity sha512-g9sDwxyzOx6qaCD1lGiyi8D5/q+nM2Uiyro4zfrGXMqVFMSVH0R7B1ij+m4/9HegfYW51iYMqvHxKSsiWic7aA==
+"@optimizely/cms-cli@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@optimizely/cms-cli/-/cms-cli-3.0.0.tgz#93ca1177208eeed6ef571ed78d5ffdb4279db777"
+  integrity sha512-F2rv/23EnG7PAhVkoQBNnjD0CLDoyHUO1cj4hELuIujRP28d4qavII5uSA1+CpXBzDY8rQtxnWL7mElCETdtkg==
   dependencies:
     "@inquirer/prompts" "^7.4.0"
     "@oclif/core" "^4.2.10"
-    "@optimizely/cms-sdk" "2.2.0"
+    "@optimizely/cms-sdk" "3.0.0"
     chalk "^5.4.1"
     conf "^13.1.0"
     dotenv "^16.5.0"
@@ -1023,10 +1023,10 @@
     uuid "^14.0.0"
     zod "^3.24.2"
 
-"@optimizely/cms-sdk@2.2.0", "@optimizely/cms-sdk@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@optimizely/cms-sdk/-/cms-sdk-2.2.0.tgz#f1436b40255f9284f6f6b275a82cbab3f1716b8b"
-  integrity sha512-yctxLb9CuPR/MxvjpCRDCVnuTP41CzWud1rKOTlPz9bbsdaR6RoNSD3z0oYmQS2vkWWCRZZCMbGYy+Bh3HJYZg==
+"@optimizely/cms-sdk@3.0.0", "@optimizely/cms-sdk@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@optimizely/cms-sdk/-/cms-sdk-3.0.0.tgz#1c86cce1923194ac8cb4fe48b953e226af8d68ee"
+  integrity sha512-rAxFZ5M0sIS08LrJXghW1P7rvshLkHGXul3vNJXyrx0zP07czjJ8zBS/cPfuOVarGCaVSQnaY948eA4IEP/ZSw==
   dependencies:
     "@opentelemetry/api" "^1.9.0"
 
