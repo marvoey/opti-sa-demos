@@ -1,6 +1,7 @@
 import { contentType } from '@optimizely/cms-sdk'
 import { OT_EventSpeaker } from './OT_EventSpeaker'
 import { OT_AgendaItem }   from './OT_AgendaItem'
+import { enableExternalPreviewProperty } from './_shared/externalPreview'
 
 // ─── OT_EventPage ───────────────────────────────────────────────────────────────
 // A traditional CMS page (URL-addressable) representing a single event — webinar,
@@ -21,6 +22,8 @@ export const OT_EventPage = contentType({
   baseType:    '_page',
   mayContainTypes: ['*'], // All child content types allowed
   properties: {
+    enableExternalPreview: enableExternalPreviewProperty,
+
     // ── Core content ──────────────────────────────────────────────────────────
     title: {
       type:        'string',
