@@ -2508,6 +2508,70 @@ body {
   .feature-card-lift:hover { transform: none; }
 }
 
+/* ── Feature grid — ruled layout divider system ───────────────────────────────
+ * The "ruled" layout's row dividers borrow the brand→accent horizon-hairline
+ * motif already used by the split-bar header and mega-menu (see the
+ * ::after comment above .split-shell) rather than a flat neutral line, so the
+ * effect reads as one system instead of a plain table rule. A matching
+ * vertical hairline bisects the two text columns at the md+ breakpoint (where
+ * the ruled grid itself goes two-column), so the layout reads as a ruled
+ * ledger grid instead of two blocks of text floating in open space.
+ *
+ * On a brand-filled section the gradient would vanish into the same-hued
+ * background, so [data-color="brand"] falls back to a neutral fg-on-brand
+ * line instead — same fallback logic DESIGN.md documents for chromatic vs.
+ * neutral shadows.
+ * ─────────────────────────────────────────────────────────────────────────── */
+[data-ruled-row] {
+  border-top: 1px solid transparent;
+  border-image: linear-gradient(to right, transparent, var(--ot-brand) 15%, var(--ot-accent) 85%, transparent) 1;
+  transition: background-color var(--ot-dur-quick) var(--ot-ease-quick);
+}
+[data-ruled-row][data-color="brand"] {
+  border-image: none;
+  border-top-color: oklch(from var(--ot-fg-on-brand) l c h / 0.2);
+}
+
+/* Zebra banding — faint at rest, just enough to read as ledger rows without
+ * competing with the hairlines. Hover deepens the same tint one step further,
+ * so every row (banded or not) signals it's the one under the pointer. */
+[data-ruled-row][data-zebra] {
+  background-color: oklch(from var(--ot-fg) l c h / 0.03);
+}
+[data-ruled-row][data-zebra][data-color="brand"] {
+  background-color: oklch(from var(--ot-fg-on-brand) l c h / 0.05);
+}
+[data-ruled-row]:hover {
+  background-color: oklch(from var(--ot-fg) l c h / 0.06);
+}
+[data-ruled-row][data-color="brand"]:hover {
+  background-color: oklch(from var(--ot-fg-on-brand) l c h / 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-ruled-row] { transition: none; }
+}
+
+[data-ruled-grid] {
+  position: relative;
+}
+@media (min-width: 768px) {
+  [data-ruled-grid]::after {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 50%;
+    width: 1px;
+    /* Otherwise this 1px overlay sits directly on the row's own horizontal
+     * midpoint and silently eats the pointer, so hovering a row exactly on
+     * the line never triggers [data-ruled-row]'s own :hover. */
+    pointer-events: none;
+    background: linear-gradient(to bottom, transparent, var(--ot-brand) 15%, var(--ot-accent) 85%, transparent);
+  }
+  [data-ruled-grid][data-color="brand"]::after {
+    background: oklch(from var(--ot-fg-on-brand) l c h / 0.15);
+  }
+}
+
 /* ── Rich Text Block — treatment containers ────────────────────────────────────
  * These classes reference bloom tokens so they follow CMS theme overrides
  * automatically. All shadow/border/background values are token-derived.
