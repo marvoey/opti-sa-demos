@@ -36,6 +36,8 @@ type Props = {
   styleOptions: LocationListingStyleOptions
   mapboxToken:  string
   emptyMessage: string
+  /** True for any CMS draft/preview render — hides the filter trigger + drawer. */
+  isPreview?:   boolean
 }
 
 const GRID_COLS: Record<LocationListingColumns, string> = {
@@ -89,7 +91,7 @@ function ViewToggle({
 
 // ─── Directory client ─────────────────────────────────────────────────────────
 
-export default function LocationListingClient({ locations, styleOptions, mapboxToken, emptyMessage }: Props) {
+export default function LocationListingClient({ locations, styleOptions, mapboxToken, emptyMessage, isPreview = false }: Props) {
   const { defaultView, showViewToggle, mapHeight, color, columns, showSearch, showLabelFilter, density } = styleOptions
 
   const [view, setView]                     = useState<LocationListingView>(defaultView)
@@ -153,7 +155,9 @@ export default function LocationListingClient({ locations, styleOptions, mapboxT
     setLabel(null)
   }
 
-  const hasControls = showSearch || (showLabelFilter && labelOptions.length > 0) || showViewToggle
+  // Hidden entirely in CMS preview/edit renders — live-front-end feature only.
+  const showLabelFilterUI = showLabelFilter && labelOptions.length > 0 && !isPreview
+  const hasControls = showSearch || showLabelFilterUI || showViewToggle
   const mappableCount = useMemo(() => results.filter(hasCoordinates).length, [results])
 
   return (
@@ -193,7 +197,7 @@ export default function LocationListingClient({ locations, styleOptions, mapboxT
             )}
           </div>
 
-          {(showLabelFilter && labelOptions.length > 0) && (
+          {showLabelFilterUI && (
             <div className="flex flex-col gap-sm sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
               <FilterTriggerButton
                 ref={filterTriggerRef}
@@ -219,7 +223,7 @@ export default function LocationListingClient({ locations, styleOptions, mapboxT
         </div>
       )}
 
-      {(showLabelFilter && labelOptions.length > 0) && (
+      {showLabelFilterUI && (
         <FilterDrawer
           id={filterPanelId}
           open={filtersOpen}

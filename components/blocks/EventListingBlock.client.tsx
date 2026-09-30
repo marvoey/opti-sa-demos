@@ -36,6 +36,8 @@ export type EventListingClientProps = {
   typeLocked:     boolean
   /** Server-stamped ISO "now" — keeps the upcoming/past split + today marker stable. */
   nowIso:         string
+  /** True for any CMS draft/preview render — hides the filter trigger + drawer. */
+  isPreview?:     boolean
 }
 
 // Canonical type ordering for the filter chips.
@@ -666,6 +668,7 @@ export default function EventListingClient({
   pastMode,
   typeLocked,
   nowIso,
+  isPreview = false,
 }: EventListingClientProps) {
   const now = useMemo(() => new Date(nowIso), [nowIso])
 
@@ -709,7 +712,8 @@ export default function EventListingClient({
 
   const changeType = useCallback((t: string | null) => setActiveType(t), [])
 
-  const showChips    = showTypeFilter && !typeLocked && availableTypes.length > 0
+  // Hidden entirely in CMS preview/edit renders — live-front-end feature only.
+  const showChips    = showTypeFilter && !typeLocked && availableTypes.length > 0 && !isPreview
   const showPastCtrl = pastMode === 'toggle' && past.length > 0 && effectiveView !== 'calendar'
 
   // ── Empty states for card/list ────────────────────────────────────────────
