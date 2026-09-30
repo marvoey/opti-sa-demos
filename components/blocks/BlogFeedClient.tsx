@@ -230,6 +230,8 @@ export type BlogFeedClientProps = {
   anchorId:    string
   /** Initial view mode — set by the CMS editor; visitor can still toggle */
   defaultView?: 'grid' | 'list'
+  /** True for any CMS draft/preview render — hides the filter trigger + drawer. */
+  isPreview?:   boolean
 }
 
 type View = 'grid' | 'list'
@@ -243,6 +245,7 @@ export default function BlogFeedClient({
   onBrand,
   anchorId,
   defaultView = 'grid',
+  isPreview   = false,
 }: BlogFeedClientProps) {
   const [view,        setView]   = useState<View>(defaultView)
   const [activeTopic, setTopic]  = useState<string | null>(null)
@@ -295,8 +298,9 @@ export default function BlogFeedClient({
       {/* ── Controls bar ────────────────────────────────────────────────────── */}
       <div className={`flex flex-wrap items-center justify-between gap-sm pb-lg mb-lg border-b ${dividerClass}`}>
 
-        {/* Filters trigger — hidden when the CMS has locked the feed to a single topic */}
-        {!topicFilter && (
+        {/* Filters trigger — hidden when the CMS has locked the feed to a single topic,
+            and hidden entirely in CMS preview/edit renders (live-front-end feature only) */}
+        {!topicFilter && !isPreview && (
           <FilterTriggerButton
             ref={filterTriggerRef}
             open={filtersOpen}
@@ -335,8 +339,8 @@ export default function BlogFeedClient({
         </div>
       </div>
 
-      {/* Filter drawer — hidden when the CMS has locked the feed to a single topic */}
-      {!topicFilter && (
+      {/* Filter drawer — same gating as the trigger above */}
+      {!topicFilter && !isPreview && (
         <FilterDrawer
           id={filterPanelId}
           open={filtersOpen}

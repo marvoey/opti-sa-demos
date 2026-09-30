@@ -1,3 +1,4 @@
+import { draftMode } from 'next/headers'
 import { ContentProps } from '@optimizely/cms-sdk'
 import { getPreviewUtils } from '@optimizely/cms-sdk/react/server'
 import { OT_LocationListingBlock as OT_LocationListingBlockContentType } from '@/cms/content-types/OT_LocationListingBlock'
@@ -20,6 +21,8 @@ export default async function OT_LocationListingBlockAdapter({
   displaySettings = {},
 }: Props) {
   const { pa } = getPreviewUtils(content)
+  // Live-front-end-only feature — see the matching note in OT_BlogFeedBlock.tsx.
+  const { isEnabled: isPreview } = await draftMode()
 
   const styleOptions = getLocationListingStyles(content.defaultView ? { ...displaySettings, defaultView: content.defaultView } : displaySettings)
   const [locale, siteKey] = await Promise.all([getRequestLocale(), getSiteKey()])
@@ -37,6 +40,7 @@ export default async function OT_LocationListingBlockAdapter({
         locations={locations}
         emptyMessage={content.emptyMessage ?? undefined}
         styleOptions={styleOptions}
+        isPreview={isPreview}
         pa={pa}
       />
     </div>

@@ -1,3 +1,4 @@
+import { draftMode } from 'next/headers'
 import { ContentProps } from '@optimizely/cms-sdk'
 import { getPreviewUtils } from '@optimizely/cms-sdk/react/server'
 import { OT_BlogFeedBlock as OT_BlogFeedBlockContentType } from '@/cms/content-types/OT_BlogFeedBlock'
@@ -28,6 +29,13 @@ export default async function OT_BlogFeedBlockAdapter({
   displaySettings = {},
 }: Props) {
   const { pa } = getPreviewUtils(content)
+  // The interactive filter drawer is a live-front-end feature only — the CMS
+  // editor's Visual Builder canvas and any other draft/preview render leave it
+  // permanently mounted off-screen (skewed, translated out), which showed up
+  // as a stray shape bleeding into the editing iframe. draftMode() is this
+  // repo's existing signal for "this isn't the live site" (see app/(site)/
+  // [...slug]/page.tsx and the draft block route).
+  const { isEnabled: isPreview } = await draftMode()
 
   // ── Locale + site base URL ────────────────────────────────────────────────
   // getRequestLocale reads the x-locale header set by middleware; falls back
@@ -91,6 +99,7 @@ export default async function OT_BlogFeedBlockAdapter({
         pageSize={pageSize}
         topicFilter={topicFilter}
         styleOptions={{ color, columns, headingSize, defaultView }}
+        isPreview={isPreview}
         pa={pa}
       />
     </div>
