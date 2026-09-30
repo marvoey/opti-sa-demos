@@ -211,6 +211,25 @@ html {
   100% { transform: scale(1); }
 }
 
+/* FilterBar — the chip that becomes active (selecting a filter, or clearing
+   one back to "All") catches and settles rather than snapping. Overshoots
+   past 1 before resting, so it reads as a tactile click, not a glitch. */
+@keyframes chipSelect {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(0.93); }
+  70%  { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-chip-select {
+    animation: chipSelect var(--ot-dur-base) var(--ot-ease-quick) both;
+  }
+  .animate-filter-swap {
+    animation: fadeIn var(--ot-dur-base) var(--ot-ease-quick) both;
+  }
+}
+
 /* MultiSelect popover entrance — opacity + short rise, transform-only so no
    layout shift. Gated at the utility via motion-safe:. */
 @keyframes multiselect-in {
