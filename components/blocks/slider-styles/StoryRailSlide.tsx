@@ -149,7 +149,7 @@ function RailCard({
       aria-roledescription="slide"
       aria-label={`Slide ${index + 1} of ${count}`}
       data-theme={forcedTheme}
-      className={cn(CARD_BASIS, 'relative h-full overflow-hidden shadow-hover-lift ring-1 ring-white/10')}
+      className="relative h-full overflow-hidden shadow-hover-lift ring-1 ring-white/10"
       style={{ borderRadius: radiusPx }}
     >
       <SlideVisual slide={slide} priority={priority} active={isActive} />
@@ -249,26 +249,36 @@ export default function StoryRailSlide({ slides, styleOptions, engine }: SlideSt
     <div className="relative h-full w-full overflow-hidden">
       <motion.div animate={controls} initial={false} className="absolute inset-0" style={{ willChange: 'filter' }}>
         <div ref={viewportRef} className="h-full w-full overflow-hidden">
-          <div className="flex h-full gap-sm lg:gap-md">
+          {/* The gap between cards is padding-left on each slide + a matching
+              negative margin here, not CSS `gap` on this flex container.
+              Confirmed live: with `gap`, Embla's loop wrap-point collapses to
+              0px — its loop math positions each slide from its own measured
+              width alone, and `gap` is the parent's layout property, not
+              part of any single slide's box, so the wrap seam (last slide
+              back to first) never got it. Padding is part of the slide's own
+              measured rect, so Embla's loop math picks it up automatically,
+              including at the seam. */}
+          <div className="flex h-full -ml-sm lg:-ml-md">
             {slides.map((slide, i) => (
-              <RailCard
-                key={slide.key || i}
-                slide={slide}
-                index={i}
-                count={slideCount}
-                isActive={i === activeIndex}
-                headingLevel={styleOptions.headingLevel}
-                radiusPx={radiusPx}
-                priority={styleOptions.headingLevel === 'h1' && i === 0}
-                phase={
-                  transition == null ? 'idle'
-                  : i === transition.exitingIndex ? 'exiting'
-                  : i === transition.enteringIndex ? 'entering'
-                  : 'idle'
-                }
-                forward={transition?.forward ?? true}
-                runId={transition?.runId ?? 0}
-              />
+              <div key={slide.key || i} className={cn(CARD_BASIS, 'h-full pl-sm lg:pl-md')}>
+                <RailCard
+                  slide={slide}
+                  index={i}
+                  count={slideCount}
+                  isActive={i === activeIndex}
+                  headingLevel={styleOptions.headingLevel}
+                  radiusPx={radiusPx}
+                  priority={styleOptions.headingLevel === 'h1' && i === 0}
+                  phase={
+                    transition == null ? 'idle'
+                    : i === transition.exitingIndex ? 'exiting'
+                    : i === transition.enteringIndex ? 'entering'
+                    : 'idle'
+                  }
+                  forward={transition?.forward ?? true}
+                  runId={transition?.runId ?? 0}
+                />
+              </div>
             ))}
           </div>
         </div>
