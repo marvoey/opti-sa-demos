@@ -50,39 +50,39 @@ export const FilterTriggerButton = forwardRef<HTMLButtonElement, {
     : 'text-brand motion-safe:transition-colors motion-safe:duration-150 motion-safe:delay-75 motion-safe:group-hover:text-fg-on-brand'
 
   return (
-    <div className="inline-flex flex-col items-start gap-xs">
-      <button
-        ref={ref}
-        type="button"
-        onClick={onClick}
-        aria-expanded={open}
-        aria-controls={panelId}
-        aria-haspopup="dialog"
-        className={[
-          'group relative inline-flex items-center gap-xs overflow-hidden rounded-ot-control border border-brand px-sm py-2.5',
-          'transition-colors duration-150 ease-quick',
-          'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand',
-          open ? 'bg-brand' : 'btn-signal bg-surface',
-        ].join(' ')}
-      >
-        <SlidersHorizontal size={18} strokeWidth={1.75} aria-hidden className={`relative z-10 shrink-0 ${iconTextClass}`} />
-        <span className={`relative z-10 text-body font-semibold ${open ? 'text-fg-on-brand' : 'text-fg motion-safe:transition-colors motion-safe:duration-150 motion-safe:delay-75 motion-safe:group-hover:text-fg-on-brand'}`}>
-          Filters
+    <button
+      ref={ref}
+      type="button"
+      onClick={onClick}
+      aria-expanded={open}
+      aria-controls={panelId}
+      aria-haspopup="dialog"
+      className={[
+        'group relative inline-flex flex-wrap items-center gap-x-sm gap-y-1 overflow-hidden rounded-full border border-brand px-md py-sm text-left',
+        'transition-colors duration-150 ease-quick',
+        'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand',
+        open ? 'bg-brand' : 'btn-signal bg-surface',
+      ].join(' ')}
+    >
+      <SlidersHorizontal size={18} strokeWidth={1.75} aria-hidden className={`relative z-10 shrink-0 ${iconTextClass}`} />
+      <span className={`relative z-10 text-body font-semibold ${open ? 'text-fg-on-brand' : 'text-fg motion-safe:transition-colors motion-safe:duration-150 motion-safe:delay-75 motion-safe:group-hover:text-fg-on-brand'}`}>
+        Filters
+      </span>
+      {activeCount > 0 && (
+        <span
+          aria-hidden
+          className={[
+            'relative z-10 flex h-4.5 min-w-4.5 items-center justify-center rounded-full px-0.75 text-[10px] font-bold tabular-nums',
+            open ? 'bg-fg-on-brand text-brand' : 'bg-brand text-fg-on-brand',
+          ].join(' ')}
+        >
+          {activeCount}
         </span>
-        {activeCount > 0 && (
-          <span
-            aria-hidden
-            className={[
-              'relative z-10 flex h-4.5 min-w-4.5 items-center justify-center rounded-full px-0.75 text-[10px] font-bold tabular-nums',
-              open ? 'bg-fg-on-brand text-brand' : 'bg-brand text-fg-on-brand',
-            ].join(' ')}
-          >
-            {activeCount}
-          </span>
-        )}
-      </button>
-      <span className="max-w-56 text-label text-fg-muted">{subtitle}</span>
-    </div>
+      )}
+      <span className={`relative z-10 text-label leading-snug ${open ? 'text-fg-on-brand/70' : 'text-fg-muted motion-safe:transition-colors motion-safe:duration-150 motion-safe:delay-75 motion-safe:group-hover:text-fg-on-brand/70'}`}>
+        {subtitle}
+      </span>
+    </button>
   )
 })
 
