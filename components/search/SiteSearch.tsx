@@ -416,6 +416,10 @@ export default function SiteSearch() {
             role="listbox"
             aria-label="Suggested results"
             data-suggestions-list
+            // Hovering keeps it open; the moment the pointer leaves, it
+            // collapses — no arbitrary timer to guess at. Typing further (new
+            // suggestions) or refocusing the input can always bring it back.
+            onMouseLeave={() => { setShowSuggestions(false); setFocusedSugIdx(-1) }}
             onKeyDown={e => {
               // Attached here (not just on the input) so Escape dismisses even
               // after arrow-key navigation has moved focus onto a row.
