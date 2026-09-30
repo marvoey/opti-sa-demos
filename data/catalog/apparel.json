@@ -206,13 +206,19 @@
           "code": "loden",
           "name": "Loden",
           "hex": "#4b5e45",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-loden-wool-car-coat.jpg",
+            "/globalassets/tessel-assets/product/tessel-p-loden-wool-car-coat-2.jpg"
+          ]
         },
         {
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-loden-wool-car-coat-2.jpg",
+            "/globalassets/tessel-assets/product/tessel-p-loden-wool-car-coat.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -519,13 +525,17 @@
           "code": "oat",
           "name": "Oat",
           "hex": "#d8ccb4",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-double-faced-wrap-coat.jpg"
+          ]
         },
         {
           "code": "umber",
           "name": "Umber",
           "hex": "#6b4a33",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-double-faced-wrap-coat.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -832,13 +842,17 @@
           "code": "moss",
           "name": "Moss",
           "hex": "#6e7250",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-quilted-liner-jacket-women.jpg"
+          ]
         },
         {
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-quilted-liner-jacket-women.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -1144,7 +1158,9 @@
           "code": "tobacco",
           "name": "Tobacco",
           "hex": "#8a5a36",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-shearling-collar-suede-jacket.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -1336,25 +1352,37 @@
           "code": "chalk",
           "name": "Chalk",
           "hex": "#ece9e1",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-merino-rib-crewneck.jpg",
+            "/globalassets/tessel-assets/product/tessel-p-merino-rib-crewneck-2.jpg"
+          ]
         },
         {
           "code": "ochre",
           "name": "Ochre",
           "hex": "#c99a3e",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-merino-rib-crewneck-2.jpg",
+            "/globalassets/tessel-assets/product/tessel-p-merino-rib-crewneck.jpg"
+          ]
         },
         {
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-merino-rib-crewneck-2.jpg",
+            "/globalassets/tessel-assets/product/tessel-p-merino-rib-crewneck.jpg"
+          ]
         },
         {
           "code": "loden",
           "name": "Loden",
           "hex": "#4b5e45",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-merino-rib-crewneck-2.jpg",
+            "/globalassets/tessel-assets/product/tessel-p-merino-rib-crewneck.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -1893,13 +1921,17 @@
           "code": "oat",
           "name": "Oat",
           "hex": "#d8ccb4",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-cashmere-boxy-cardigan.jpg"
+          ]
         },
         {
           "code": "slate",
           "name": "Slate",
           "hex": "#6d7478",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-cashmere-boxy-cardigan.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -2204,13 +2236,17 @@
           "code": "ecru",
           "name": "Ecru",
           "hex": "#e6dcc6",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-fisherman-roll-neck.jpg"
+          ]
         },
         {
           "code": "umber",
           "name": "Umber",
           "hex": "#6b4a33",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-fisherman-roll-neck.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -2513,13 +2549,17 @@
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-fine-gauge-merino-polo.jpg"
+          ]
         },
         {
           "code": "ochre",
           "name": "Ochre",
           "hex": "#c99a3e",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-fine-gauge-merino-polo.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -2822,13 +2862,17 @@
           "code": "chalk",
           "name": "Chalk",
           "hex": "#ece9e1",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-oversized-poplin-shirt.jpg"
+          ]
         },
         {
           "code": "slate-stripe",
           "name": "Slate Stripe",
           "hex": "#8a9195",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-oversized-poplin-shirt.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -3131,13 +3175,17 @@
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-silk-crepe-blouse.jpg"
+          ]
         },
         {
           "code": "ochre",
           "name": "Ochre",
           "hex": "#c99a3e",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-silk-crepe-blouse.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -3440,19 +3488,25 @@
           "code": "chalk",
           "name": "Chalk",
           "hex": "#ece9e1",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-heavyweight-jersey-tee-women.jpg"
+          ]
         },
         {
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-heavyweight-jersey-tee-women.jpg"
+          ]
         },
         {
           "code": "loden",
           "name": "Loden",
           "hex": "#4b5e45",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-heavyweight-jersey-tee-women.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -3870,13 +3924,17 @@
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-wide-leg-wool-trouser.jpg"
+          ]
         },
         {
           "code": "umber",
           "name": "Umber",
           "hex": "#6b4a33",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-wide-leg-wool-trouser.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -4272,13 +4330,17 @@
           "code": "oat",
           "name": "Oat",
           "hex": "#d8ccb4",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-pleated-barrel-trouser.jpg"
+          ]
         },
         {
           "code": "slate",
           "name": "Slate",
           "hex": "#6d7478",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-pleated-barrel-trouser.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -4675,13 +4737,17 @@
           "code": "indigo",
           "name": "Rinse Indigo",
           "hex": "#2c3a55",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-straight-selvedge-jean-women.jpg"
+          ]
         },
         {
           "code": "ecru",
           "name": "Ecru",
           "hex": "#e6dcc6",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-straight-selvedge-jean-women.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -5175,13 +5241,17 @@
           "code": "loden",
           "name": "Loden",
           "hex": "#4b5e45",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-merino-knit-midi-dress.jpg"
+          ]
         },
         {
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-merino-knit-midi-dress.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -5484,13 +5554,17 @@
           "code": "ochre",
           "name": "Ochre",
           "hex": "#c99a3e",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-satin-slip-skirt.jpg"
+          ]
         },
         {
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-satin-slip-skirt.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -5794,7 +5868,9 @@
           "code": "umber",
           "name": "Umber",
           "hex": "#6b4a33",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-wool-twill-shirt-dress.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -5983,13 +6059,17 @@
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-relaxed-wool-blazer.jpg"
+          ]
         },
         {
           "code": "oat-check",
           "name": "Oat Check",
           "hex": "#cbbd9f",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-relaxed-wool-blazer.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -6387,7 +6467,9 @@
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-tailored-waistcoat.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -6624,7 +6706,9 @@
           "code": "loden",
           "name": "Loden",
           "hex": "#4b5e45",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-cropped-wool-overshirt.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -6818,13 +6902,19 @@
           "code": "loden",
           "name": "Loden",
           "hex": "#4b5e45",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-loden-wool-overcoat.jpg",
+            "/globalassets/tessel-assets/product/tessel-p-loden-wool-overcoat-2.jpg"
+          ]
         },
         {
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-loden-wool-overcoat-2.jpg",
+            "/globalassets/tessel-assets/product/tessel-p-loden-wool-overcoat.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -7129,13 +7219,17 @@
           "code": "umber",
           "name": "Umber",
           "hex": "#6b4a33",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-waxed-cotton-field-jacket.jpg"
+          ]
         },
         {
           "code": "moss",
           "name": "Moss",
           "hex": "#6e7250",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-waxed-cotton-field-jacket.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -7439,13 +7533,17 @@
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-quilted-liner-jacket-men.jpg"
+          ]
         },
         {
           "code": "moss",
           "name": "Moss",
           "hex": "#6e7250",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-quilted-liner-jacket-men.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -7750,13 +7848,17 @@
           "code": "oat",
           "name": "Oat",
           "hex": "#d8ccb4",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-wool-cashmere-chore-coat.jpg"
+          ]
         },
         {
           "code": "slate",
           "name": "Slate",
           "hex": "#6d7478",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-wool-cashmere-chore-coat.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -8062,25 +8164,37 @@
           "code": "ochre",
           "name": "Ochre",
           "hex": "#c99a3e",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-lambswool-crewneck.jpg",
+            "/globalassets/tessel-assets/product/tessel-p-lambswool-crewneck-2.jpg"
+          ]
         },
         {
           "code": "loden",
           "name": "Loden",
           "hex": "#4b5e45",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-lambswool-crewneck-2.jpg",
+            "/globalassets/tessel-assets/product/tessel-p-lambswool-crewneck.jpg"
+          ]
         },
         {
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-lambswool-crewneck-2.jpg",
+            "/globalassets/tessel-assets/product/tessel-p-lambswool-crewneck.jpg"
+          ]
         },
         {
           "code": "ecru",
           "name": "Ecru",
           "hex": "#e6dcc6",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-lambswool-crewneck-2.jpg",
+            "/globalassets/tessel-assets/product/tessel-p-lambswool-crewneck.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -8614,13 +8728,17 @@
           "code": "slate",
           "name": "Slate",
           "hex": "#6d7478",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-merino-half-zip.jpg"
+          ]
         },
         {
           "code": "umber",
           "name": "Umber",
           "hex": "#6b4a33",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-merino-half-zip.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -8926,7 +9044,9 @@
           "code": "ecru",
           "name": "Ecru",
           "hex": "#e6dcc6",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-shawl-cardigan.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -9119,13 +9239,17 @@
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-cashmere-roll-neck.jpg"
+          ]
         },
         {
           "code": "oat",
           "name": "Oat",
           "hex": "#d8ccb4",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-cashmere-roll-neck.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -9430,13 +9554,17 @@
           "code": "loden-check",
           "name": "Loden Check",
           "hex": "#56644c",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-brushed-flannel-overshirt.jpg"
+          ]
         },
         {
           "code": "ochre",
           "name": "Ochre",
           "hex": "#c99a3e",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-brushed-flannel-overshirt.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -9739,13 +9867,17 @@
           "code": "chalk",
           "name": "Chalk",
           "hex": "#ece9e1",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-oxford-button-down.jpg"
+          ]
         },
         {
           "code": "slate-stripe",
           "name": "Slate Stripe",
           "hex": "#8a9195",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-oxford-button-down.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -10048,19 +10180,25 @@
           "code": "chalk",
           "name": "Chalk",
           "hex": "#ece9e1",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-heavyweight-jersey-tee-men.jpg"
+          ]
         },
         {
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-heavyweight-jersey-tee-men.jpg"
+          ]
         },
         {
           "code": "moss",
           "name": "Moss",
           "hex": "#6e7250",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-heavyweight-jersey-tee-men.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -10477,7 +10615,9 @@
           "code": "ecru",
           "name": "Ecru",
           "hex": "#e6dcc6",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-waffle-long-sleeve.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -10665,13 +10805,17 @@
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-pleated-wool-trouser.jpg"
+          ]
         },
         {
           "code": "umber",
           "name": "Umber",
           "hex": "#6b4a33",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-pleated-wool-trouser.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -11020,13 +11164,17 @@
           "code": "tobacco",
           "name": "Tobacco",
           "hex": "#8a5a36",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-relaxed-cord-trouser.jpg"
+          ]
         },
         {
           "code": "loden",
           "name": "Loden",
           "hex": "#4b5e45",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-relaxed-cord-trouser.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -11376,7 +11524,9 @@
           "code": "indigo",
           "name": "Rinse Indigo",
           "hex": "#2c3a55",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-straight-selvedge-jean-men.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -11587,7 +11737,9 @@
           "code": "slate",
           "name": "Slate",
           "hex": "#6d7478",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-drawstring-wool-trouser.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -11800,13 +11952,17 @@
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-unstructured-wool-blazer.jpg"
+          ]
         },
         {
           "code": "loden",
           "name": "Loden",
           "hex": "#4b5e45",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-unstructured-wool-blazer.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -12157,7 +12313,9 @@
           "code": "moss",
           "name": "Moss",
           "hex": "#6e7250",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-fleece-gilet.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -12344,13 +12502,19 @@
           "code": "tobacco",
           "name": "Tobacco",
           "hex": "#8a5a36",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-structured-leather-tote.jpg",
+            "/globalassets/tessel-assets/product/tessel-p-structured-leather-tote-2.jpg"
+          ]
         },
         {
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-structured-leather-tote-2.jpg",
+            "/globalassets/tessel-assets/product/tessel-p-structured-leather-tote.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -12467,13 +12631,17 @@
           "code": "umber",
           "name": "Umber",
           "hex": "#6b4a33",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-soft-leather-crossbody.jpg"
+          ]
         },
         {
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-soft-leather-crossbody.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -12592,7 +12760,9 @@
           "code": "moss",
           "name": "Moss",
           "hex": "#6e7250",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-waxed-canvas-weekender.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -12685,13 +12855,17 @@
           "code": "loden-check",
           "name": "Loden Check",
           "hex": "#56644c",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-oversized-lambswool-scarf.jpg"
+          ]
         },
         {
           "code": "ochre",
           "name": "Ochre",
           "hex": "#c99a3e",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-oversized-lambswool-scarf.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -12809,19 +12983,25 @@
           "code": "ochre",
           "name": "Ochre",
           "hex": "#c99a3e",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-cashmere-rib-beanie.jpg"
+          ]
         },
         {
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-cashmere-rib-beanie.jpg"
+          ]
         },
         {
           "code": "oat",
           "name": "Oat",
           "hex": "#d8ccb4",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-cashmere-rib-beanie.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -12958,13 +13138,17 @@
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-leather-palm-knit-gloves.jpg"
+          ]
         },
         {
           "code": "umber",
           "name": "Umber",
           "hex": "#6b4a33",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-leather-palm-knit-gloves.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -13129,13 +13313,19 @@
           "code": "tobacco",
           "name": "Tobacco",
           "hex": "#8a5a36",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-suede-chelsea-boot.jpg",
+            "/globalassets/tessel-assets/product/tessel-p-suede-chelsea-boot-2.jpg"
+          ]
         },
         {
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-suede-chelsea-boot-2.jpg",
+            "/globalassets/tessel-assets/product/tessel-p-suede-chelsea-boot.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -13533,13 +13723,17 @@
           "code": "ink",
           "name": "Ink",
           "hex": "#1f2430",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-leather-derby.jpg"
+          ]
         },
         {
           "code": "umber",
           "name": "Umber",
           "hex": "#6b4a33",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-leather-derby.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -13936,7 +14130,9 @@
           "code": "tobacco",
           "name": "Tobacco",
           "hex": "#8a5a36",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-wide-leather-belt.jpg"
+          ]
         }
       ],
       "sizes": [
@@ -14099,7 +14295,9 @@
           "code": "mixed",
           "name": "Mixed",
           "hex": "#9a8a70",
-          "images": []
+          "images": [
+            "/globalassets/tessel-assets/product/tessel-p-merino-sock-set.jpg"
+          ]
         }
       ],
       "sizes": [

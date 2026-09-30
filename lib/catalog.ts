@@ -81,6 +81,12 @@ async function graphGet<T>(query: string, variables: Record<string, unknown>): P
   return json.data
 }
 
+// Catalog images are stored as instance-relative DAM paths (/globalassets/…)
+// so one dataset works on every CMS instance; resolve them against the CMS host.
+const CMS_ORIGIN = (process.env.OPTIMIZELY_CMS_URL ?? '').replace(/\/+$/, '')
+const resolveImage = (src: string): string => (src.startsWith('/') && CMS_ORIGIN ? CMS_ORIGIN + src : src)
+const resolveColours = (colours: Colour[]): Colour[] => colours.map((c) => ({ ...c, images: c.images.map(resolveImage) }))
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const toMoney = (p: any): Money => ({
   currency:  p.Currency as CurrencyCode,
@@ -111,7 +117,7 @@ function fromGraphProduct(p: any): Product {
     sortRank:        Number(p.SortRank) || 0,
     launchedAt:      p.LaunchedAt ?? '',
     url:             p.Url ?? `/products/${p.Handle}`,
-    colours:         (p.Colours ?? []).map((c: any): Colour => ({ code: c.Code, name: c.Name, hex: c.Hex, images: c.Images ?? [] })),
+    colours:         resolveColours((p.Colours ?? []).map((c: any): Colour => ({ code: c.Code, name: c.Name, hex: c.Hex, images: c.Images ?? [] }))),
     sizes:           p.Sizes ?? [],
     variants:        (p.Variants ?? []).map((v: any): Variant => ({
       sku: v.Sku, colourCode: v.ColourCode, size: v.Size, stock: Number(v.Stock) || 0, prices: (v.Prices ?? []).map(toMoney),
@@ -149,7 +155,8 @@ async function graphCategories(catalogId: string): Promise<Category[]> {
 // ─── Local provider ────────────────────────────────────────────────────────────
 
 type LocalCatalog = { catalogId: string; categories: Category[]; products: Product[] }
-const LOCAL = localCatalog as unknown as LocalCatalog
+const RAW_LOCAL = localCatalog as unknown as LocalCatalog
+const LOCAL: LocalCatalog = { ...RAW_LOCAL, products: RAW_LOCAL.products.map((p) => ({ ...p, colours: resolveColours(p.colours) })) }
 
 const localProducts   = (catalogId: string) => (LOCAL.catalogId === catalogId ? LOCAL.products : [])
 const localCategories = (catalogId: string) => (LOCAL.catalogId === catalogId ? LOCAL.categories : [])

@@ -30,7 +30,7 @@ type Props = {
 
 const LINK_VOICE = {
   default: 'text-sm font-medium text-fg-muted hover:text-fg',
-  split:   'text-label font-semibold uppercase tracking-label text-fg-muted hover:text-fg',
+  split:   'text-label font-semibold uppercase tracking-label whitespace-nowrap text-fg-muted hover:text-fg',
 } as const
 
 const GROUP_GAP = {
