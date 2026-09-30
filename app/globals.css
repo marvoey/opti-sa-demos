@@ -3409,6 +3409,13 @@ body {
 [data-theme="light"] .text-accent-ground { color: oklch(from var(--ot-accent) calc(l - 0.40) c h); }
 [data-theme="light"] .bg-accent-ground   { background-color: oklch(from var(--ot-accent) calc(l - 0.40) c h); }
 
+/* Brand-as-text. --ot-brand-text is emitted by buildThemeCSS ONLY for themes
+ * whose brand is deep enough to fail AA as text on dark grounds (it lifts the
+ * lightness in dark mode, resets to the brand in light mode). Every other theme
+ * falls back to --ot-brand — byte-for-byte the same colour as Tailwind's
+ * text-brand utility, so they render unchanged. */
+.text-brand { color: var(--ot-brand-text, var(--ot-brand)); }
+
 /* ── Blog: Atmospheric — gradient overlay for image/video background header ──
  * Heavy darkening gradient ensures the glass panel text is legible regardless
  * of the image/video content behind it. Top stays relatively open to show the
@@ -4217,4 +4224,15 @@ body {
   .oa-day-panel {
     animation: oa-slide-from-right 240ms cubic-bezier(0.16, 1, 0.3, 1) both; /* dur-exempt: 240ms — nearest quick(200) Δ40ms */
   }
+}
+
+/* ── Commerce: mini-bag drawer ────────────────────────────────────────────────
+ * Radix Dialog panel sliding in from the right edge. transform + opacity only;
+ * reduced-motion users get the panel in place with no slide.
+ * ─────────────────────────────────────────────────────────────────────────── */
+@keyframes minibagIn  { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@keyframes minibagOut { from { transform: translateX(0); } to { transform: translateX(100%); } }
+@media (prefers-reduced-motion: no-preference) {
+  .minibag-panel[data-state="open"]   { animation: minibagIn  var(--ot-dur-base) var(--ot-ease-kinetic) both; }
+  .minibag-panel[data-state="closed"] { animation: minibagOut var(--ot-dur-quick) var(--ot-ease-quick) both; }
 }

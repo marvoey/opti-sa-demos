@@ -36,6 +36,8 @@ import { OT_PractitionerListingDefault } from '@/cms/display-templates/OT_Practi
 import { OT_LocationListingDefault } from '@/cms/display-templates/OT_LocationListingDefault'
 import { OT_ContentRecommendationsDefault } from '@/cms/display-templates/OT_ContentRecommendationsDefault'
 import { OT_ProductRecommendationsDefault } from '@/cms/display-templates/OT_ProductRecommendationsDefault'
+import { OT_ProductListingDefault } from '@/cms/display-templates/OT_ProductListingDefault'
+import { OT_CommerceFlowDefault } from '@/cms/display-templates/OT_CommerceFlowDefault'
 import { OT_ComparisonTableDefault }        from '@/cms/display-templates/OT_ComparisonTableDefault'
 import { OT_DisclosureBlockDefault }       from '@/cms/display-templates/OT_DisclosureBlockDefault'
 import { OT_TopicHubDefault }             from '@/cms/display-templates/OT_TopicHubDefault'
@@ -89,11 +91,14 @@ import { OT_EventListingBlock }     from '@/cms/content-types/OT_EventListingBlo
 import { OT_PracticeArea }            from '@/cms/content-types/OT_PracticeArea'
 import { OT_PractitionerProfile }     from '@/cms/content-types/OT_PractitionerProfile'
 import { OT_PractitionerPage }        from '@/cms/content-types/OT_PractitionerPage'
+import { OT_ProductDetailTemplate }   from '@/cms/content-types/OT_ProductDetailTemplate'
 import { OT_PractitionerListingBlock } from '@/cms/content-types/OT_PractitionerListingBlock'
 import { OT_LocationProfile }            from '@/cms/content-types/OT_LocationProfile'
 import { OT_LocationListingBlock }       from '@/cms/content-types/OT_LocationListingBlock'
 import { OT_ContentRecommendationsBlock } from '@/cms/content-types/OT_ContentRecommendationsBlock'
 import { OT_ProductRecommendationsBlock } from '@/cms/content-types/OT_ProductRecommendationsBlock'
+import { OT_ProductListingBlock } from '@/cms/content-types/OT_ProductListingBlock'
+import { OT_CommerceFlowBlock } from '@/cms/content-types/OT_CommerceFlowBlock'
 import { OT_ComparisonCell }        from '@/cms/content-types/OT_ComparisonCell'
 import { OT_ComparisonRow }         from '@/cms/content-types/OT_ComparisonRow'
 import { OT_ComparisonColumn }      from '@/cms/content-types/OT_ComparisonColumn'
@@ -162,6 +167,8 @@ import OT_LocationListingBlockAdapter        from '@/cms/components/OT_LocationL
 import OT_LocationProfileAdapter             from '@/cms/components/OT_LocationProfile'
 import OT_ContentRecommendationsBlockAdapter from '@/cms/components/OT_ContentRecommendationsBlock'
 import OT_ProductRecommendationsBlockAdapter from '@/cms/components/OT_ProductRecommendationsBlock'
+import OT_ProductListingBlockAdapter from '@/cms/components/OT_ProductListingBlock'
+import OT_CommerceFlowBlockAdapter from '@/cms/components/OT_CommerceFlowBlock'
 import OT_ComparisonTableBlockAdapter        from '@/cms/components/OT_ComparisonTableBlock'
 import OT_DisclosureBlockAdapter            from '@/cms/components/OT_DisclosureBlock'
 import OT_TokenManagerAdapter               from '@/cms/components/OT_TokenManager'
@@ -222,6 +229,8 @@ initDisplayTemplateRegistry([
   OT_LocationListingDefault,
   OT_ContentRecommendationsDefault,
   OT_ProductRecommendationsDefault,
+  OT_ProductListingDefault,
+  OT_CommerceFlowDefault,
   OT_ComparisonTableDefault,
   OT_DisclosureBlockDefault,
   OT_TopicHubDefault,
@@ -275,11 +284,14 @@ initContentTypeRegistry([
   OT_PracticeArea,
   OT_PractitionerProfile,
   OT_PractitionerPage,
+  OT_ProductDetailTemplate,
   OT_PractitionerListingBlock,
   OT_LocationProfile,
   OT_LocationListingBlock,
   OT_ContentRecommendationsBlock,
   OT_ProductRecommendationsBlock,
+  OT_ProductListingBlock,
+  OT_CommerceFlowBlock,
   OT_ComparisonCell,
   OT_ComparisonRow,
   OT_ComparisonColumn,
@@ -353,6 +365,8 @@ initReactComponentRegistry({
     OT_LocationListingBlock:     OT_LocationListingBlockAdapter,
     OT_ContentRecommendationsBlock: OT_ContentRecommendationsBlockAdapter,
     OT_ProductRecommendationsBlock: OT_ProductRecommendationsBlockAdapter,
+    OT_ProductListingBlock: OT_ProductListingBlockAdapter,
+    OT_CommerceFlowBlock: OT_CommerceFlowBlockAdapter,
     OT_ComparisonTableBlock:        OT_ComparisonTableBlockAdapter,
     OT_DisclosureBlock:             OT_DisclosureBlockAdapter,
     OT_TokenManager:                OT_TokenManagerAdapter,
