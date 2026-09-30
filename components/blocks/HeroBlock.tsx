@@ -164,8 +164,12 @@ const secondaryCtaCva = cva(
   }
 );
 
+// Editorial Split is a flush two-panel layout — the visual panel sits directly
+// against the square text panel with no gap, so it always stays sharp-cornered
+// (rounded-none) even when the theme's Corner Style axis is Soft/Rounded;
+// rounding just this one edge would misalign it against the text panel.
 const visualPanelCva = cva(
-  "relative overflow-hidden rounded-ot-surface aspect-video lg:aspect-auto lg:flex-1",
+  "relative overflow-hidden rounded-none aspect-video lg:aspect-auto lg:flex-1",
   {
     variants: {
       color: {
