@@ -1,7 +1,6 @@
 import 'server-only'
 import { cache } from 'react'
 import type { Category, Colour, CurrencyCode, Money, Product, ProductGender, Variant } from '@/lib/commerce/types'
-import localCatalog from '@/data/catalog/apparel.json'
 
 /**
  * Product catalog reader.
@@ -15,7 +14,8 @@ import localCatalog from '@/data/catalog/apparel.json'
  * Two providers sit behind one interface:
  *   - `graph` (default) — cached Graph GET queries, tagged `catalog` so
  *     /api/revalidate/catalog can bust them after a re-push.
- *   - `local` — reads data/catalog/apparel.json directly. Selected with
+ *   - `local` — reads the catalog's seed file, data/catalog/<catalogId>.json
+ *     (loaded lazily, per catalog — no site's data is bundled in). Selected with
  *     CATALOG_SOURCE=local, and used automatically as a fallback if a Graph
  *     read fails, so the demo never renders an empty store.
  *
@@ -155,11 +155,21 @@ async function graphCategories(catalogId: string): Promise<Category[]> {
 // ─── Local provider ────────────────────────────────────────────────────────────
 
 type LocalCatalog = { catalogId: string; categories: Category[]; products: Product[] }
-const RAW_LOCAL = localCatalog as unknown as LocalCatalog
-const LOCAL: LocalCatalog = { ...RAW_LOCAL, products: RAW_LOCAL.products.map((p) => ({ ...p, colours: resolveColours(p.colours) })) }
+const EMPTY_CATALOG: LocalCatalog = { catalogId: '', categories: [], products: [] }
 
-const localProducts   = (catalogId: string) => (LOCAL.catalogId === catalogId ? LOCAL.products : [])
-const localCategories = (catalogId: string) => (LOCAL.catalogId === catalogId ? LOCAL.categories : [])
+const loadLocal = cache(async (catalogId: string): Promise<LocalCatalog> => {
+  if (!isValidHandle(catalogId)) return EMPTY_CATALOG
+  try {
+    const raw = ((await import(`../data/catalog/${catalogId}.json`)) as { default: LocalCatalog }).default
+    if (raw.catalogId !== catalogId) return EMPTY_CATALOG
+    return { ...raw, products: raw.products.map((p) => ({ ...p, colours: resolveColours(p.colours) })) }
+  } catch {
+    return EMPTY_CATALOG // no seed file for this catalog
+  }
+})
+
+const localProducts   = async (catalogId: string) => (await loadLocal(catalogId)).products
+const localCategories = async (catalogId: string) => (await loadLocal(catalogId)).categories
 
 // ─── Provider selection (per request) ──────────────────────────────────────────
 

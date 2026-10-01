@@ -31,8 +31,10 @@ export default function CatalogRecommendations({
   const onBrand = color === 'brand'
   if (!dynamic && !initial?.length) return null
 
+  // Keyed: this element crosses the server→client boundary as a prop and is
+  // rendered beside the product list there, so React dev validates it as one.
   const header = (heading || subheading) ? (
-    <div className="mb-lg flex max-w-3xl flex-col gap-xs">
+    <div key="recs-header" className="mb-lg flex max-w-3xl flex-col gap-xs">
       {heading && (
         <h2 className={`text-title font-semibold leading-title tracking-headline md:text-[1.75rem] md:leading-tight ${onBrand ? 'text-fg-on-brand' : 'text-fg'}`} {...pa('heading')}>
           {heading}

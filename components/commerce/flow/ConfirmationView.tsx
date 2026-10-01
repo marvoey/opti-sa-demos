@@ -43,7 +43,7 @@ export default function ConfirmationView({ heading, continueLabel, continueUrl, 
           <div><dt className="text-label uppercase tracking-label text-fg-muted">{t('commerce.orderNumber')}</dt><dd className="mt-1 font-mono text-sm text-fg">{order.id}</dd></div>
           <div><dt className="text-label uppercase tracking-label text-fg-muted">{t('commerce.placedOn')}</dt><dd className="mt-1 text-sm text-fg">{placed}</dd></div>
           <div><dt className="text-label uppercase tracking-label text-fg-muted">{t('commerce.deliveryMethod')}</dt><dd className="mt-1 text-sm text-fg">{SHIPPING[order.delivery].label}</dd></div>
-          <div><dt className="text-label uppercase tracking-label text-fg-muted">{t('commerce.stepPayment')}</dt><dd className="mt-1 text-sm text-fg">{t('commerce.paidWith', { last4: order.cardLast4 })}</dd></div>
+          <div><dt className="text-label uppercase tracking-label text-fg-muted">{t('commerce.stepPayment')}</dt><dd className="mt-1 text-sm text-fg">{t('commerce.paidWith')}</dd></div>
         </dl>
 
         <ul className="divide-y divide-fg/10">

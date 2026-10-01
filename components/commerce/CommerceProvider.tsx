@@ -6,9 +6,10 @@ import { priceIn } from '@/lib/commerce/card'
 import type { CartLine, CurrencyCode } from '@/lib/commerce/types'
 
 /**
- * Mock-storefront context: bag, wishlist, recently viewed and the last order,
- * persisted in localStorage per catalog. Mounted by app/(site)/layout.tsx ONLY
- * on sites with ThemeManager `enableCommerce` — every other site never ships it.
+ * Mock-storefront context: bag, wishlist, recently viewed, the demo persona and
+ * the last order, persisted in browser storage per catalog (see
+ * lib/commerce/storage.ts). Mounted by app/(site)/layout.tsx ONLY on sites
+ * with ThemeManager `enableCommerce` — every other site never ships it.
  *
  * `useCommerce()` outside a provider returns an inert value (enabled: false,
  * empty state, no-op actions) so shared components (ProductCard in the
@@ -32,16 +33,18 @@ type CommerceContextValue = {
   toggleWishlist: (handle: string) => boolean
   recordView:  CommerceStore['recordView']
   completeOrder: CommerceStore['completeOrder']
+  signIn:      CommerceStore['signIn']
+  signOut:     CommerceStore['signOut']
 }
 
 const noop = () => {}
-const INERT_STATE: CommerceState = { bag: [], wishlist: [], viewed: [], lastOrder: null, hydrated: false }
+const INERT_STATE: CommerceState = { bag: [], wishlist: [], viewed: [], lastOrder: null, persona: null, hydrated: false }
 
 const CommerceContext = createContext<CommerceContextValue>({
   enabled: false, catalogId: '', currency: 'USD', locale: 'en', state: INERT_STATE,
   bagCount: 0, subtotal: 0, bagOpen: false, lastAdded: null,
   openBag: noop, closeBag: noop, addLine: () => null, setQuantity: noop, removeLine: noop,
-  toggleWishlist: () => false, recordView: noop, completeOrder: noop,
+  toggleWishlist: () => false, recordView: noop, completeOrder: noop, signIn: noop, signOut: noop,
 })
 
 export function useCommerce(): CommerceContextValue {
@@ -93,6 +96,8 @@ export default function CommerceProvider({ catalogId, currency, locale, seed, ch
     toggleWishlist: store.toggleWishlist,
     recordView:     store.recordView,
     completeOrder:  store.completeOrder,
+    signIn:         store.signIn,
+    signOut:        store.signOut,
   }), [catalogId, currency, locale, state, bagOpen, lastAdded, addLine, store])
 
   return <CommerceContext.Provider value={value}>{children}</CommerceContext.Provider>

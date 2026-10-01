@@ -2,6 +2,7 @@
 
 import { Heart, ShoppingBag } from 'lucide-react'
 import { useCommerce } from '@/components/commerce/CommerceProvider'
+import PersonaSignIn from '@/components/commerce/PersonaSignIn'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import { localizedHref } from '@/lib/i18n/config'
 
@@ -11,6 +12,8 @@ type Props = {
   initialBagCount?: number
   /** Hide the wishlist link (mobile bar keeps just the bag). */
   showWishlist?: boolean
+  /** Hide the demo sign-in (mobile bar keeps just the bag). */
+  showAccount?:  boolean
 }
 
 const iconBtn =
@@ -31,11 +34,11 @@ function CountBadge({ count }: { count: number }) {
 }
 
 /**
- * Wishlist + bag icons for the header utility cluster. Rendered by the header
+ * Demo sign-in, wishlist and bag icons for the header utility cluster. Rendered by the header
  * components only when the site has mock commerce enabled; renders nothing
  * outside a CommerceProvider.
  */
-export default function CommerceHeaderActions({ initialBagCount = 0, showWishlist = true }: Props) {
+export default function CommerceHeaderActions({ initialBagCount = 0, showWishlist = true, showAccount = showWishlist }: Props) {
   const { t, locale } = useTranslation()
   const { enabled, state, bagCount, openBag } = useCommerce()
   if (!enabled) return null
@@ -45,6 +48,7 @@ export default function CommerceHeaderActions({ initialBagCount = 0, showWishlis
 
   return (
     <>
+      {showAccount && <PersonaSignIn />}
       {showWishlist && (
         <a
           href={localizedHref('/wishlist', locale)}

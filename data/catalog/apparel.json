@@ -28,7 +28,7 @@
       "name": "Knitwear",
       "parentHandle": "women",
       "gender": "women",
-      "url": "/women?category=women-knitwear",
+      "url": "/women/knitwear",
       "sortRank": 3
     },
     {
@@ -36,7 +36,7 @@
       "name": "Shirts & Tops",
       "parentHandle": "women",
       "gender": "women",
-      "url": "/women?category=women-shirts-and-tops",
+      "url": "/women/shirts-and-tops",
       "sortRank": 4
     },
     {
@@ -44,7 +44,7 @@
       "name": "Trousers & Denim",
       "parentHandle": "women",
       "gender": "women",
-      "url": "/women?category=women-trousers-and-denim",
+      "url": "/women/trousers-and-denim",
       "sortRank": 5
     },
     {
@@ -52,7 +52,7 @@
       "name": "Dresses & Skirts",
       "parentHandle": "women",
       "gender": "women",
-      "url": "/women?category=women-dresses-and-skirts",
+      "url": "/women/dresses-and-skirts",
       "sortRank": 6
     },
     {
@@ -60,7 +60,7 @@
       "name": "Tailoring",
       "parentHandle": "women",
       "gender": "women",
-      "url": "/women?category=women-tailoring",
+      "url": "/women/tailoring",
       "sortRank": 7
     },
     {
@@ -76,7 +76,7 @@
       "name": "Coats & Jackets",
       "parentHandle": "men",
       "gender": "men",
-      "url": "/men?category=men-coats-and-jackets",
+      "url": "/men/coats-and-jackets",
       "sortRank": 9
     },
     {
@@ -92,7 +92,7 @@
       "name": "Shirts & Overshirts",
       "parentHandle": "men",
       "gender": "men",
-      "url": "/men?category=men-shirts-and-overshirts",
+      "url": "/men/shirts-and-overshirts",
       "sortRank": 11
     },
     {
@@ -100,7 +100,7 @@
       "name": "Trousers & Denim",
       "parentHandle": "men",
       "gender": "men",
-      "url": "/men?category=men-trousers-and-denim",
+      "url": "/men/trousers-and-denim",
       "sortRank": 12
     },
     {
@@ -108,7 +108,7 @@
       "name": "Jersey",
       "parentHandle": "men",
       "gender": "men",
-      "url": "/men?category=men-jersey",
+      "url": "/men/jersey",
       "sortRank": 13
     },
     {
@@ -116,7 +116,7 @@
       "name": "Tailoring",
       "parentHandle": "men",
       "gender": "men",
-      "url": "/men?category=men-tailoring",
+      "url": "/men/tailoring",
       "sortRank": 14
     },
     {
@@ -132,7 +132,7 @@
       "name": "Bags",
       "parentHandle": "accessories",
       "gender": "unisex",
-      "url": "/accessories?category=accessories-bags",
+      "url": "/accessories/bags",
       "sortRank": 16
     },
     {
@@ -140,7 +140,7 @@
       "name": "Scarves & Knit Accessories",
       "parentHandle": "accessories",
       "gender": "unisex",
-      "url": "/accessories?category=accessories-scarves-and-knit",
+      "url": "/accessories/scarves-and-knit",
       "sortRank": 17
     },
     {
@@ -148,7 +148,7 @@
       "name": "Gloves, Belts & Socks",
       "parentHandle": "accessories",
       "gender": "unisex",
-      "url": "/accessories?category=accessories-gloves-and-belts",
+      "url": "/accessories/gloves-and-belts",
       "sortRank": 18
     },
     {
@@ -156,7 +156,7 @@
       "name": "Footwear",
       "parentHandle": "accessories",
       "gender": "unisex",
-      "url": "/accessories?category=accessories-footwear",
+      "url": "/accessories/footwear",
       "sortRank": 19
     }
   ],
@@ -2544,7 +2544,7 @@
           "name": "Ink",
           "hex": "#1f2430",
           "images": [
-            "/globalassets/tessel-assets/product/tessel-p-fine-gauge-merino-polo.jpg"
+            "/globalassets/tessel-assets/product/tessel-p-fine-gauge-merino-polo-v2.jpg"
           ]
         },
         {
@@ -2552,7 +2552,7 @@
           "name": "Ochre",
           "hex": "#c99a3e",
           "images": [
-            "/globalassets/tessel-assets/product/tessel-p-fine-gauge-merino-polo.jpg"
+            "/globalassets/tessel-assets/product/tessel-p-fine-gauge-merino-polo-v2.jpg"
           ]
         }
       ],

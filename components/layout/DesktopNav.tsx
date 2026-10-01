@@ -35,7 +35,7 @@ const LINK_VOICE = {
 
 const GROUP_GAP = {
   default: 'gap-lg',
-  split:   'gap-xl',
+  split:   'gap-md 2xl:gap-xl',
 } as const
 
 function matchHref(pathname: string, href: string) {

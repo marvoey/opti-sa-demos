@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
+import { usePathname } from 'next/navigation'
 import * as Dialog from '@radix-ui/react-dialog'
 import { Check, ShoppingBag, X } from 'lucide-react'
 import Button from '@/components/ui/Button'
@@ -14,12 +16,21 @@ import { formatMoney } from '@/lib/commerce/money'
  * Right-hand bag drawer. Opens from the header bag icon or automatically after
  * "Add to bag" (with an added-item confirmation). Radix Dialog supplies the
  * focus trap, Esc-to-close, scroll lock and aria-modal; motion is transform +
- * opacity only and collapses under prefers-reduced-motion.
+ * opacity only and collapses under prefers-reduced-motion. Any navigation
+ * (View bag, Checkout, a product link) closes it.
  */
 export default function MiniBag() {
   const { t, locale } = useTranslation()
   const { state, bagOpen, closeBag, bagCount, subtotal, currency, lastAdded } = useCommerce()
   const lines = state.bag
+
+  const pathname = usePathname()
+  const lastPath = useRef(pathname)
+  useEffect(() => {
+    if (lastPath.current === pathname) return
+    lastPath.current = pathname
+    closeBag()
+  }, [pathname, closeBag])
 
   return (
     <Dialog.Root open={bagOpen} onOpenChange={(open) => { if (!open) closeBag() }}>

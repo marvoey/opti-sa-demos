@@ -1,9 +1,10 @@
 import type { CartLine, Order } from '@/lib/commerce/types'
-import { isCatalogStorageKey, readStored, writeBagCountCookie, writeStored } from '@/lib/commerce/storage'
+import { isCatalogStorageKey, purgeLegacyStorage, readStored, writeBagCountCookie, writePersonaSegmentCookie, writeStored } from '@/lib/commerce/storage'
+import { getPersona } from '@/lib/commerce/personas'
 
 /**
  * External store for the mock storefront, consumed with useSyncExternalStore.
- * State lives in localStorage (per catalog); the store keeps an in-memory copy
+ * State lives in browser storage (per catalog; see storage.ts); the store keeps an in-memory copy
  * so snapshots are referentially stable between changes.
  */
 export type CommerceState = {
@@ -11,11 +12,13 @@ export type CommerceState = {
   wishlist:  string[]
   viewed:    string[]
   lastOrder: Order | null
+  /** Signed-in demo persona id (lib/commerce/personas.ts), or null for a guest. */
+  persona:   string | null
   /** False on the server snapshot and the first hydration pass. */
   hydrated:  boolean
 }
 
-const EMPTY: CommerceState = { bag: [], wishlist: [], viewed: [], lastOrder: null, hydrated: false }
+const EMPTY: CommerceState = { bag: [], wishlist: [], viewed: [], lastOrder: null, persona: null, hydrated: false }
 const MAX_VIEWED = 12
 const MAX_QTY = 10
 
@@ -35,10 +38,14 @@ export function createCommerceStore(catalogId: string, seed?: Partial<Pick<Comme
     wishlist:  readStored<string[]>(catalogId, 'wishlist', seed?.wishlist ?? []),
     viewed:    readStored<string[]>(catalogId, 'viewed', []),
     lastOrder: readStored<Order | null>(catalogId, 'order', null),
+    persona:   getPersona(readStored<string | null>(catalogId, 'persona', null))?.id ?? null,
     hydrated:  true,
   })
 
-  if (typeof window !== 'undefined') state = load()
+  if (typeof window !== 'undefined') {
+    purgeLegacyStorage(catalogId)
+    state = load()
+  }
 
   const emit = () => listeners.forEach((l) => l())
 
@@ -51,6 +58,10 @@ export function createCommerceStore(catalogId: string, seed?: Partial<Pick<Comme
     if (next.wishlist) writeStored(catalogId, 'wishlist', next.wishlist)
     if (next.viewed) writeStored(catalogId, 'viewed', next.viewed)
     if (next.lastOrder !== undefined) writeStored(catalogId, 'order', next.lastOrder)
+    if (next.persona !== undefined) {
+      writeStored(catalogId, 'persona', next.persona)
+      writePersonaSegmentCookie(getPersona(next.persona)?.segment ?? null)
+    }
     emit()
   }
 
@@ -63,7 +74,8 @@ export function createCommerceStore(catalogId: string, seed?: Partial<Pick<Comme
       listeners.add(listener)
       // Keep tabs in sync, and clear with the global demo reset (lib/demo/state.ts).
       const onStorage = (e: StorageEvent) => { if (e.key === null || isCatalogStorageKey(catalogId, e.key)) reload() }
-      const onReset = () => { writeBagCountCookie(0); reload() }
+      // localStorage.clear() in the reset doesn't reach sessionStorage or cookies.
+      const onReset = () => { writeStored(catalogId, 'order', null); writeBagCountCookie(0); writePersonaSegmentCookie(null); reload() }
       window.addEventListener('storage', onStorage)
       window.addEventListener('demo:reset', onReset)
       return () => {
@@ -98,6 +110,12 @@ export function createCommerceStore(catalogId: string, seed?: Partial<Pick<Comme
     },
     completeOrder(order: Order) {
       set({ lastOrder: order, bag: [] })
+    },
+    signIn(personaId: string) {
+      if (getPersona(personaId)) set({ persona: personaId })
+    },
+    signOut() {
+      set({ persona: null })
     },
   }
 }

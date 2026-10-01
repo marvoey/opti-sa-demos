@@ -130,7 +130,7 @@ export default async function SplitHeader() {
 
       <SplitHeaderShell>
         {/* ── Desktop masthead: left wing / centered logo / right wing ─────── */}
-        <div className="hidden lg:grid grid-cols-[1fr_auto_1fr] items-center gap-lg px-lg py-6">
+        <div className="hidden lg:grid grid-cols-[1fr_auto_1fr] items-center gap-md px-md py-6 2xl:gap-lg 2xl:px-lg">
 
           <div className="flex justify-end" data-stagger="split-left">
             <DesktopNav navItems={leftItems} variant="split" ariaLabel="Primary navigation" />
@@ -145,7 +145,7 @@ export default async function SplitHeader() {
             {logoEl}
           </a>
 
-          <div className="flex items-center justify-start gap-lg" data-stagger="split-right">
+          <div className="flex items-center justify-start gap-md 2xl:gap-lg" data-stagger="split-right">
             <DesktopNav navItems={rightItems} variant="split" ariaLabel="More navigation" />
 
             <div aria-hidden="true" className="w-px h-6 bg-fg/15 shrink-0" />

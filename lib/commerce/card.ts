@@ -28,6 +28,13 @@ export type ProductCardData = {
   reviewCount: number
   sortRank:    number
   launchedAt:  string
+  /** First colour's variants, for Quick Add on the card (size → sku/stock/prices). */
+  quick:       QuickAdd | null
+}
+
+export type QuickAdd = {
+  colourName: string
+  variants:   { size: string; sku: string; stock: number; prices: Money[] }[]
 }
 
 /** Price for `currency`, falling back to the first price present. */
@@ -60,5 +67,16 @@ export function toCardData(p: Product, currency: CurrencyCode): ProductCardData 
     reviewCount:  p.reviewCount,
     sortRank:     p.sortRank,
     launchedAt:   p.launchedAt,
+    quick:        quickAddFor(p),
   }
+}
+
+function quickAddFor(p: Product): QuickAdd | null {
+  const colour = p.colours[0]
+  if (!colour) return null
+  const variants = p.sizes
+    .map((size) => p.variants.find((v) => v.colourCode === colour.code && v.size === size))
+    .filter((v): v is NonNullable<typeof v> => !!v)
+    .map((v) => ({ size: v.size, sku: v.sku, stock: v.stock, prices: v.prices }))
+  return variants.length ? { colourName: colour.name, variants } : null
 }

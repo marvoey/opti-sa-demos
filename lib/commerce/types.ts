@@ -116,9 +116,8 @@ export type Order = {
   shipping:    number
   total:       number
   delivery:    'standard' | 'express' | 'collect'
+  /** Shown on the confirmation page only; kept in sessionStorage. No card data is stored. */
   address:     OrderAddress
-  /** Last four digits of the mock test card only — nothing else is stored. */
-  cardLast4:   string
 }
 
 /** Site-level commerce settings, resolved per host from OT_ThemeManager. */

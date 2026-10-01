@@ -40,7 +40,7 @@ export const OT_ProductListingBlock = contentType({
       description: 'Optionally limit to one collection.',
       enum: [
         { value: 'all',            displayName: 'All collections' },
-        { value: 'low-light-aw26', displayName: 'Low Light — AW26' },
+        { value: 'low-light-aw26', displayName: 'Autumn/Winter 2026' },
         { value: 'core',           displayName: 'Core' },
         { value: 'gift-edit',      displayName: 'Gift Edit' },
         { value: 'archive',        displayName: 'Archive' },

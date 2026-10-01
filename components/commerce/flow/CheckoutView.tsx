@@ -1,6 +1,6 @@
 'use client'
 
-import { useId, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Check, Lock, ShoppingBag } from 'lucide-react'
 import Button from '@/components/ui/Button'
@@ -12,18 +12,19 @@ import { useTranslation } from '@/lib/i18n/useTranslation'
 import { localizedHref } from '@/lib/i18n/config'
 import { formatMoney, FREE_SHIPPING_THRESHOLD, SHIPPING } from '@/lib/commerce/money'
 import { trackPurchase } from '@/lib/commerce/track'
+import { DEFAULT_PERSONA_ID, getPersona, TEST_CARD as DEMO_CARD } from '@/lib/commerce/personas'
 import type { Order, OrderAddress } from '@/lib/commerce/types'
 
 type Delivery = Order['delivery']
 type Errors = Partial<Record<string, string>>
 
-const TEST_CARD = '4242424242424242'
+const TEST_CARD = DEMO_CARD.number.replace(/\s/g, '')
 const COUNTRIES = ['United States', 'United Kingdom', 'France', 'Germany', 'Spain', 'Canada']
 
 function newOrderId(): string {
   const bytes = new Uint8Array(4)
   crypto.getRandomValues(bytes)
-  return 'TS-' + Array.from(bytes, (b) => b.toString(36).padStart(2, '0')).join('').toUpperCase().slice(0, 7)
+  return 'AI-' + Array.from(bytes, (b) => b.toString(36).padStart(2, '0')).join('').toUpperCase().slice(0, 7)
 }
 
 const inputCls =
@@ -42,14 +43,17 @@ function Field({ id, label, error, children }: { id: string; label: string; erro
 
 /**
  * Three-step demo checkout — details, delivery, payment — with inline
- * validation. Payment accepts ONLY the published test card; nothing is sent
- * anywhere and only the last four digits are kept on the order.
+ * validation. Payment accepts ONLY the published test card. Nothing typed here
+ * is sent anywhere: the order (for the confirmation page) goes to
+ * sessionStorage, and no card data is kept at all. A signed-in demo persona
+ * pre-fills every field; guests get a one-click "Use demo details".
  */
 export default function CheckoutView({ heading, emptyMessage, continueLabel, continueUrl, assurance, summaryStyle }: FlowCopy) {
   const { t, locale } = useTranslation()
   const router = useRouter()
   const uid = useId()
-  const { state, bagCount, subtotal, currency, completeOrder } = useCommerce()
+  const { state, bagCount, subtotal, currency, completeOrder, signOut } = useCommerce()
+  const persona = getPersona(state.persona)
 
   const [step, setStep] = useState(1)
   const [placing, setPlacing] = useState(false)
@@ -57,6 +61,18 @@ export default function CheckoutView({ heading, emptyMessage, continueLabel, con
   const [address, setAddress] = useState<OrderAddress>({ firstName: '', lastName: '', email: '', line1: '', city: '', postcode: '', country: COUNTRIES[0] })
   const [delivery, setDelivery] = useState<Delivery>('standard')
   const [card, setCard] = useState({ number: '', expiry: '', cvc: '', name: '' })
+
+  const fillFrom = (personaId: string) => {
+    const p = getPersona(personaId)
+    if (!p) return
+    setAddress(p.address)
+    setCard({ ...DEMO_CARD, name: `${p.address.firstName} ${p.address.lastName}` })
+    setErrors({})
+  }
+  // Pre-fill from the signed-in persona once storage has hydrated.
+  const signedIn = state.hydrated ? state.persona : null
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => { if (signedIn) fillFrom(signedIn) }, [signedIn])
 
   const home = continueUrl || localizedHref('/', locale)
   const shipping = delivery === 'standard' && subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING[delivery].amount
@@ -115,7 +131,6 @@ export default function CheckoutView({ heading, emptyMessage, continueLabel, con
       total: sub + shipping,
       delivery,
       address: { ...address, email: address.email.trim() },
-      cardLast4: TEST_CARD.slice(-4),
     }
     completeOrder(order)
     trackPurchase(order)
@@ -166,6 +181,26 @@ export default function CheckoutView({ heading, emptyMessage, continueLabel, con
           onSubmit={(e) => { e.preventDefault(); if (step < 3) next(); else placeOrder() }}
           className="flex flex-col gap-md"
         >
+          {step === 1 && (
+            <p className="flex flex-wrap items-center gap-x-sm gap-y-1 bg-surface px-md py-sm text-sm text-fg">
+              {persona ? (
+                <>
+                  <span>{t('commerce.signedInAs', { name: `${persona.address.firstName} ${persona.address.lastName}` })}</span>
+                  <button type="button" onClick={() => { signOut(); setAddress({ firstName: '', lastName: '', email: '', line1: '', city: '', postcode: '', country: COUNTRIES[0] }); setCard({ number: '', expiry: '', cvc: '', name: '' }) }} className="underline underline-offset-4 hover:text-brand">
+                    {t('commerce.notYou')}
+                  </button>
+                </>
+              ) : (
+                <>
+                  <span>{t('commerce.guestCheckout')}</span>
+                  <button type="button" onClick={() => fillFrom(DEFAULT_PERSONA_ID)} className="underline underline-offset-4 hover:text-brand">
+                    {t('commerce.useDemoDetails')}
+                  </button>
+                </>
+              )}
+            </p>
+          )}
+
           {step === 1 && (
             <fieldset className="grid grid-cols-1 gap-md sm:grid-cols-2">
               <legend className="sr-only">{steps[0]}</legend>

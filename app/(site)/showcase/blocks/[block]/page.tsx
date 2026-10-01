@@ -2734,7 +2734,7 @@ function ProductListingShowcase() {
       <div className="border-t border-fg/5">
         <ProductListingBlock
           heading="Women"
-          subtext="Loden, lambswool and the hour after four — the Low Light collection and the pieces it was built around."
+          subtext="The season's collection and the pieces it was built around."
           products={fixtureCards((p) => p.gender === 'women')}
           subCategories={fixtureSubCategories('women')}
           currency="USD"

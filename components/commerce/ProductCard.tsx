@@ -1,12 +1,14 @@
 'use client'
 
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-import { Heart } from 'lucide-react'
+import { Heart, Plus, X } from 'lucide-react'
 import Price from '@/components/commerce/Price'
 import { useCommerce } from '@/components/commerce/CommerceProvider'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import { localizedHref } from '@/lib/i18n/config'
-import { trackWishlistAdd } from '@/lib/commerce/track'
+import { trackAddToCart, trackWishlistAdd } from '@/lib/commerce/track'
+import { priceIn } from '@/lib/commerce/card'
 import type { ProductCardData } from '@/lib/commerce/card'
 import type { MessageKey } from '@/lib/i18n/t'
 
@@ -25,12 +27,14 @@ type Props = {
  * The storefront's product tile — used by the PLP, catalog recommendations and
  * the wishlist. Deliberately quiet: image-led, one line of name, one of price,
  * swatches as small dots. The second image crossfades in on hover (opacity
- * only, motion-safe). The wishlist heart is a real toggle button layered over
- * the link (not nested in it), with a 44px target.
+ * only, motion-safe). The wishlist heart and Quick Add are real buttons
+ * layered over the link (not nested in it). Quick Add appears on hover/focus
+ * (always on touch screens): one-size pieces go straight to the bag, others
+ * open an inline size row.
  */
 export default function ProductCard({ product, priority = false, aspect = 'portrait', sizes }: Props) {
   const { t, locale } = useTranslation()
-  const { enabled, state, toggleWishlist } = useCommerce()
+  const { enabled, state, toggleWishlist, addLine, currency } = useCommerce()
   const saved = state.wishlist.includes(product.handle)
   const href = localizedHref(product.url, locale)
   const badge = product.badges.find((b) => b !== 'signature') ?? null
@@ -39,6 +43,37 @@ export default function ProductCard({ product, priority = false, aspect = 'portr
   const onHeart = () => {
     if (toggleWishlist(product.handle)) trackWishlistAdd(product.handle)
   }
+
+  // ── Quick Add ──────────────────────────────────────────────────────────────
+  const quick = enabled ? product.quick : null
+  const [picking, setPicking] = useState(false)
+  const quickRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const firstSizeRef = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    if (!picking) return
+    firstSizeRef.current?.focus()
+    const close = () => { setPicking(false); triggerRef.current?.focus() }
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') close() }
+    const onDown = (e: MouseEvent) => { if (!quickRef.current?.contains(e.target as Node)) setPicking(false) }
+    document.addEventListener('keydown', onKey)
+    document.addEventListener('mousedown', onDown)
+    return () => { document.removeEventListener('keydown', onKey); document.removeEventListener('mousedown', onDown) }
+  }, [picking])
+
+  const addVariant = (v: NonNullable<typeof quick>['variants'][number]) => {
+    if (!quick || v.stock <= 0) return
+    const line = addLine({ sku: v.sku, handle: product.handle, name: product.name, colourName: quick.colourName, size: v.size, image: product.image, prices: v.prices })
+    if (line) trackAddToCart(line, currency, priceIn(v.prices, currency).amount)
+    setPicking(false)
+  }
+  const onQuick = () => {
+    if (!quick) return
+    if (quick.variants.length === 1) addVariant(quick.variants[0])
+    else setPicking(true)
+  }
+  const soldOut = !!quick && quick.variants.every((v) => v.stock <= 0)
 
   return (
     <article className="group relative flex w-full flex-col">
@@ -100,6 +135,54 @@ export default function ProductCard({ product, priority = false, aspect = 'portr
           ))}
           {extraSwatches > 0 && <li className="text-xs text-fg-muted">+{extraSwatches}</li>}
         </ul>
+      )}
+
+      {quick && !soldOut && (
+        <div
+          ref={quickRef}
+          className={`pointer-events-none absolute inset-x-0 top-0 ${aspect === 'square' ? 'aspect-square' : 'aspect-4/5'}`}
+        >
+          {picking ? (
+            <div
+              role="group"
+              aria-label={t('commerce.selectSize')}
+              className="pointer-events-auto absolute inset-x-xs bottom-xs flex flex-col gap-xs bg-canvas/95 p-xs shadow-[0_8px_24px_oklch(from_var(--ot-fg)_l_c_h/0.12)] motion-safe:animate-fade-in"
+            >
+              <div className="flex items-center justify-between px-1">
+                <span className="text-label font-semibold uppercase tracking-label text-fg">{t('commerce.selectSize')}</span>
+                <button type="button" onClick={() => { setPicking(false); triggerRef.current?.focus() }} aria-label={t('commerce.closeQuickAdd')} className="inline-flex h-8 w-8 items-center justify-center text-fg-muted hover:text-fg focus-visible:outline-2 focus-visible:outline-brand">
+                  <X size={16} aria-hidden />
+                </button>
+              </div>
+              <div className="flex flex-wrap gap-1">
+                {quick.variants.map((v, i) => (
+                  <button
+                    key={v.sku}
+                    ref={i === 0 ? firstSizeRef : undefined}
+                    type="button"
+                    disabled={v.stock <= 0}
+                    onClick={() => addVariant(v)}
+                    aria-label={t('commerce.quickAddSize', { name: product.name, size: v.size })}
+                    className="h-9 min-w-11 flex-1 border border-fg/20 px-2 text-sm text-fg hover:border-fg focus-visible:outline-2 focus-visible:outline-brand disabled:cursor-not-allowed disabled:text-fg-muted/60 disabled:line-through"
+                  >
+                    {v.size}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <button
+              ref={triggerRef}
+              type="button"
+              onClick={onQuick}
+              aria-label={t('commerce.quickAddProduct', { name: product.name })}
+              className="pointer-events-auto absolute inset-x-xs bottom-xs flex h-10 items-center justify-center gap-1.5 bg-canvas/90 text-label font-semibold uppercase tracking-label text-fg opacity-0 motion-safe:transition-opacity duration-200 ease-quick hover:bg-canvas group-hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-brand [@media(hover:none)]:opacity-100"
+            >
+              <Plus size={14} aria-hidden />
+              {t('commerce.quickAdd')}
+            </button>
+          )}
+        </div>
       )}
 
       {enabled && (
