@@ -22,7 +22,10 @@ export default async function OT_LocationListingBlockAdapter({
 }: Props) {
   const { pa } = getPreviewUtils(content)
   // Live-front-end-only feature — see the matching note in OT_BlogFeedBlock.tsx.
-  const { isEnabled: isPreview } = await draftMode()
+  // Both signals are checked independently; Visual Builder doesn't always
+  // carry the Next.js draft-mode cookie, so draftMode() alone isn't trusted.
+  const { isEnabled: draftModeEnabled } = await draftMode()
+  const isPreview = draftModeEnabled || content.__context?.edit === true
 
   const styleOptions = getLocationListingStyles(content.defaultView ? { ...displaySettings, defaultView: content.defaultView } : displaySettings)
   const [locale, siteKey] = await Promise.all([getRequestLocale(), getSiteKey()])

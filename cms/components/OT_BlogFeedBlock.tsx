@@ -32,10 +32,18 @@ export default async function OT_BlogFeedBlockAdapter({
   // The interactive filter drawer is a live-front-end feature only — the CMS
   // editor's Visual Builder canvas and any other draft/preview render leave it
   // permanently mounted off-screen (skewed, translated out), which showed up
-  // as a stray shape bleeding into the editing iframe. draftMode() is this
-  // repo's existing signal for "this isn't the live site" (see app/(site)/
-  // [...slug]/page.tsx and the draft block route).
-  const { isEnabled: isPreview } = await draftMode()
+  // as a stray shape bleeding into the editing iframe.
+  //
+  // content.__context.edit is the SDK's own, content-scoped signal for "this
+  // is being served into CMS edit/preview" — set by the CMS itself whenever
+  // it hands this content to Visual Builder, regardless of which internal
+  // rendering path VB uses. draftMode() (this repo's other preview signal,
+  // used by app/(site)/[...slug]/page.tsx and the draft block route) is kept
+  // as a second, independent check: VB apparently doesn't always carry the
+  // Next.js draft-mode cookie, which is exactly how this slipped through
+  // before — so neither signal alone is trusted on its own.
+  const { isEnabled: draftModeEnabled } = await draftMode()
+  const isPreview = draftModeEnabled || content.__context?.edit === true
 
   // ── Locale + site base URL ────────────────────────────────────────────────
   // getRequestLocale reads the x-locale header set by middleware; falls back
