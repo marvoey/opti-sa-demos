@@ -24,7 +24,7 @@ export const RETAIL_SCHEMAS: Record<keyof typeof RETAIL_TABLES, { fields: Field[
     partitionField: 'created_at',
     clustering: ['customer_id'],
     fields: [
-      { name: 'customer_id',          type: 'STRING',    mode: 'REQUIRED', description: 'persona-<id>, visitor-<id> or c-<n> (seed)' },
+      { name: 'customer_id',          type: 'STRING',    mode: 'REQUIRED', description: 'persona-<id>-<demoId>, shopper-<demoId>, visitor-<id> or c-<n> (seed)' },
       { name: 'loyalty_tier',         type: 'STRING',    description: 'new | circle | reserve' },
       { name: 'home_city',            type: 'STRING' },
       { name: 'home_country',         type: 'STRING' },

@@ -179,7 +179,7 @@
     "account": "Cuenta",
     "signIn": "Iniciar sesión",
     "signInTitle": "Iniciar sesión como cliente de demostración",
-    "signInHint": "Perfiles ficticios para demostraciones. Nada sale de este navegador.",
+    "signInHint": "Perfiles ficticios para demostraciones. Cada demo tiene su propio perfil.",
     "signOut": "Cerrar sesión",
     "continueAsGuest": "Continuar como invitado",
     "resetDemo": "Restablecer la demo",
@@ -191,6 +191,11 @@
     "useDemoDetails": "Usar datos de demostración",
     "segment_new": "Cliente nuevo",
     "segment_circle": "Miembro de The Ivey Circle",
-    "segment_reserve": "Miembro Reserve"
+    "segment_reserve": "Miembro Reserve",
+    "newShopper": "Nuevo cliente",
+    "newShopperHint": "Crear un cliente ficticio de este nivel",
+    "tier_new": "Nuevo",
+    "tier_circle": "Circle",
+    "tier_reserve": "Reserve"
   }
 }

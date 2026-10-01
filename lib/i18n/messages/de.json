@@ -179,7 +179,7 @@
     "account": "Konto",
     "signIn": "Anmelden",
     "signInTitle": "Als Demo-Kunde anmelden",
-    "signInHint": "Fiktive Profile für Demos. Nichts verlässt diesen Browser.",
+    "signInHint": "Fiktive Profile für Demos. Jede Demo erhält ein eigenes Profil.",
     "signOut": "Abmelden",
     "continueAsGuest": "Als Gast fortfahren",
     "resetDemo": "Demo zurücksetzen",
@@ -191,6 +191,11 @@
     "useDemoDetails": "Demo-Daten verwenden",
     "segment_new": "Neukunde",
     "segment_circle": "Mitglied von The Ivey Circle",
-    "segment_reserve": "Reserve-Mitglied"
+    "segment_reserve": "Reserve-Mitglied",
+    "newShopper": "Neuer Kunde",
+    "newShopperHint": "Einen fiktiven Kunden mit dieser Stufe anlegen",
+    "tier_new": "Neu",
+    "tier_circle": "Circle",
+    "tier_reserve": "Reserve"
   }
 }

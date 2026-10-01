@@ -8,7 +8,7 @@
  * thing that holds checkout name/address) lives in sessionStorage, so it ends
  * with the tab; everything else is bag/wishlist/persona state for the demo.
  */
-export const STORAGE_KEYS = ['bag', 'wishlist', 'viewed', 'order', 'persona'] as const
+export const STORAGE_KEYS = ['bag', 'wishlist', 'viewed', 'order', 'persona', 'shopper'] as const
 export type StorageKey = (typeof STORAGE_KEYS)[number]
 
 /** Keys kept in sessionStorage instead of localStorage. */

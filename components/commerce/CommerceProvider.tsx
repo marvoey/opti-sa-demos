@@ -37,17 +37,18 @@ type CommerceContextValue = {
   recordView:  CommerceStore['recordView']
   completeOrder: CommerceStore['completeOrder']
   signIn:      CommerceStore['signIn']
+  signInAsNewShopper: CommerceStore['signInAsNewShopper']
   signOut:     CommerceStore['signOut']
 }
 
 const noop = () => {}
-const INERT_STATE: CommerceState = { bag: [], wishlist: [], viewed: [], lastOrder: null, persona: null, hydrated: false }
+const INERT_STATE: CommerceState = { bag: [], wishlist: [], viewed: [], lastOrder: null, persona: null, shopper: null, hydrated: false }
 
 const CommerceContext = createContext<CommerceContextValue>({
   enabled: false, catalogId: '', currency: 'USD', locale: 'en', market: 'default', state: INERT_STATE,
   bagCount: 0, subtotal: 0, bagOpen: false, lastAdded: null,
   openBag: noop, closeBag: noop, addLine: () => null, setQuantity: noop, removeLine: noop,
-  toggleWishlist: () => false, recordView: noop, completeOrder: noop, signIn: noop, signOut: noop,
+  toggleWishlist: () => false, recordView: noop, completeOrder: noop, signIn: noop, signInAsNewShopper: noop, signOut: noop,
 })
 
 export function useCommerce(): CommerceContextValue {
@@ -102,6 +103,7 @@ export default function CommerceProvider({ catalogId, currency, locale, market =
     recordView:     store.recordView,
     completeOrder:  store.completeOrder,
     signIn:         store.signIn,
+    signInAsNewShopper: store.signInAsNewShopper,
     signOut:        store.signOut,
   }), [catalogId, currency, locale, market, state, bagOpen, lastAdded, addLine, store])
 

@@ -1,6 +1,6 @@
 import type { CartLine, Order } from '@/lib/commerce/types'
 import { isCatalogStorageKey, purgeLegacyStorage, readStored, writeBagCountCookie, writePersonaSegmentCookie, writeStored } from '@/lib/commerce/storage'
-import { getPersona } from '@/lib/commerce/personas'
+import { currentPersona, getPersona, isShopper, makeRandomShopper, SHOPPER_ID, type DemoPersona, type PersonaSegment } from '@/lib/commerce/personas'
 import { forgetPersona, identifyPersona } from '@/lib/commerce/identify'
 
 /**
@@ -13,13 +13,15 @@ export type CommerceState = {
   wishlist:  string[]
   viewed:    string[]
   lastOrder: Order | null
-  /** Signed-in demo persona id (lib/commerce/personas.ts), or null for a guest. */
+  /** Signed-in demo persona id (lib/commerce/personas.ts), SHOPPER_ID, or null for a guest. */
   persona:   string | null
+  /** The generated "New shopper" profile, when persona === SHOPPER_ID. */
+  shopper:   DemoPersona | null
   /** False on the server snapshot and the first hydration pass. */
   hydrated:  boolean
 }
 
-const EMPTY: CommerceState = { bag: [], wishlist: [], viewed: [], lastOrder: null, persona: null, hydrated: false }
+const EMPTY: CommerceState = { bag: [], wishlist: [], viewed: [], lastOrder: null, persona: null, shopper: null, hydrated: false }
 const MAX_VIEWED = 12
 const MAX_QTY = 10
 
@@ -34,14 +36,20 @@ export function createCommerceStore(catalogId: string, seed?: Partial<Pick<Comme
   let state: CommerceState = EMPTY
   const listeners = new Set<() => void>()
 
-  const load = (): CommerceState => ({
-    bag:       readStored<CartLine[]>(catalogId, 'bag', seed?.bag ?? []),
-    wishlist:  readStored<string[]>(catalogId, 'wishlist', seed?.wishlist ?? []),
-    viewed:    readStored<string[]>(catalogId, 'viewed', []),
-    lastOrder: readStored<Order | null>(catalogId, 'order', null),
-    persona:   getPersona(readStored<string | null>(catalogId, 'persona', null))?.id ?? null,
-    hydrated:  true,
-  })
+  const load = (): CommerceState => {
+    const stored = readStored<unknown>(catalogId, 'shopper', null)
+    const shopper = isShopper(stored) ? stored : null
+    const id = readStored<string | null>(catalogId, 'persona', null)
+    return {
+      bag:       readStored<CartLine[]>(catalogId, 'bag', seed?.bag ?? []),
+      wishlist:  readStored<string[]>(catalogId, 'wishlist', seed?.wishlist ?? []),
+      viewed:    readStored<string[]>(catalogId, 'viewed', []),
+      lastOrder: readStored<Order | null>(catalogId, 'order', null),
+      persona:   id === SHOPPER_ID ? (shopper ? id : null) : getPersona(id)?.id ?? null,
+      shopper,
+      hydrated:  true,
+    }
+  }
 
   if (typeof window !== 'undefined') {
     purgeLegacyStorage(catalogId)
@@ -59,9 +67,10 @@ export function createCommerceStore(catalogId: string, seed?: Partial<Pick<Comme
     if (next.wishlist) writeStored(catalogId, 'wishlist', next.wishlist)
     if (next.viewed) writeStored(catalogId, 'viewed', next.viewed)
     if (next.lastOrder !== undefined) writeStored(catalogId, 'order', next.lastOrder)
+    if (next.shopper !== undefined) writeStored(catalogId, 'shopper', next.shopper)
     if (next.persona !== undefined) {
       writeStored(catalogId, 'persona', next.persona)
-      writePersonaSegmentCookie(getPersona(next.persona)?.segment ?? null)
+      writePersonaSegmentCookie(currentPersona(state)?.segment ?? null)
     }
     emit()
   }
@@ -112,14 +121,24 @@ export function createCommerceStore(catalogId: string, seed?: Partial<Pick<Comme
     completeOrder(order: Order) {
       set({ lastOrder: order, bag: [] })
     },
+    /** Sign in as a fixed demo persona. Switching from another shopper starts a fresh identity first. */
     signIn(personaId: string) {
       const persona = getPersona(personaId)
-      if (!persona) return
-      set({ persona: personaId })
+      if (!persona || state.persona === personaId) return
+      if (state.persona) forgetPersona()
+      set({ persona: personaId, shopper: null })
       identifyPersona(persona)
     },
+    /** Sign in as a newly generated fictitious shopper (random tier unless given). */
+    signInAsNewShopper(segment?: PersonaSegment) {
+      const shopper = makeRandomShopper(segment)
+      if (state.persona) forgetPersona()
+      set({ persona: SHOPPER_ID, shopper })
+      identifyPersona(shopper)
+    },
     signOut() {
-      set({ persona: null })
+      if (!state.persona) return
+      set({ persona: null, shopper: null })
       forgetPersona()
     },
   }

@@ -179,7 +179,7 @@
     "account": "Account",
     "signIn": "Sign in",
     "signInTitle": "Sign in as a demo shopper",
-    "signInHint": "Fictitious profiles for demonstrations. Nothing leaves this browser.",
+    "signInHint": "Fictitious profiles for demonstrations. Each demo gets its own profile.",
     "signOut": "Sign out",
     "continueAsGuest": "Continue as guest",
     "resetDemo": "Reset demo",
@@ -191,6 +191,11 @@
     "useDemoDetails": "Use demo details",
     "segment_new": "New customer",
     "segment_circle": "The Ivey Circle member",
-    "segment_reserve": "Reserve member"
+    "segment_reserve": "Reserve member",
+    "newShopper": "New shopper",
+    "newShopperHint": "Invent a fictitious shopper at this tier",
+    "tier_new": "New",
+    "tier_circle": "Circle",
+    "tier_reserve": "Reserve"
   }
 }

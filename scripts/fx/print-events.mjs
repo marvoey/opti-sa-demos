@@ -29,6 +29,7 @@ console.log('`purchase` sends the reserved `revenue` tag as an integer in minor 
 console.log('\n**Web Experimentation project:** create a custom event with the same key for each ✓ in the Web Exp column.')
 console.log(`\n**ODP:** \`product\`, \`order\`, \`navigation\` and \`account\` are standard event types. Custom event type(s) to add: ${custom.map((t) => `\`${t}\``).join(', ') || 'none'}.`)
 console.log(`\n**ODP customer fields** (custom, set at demo sign-in): ${ODP_CUSTOMER_FIELDS.map((f) => `\`${f}\``).join(', ')}.`)
+console.log('\n**ODP segments:** every demo sign-in creates a fresh profile (email plus-addressed with a per-demo id, e.g. `eleanor.marsh+k3f9a2@example.com`), so it has no order history yet. Build VIP / Promotional segments on the `loyalty_tier` field; in-demo behaviour (views, bag, order) adds on top. Long-run purchase history lives in BigQuery.')
 console.log('\n**FX attributes** (create in the FX project):')
 console.log('- `loyalty_tier` (string: new | circle | reserve): present while a demo persona is signed in. Use it in audiences such as "Reserve members".')
 console.log('- `utm_source`, `utm_medium`, `utm_campaign` (string): first-touch acquisition, present once a visit arrives with UTM tags or from another site.')

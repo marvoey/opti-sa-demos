@@ -13,7 +13,8 @@ import { localizedHref } from '@/lib/i18n/config'
 import { formatMoney, FREE_SHIPPING_THRESHOLD, SHIPPING } from '@/lib/commerce/money'
 import { trackPaymentInfo, trackPurchase, trackShippingInfo } from '@/lib/commerce/track'
 import { readAcquisition } from '@/lib/acquisition'
-import { DEFAULT_PERSONA_ID, getPersona, TEST_CARD as DEMO_CARD } from '@/lib/commerce/personas'
+import { currentPersona, DEFAULT_PERSONA_ID, getPersona, TEST_CARD as DEMO_CARD, type DemoPersona } from '@/lib/commerce/personas'
+import { getDemoId } from '@/lib/commerce/identify'
 import type { Order, OrderAddress } from '@/lib/commerce/types'
 
 type Delivery = Order['delivery']
@@ -51,16 +52,20 @@ function Field({ id, label, error, children }: { id: string; label: string; erro
  */
 /**
  * Retail analytics (BigQuery) — fire-and-forget. Only what was bought is sent;
- * the server re-prices it and never receives name, email or address.
+ * the server re-prices it and never receives name, email or address. The
+ * customer is the persona (or generated shopper's tier and city) plus this
+ * browser's demo id, matching the per-demo ODP profile.
  */
-function recordOrderForAnalytics(order: Order, personaId: string | null) {
+function recordOrderForAnalytics(order: Order, persona: DemoPersona | null) {
   const device = window.matchMedia('(max-width: 767px)').matches ? 'mobile' : window.matchMedia('(max-width: 1023px)').matches ? 'tablet' : 'desktop'
   fetch('/api/bq/retail-order', {
     method: 'POST',
     keepalive: true,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      orderId: order.id, currency: order.currency, delivery: order.delivery, device, personaId,
+      orderId: order.id, currency: order.currency, delivery: order.delivery, device,
+      personaId: persona?.id ?? null, demoId: getDemoId(),
+      ...(persona ? { segment: persona.segment, city: persona.address.city } : {}),
       lines: order.lines.map((l) => ({ handle: l.handle, sku: l.sku, quantity: l.quantity })),
     }),
   }).catch(() => { /* analytics only */ })
@@ -71,7 +76,7 @@ export default function CheckoutView({ heading, emptyMessage, continueLabel, con
   const router = useRouter()
   const uid = useId()
   const { state, bagCount, subtotal, currency, completeOrder, signOut } = useCommerce()
-  const persona = getPersona(state.persona)
+  const persona = currentPersona(state)
 
   const [step, setStep] = useState(1)
   const [placing, setPlacing] = useState(false)
@@ -80,17 +85,16 @@ export default function CheckoutView({ heading, emptyMessage, continueLabel, con
   const [delivery, setDelivery] = useState<Delivery>('standard')
   const [card, setCard] = useState({ number: '', expiry: '', cvc: '', name: '' })
 
-  const fillFrom = (personaId: string) => {
-    const p = getPersona(personaId)
+  const fillFrom = (p: DemoPersona | null) => {
     if (!p) return
     setAddress(p.address)
     setCard({ ...DEMO_CARD, name: `${p.address.firstName} ${p.address.lastName}` })
     setErrors({})
   }
   // Pre-fill from the signed-in persona once storage has hydrated.
-  const signedIn = state.hydrated ? state.persona : null
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => { if (signedIn) fillFrom(signedIn) }, [signedIn])
+  const signedIn = state.hydrated ? persona?.address.email ?? null : null
+  // eslint-disable-next-line react-hooks/set-state-in-effect, react-hooks/exhaustive-deps
+  useEffect(() => { if (signedIn) fillFrom(persona) }, [signedIn])
 
   const home = continueUrl || localizedHref('/', locale)
   const shipping = delivery === 'standard' && subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING[delivery].amount
@@ -157,7 +161,7 @@ export default function CheckoutView({ heading, emptyMessage, continueLabel, con
     completeOrder(order)
     trackPaymentInfo(currency, order.total)
     trackPurchase(order, acq ? { utm_source: acq.source, utm_medium: acq.medium, utm_campaign: acq.campaign } : {})
-    recordOrderForAnalytics(order, state.persona)
+    recordOrderForAnalytics(order, persona)
     router.push(localizedHref('/checkout/confirmation', locale))
   }
 
@@ -217,7 +221,7 @@ export default function CheckoutView({ heading, emptyMessage, continueLabel, con
               ) : (
                 <>
                   <span>{t('commerce.guestCheckout')}</span>
-                  <button type="button" onClick={() => fillFrom(DEFAULT_PERSONA_ID)} className="underline underline-offset-4 hover:text-brand">
+                  <button type="button" onClick={() => fillFrom(getPersona(DEFAULT_PERSONA_ID))} className="underline underline-offset-4 hover:text-brand">
                     {t('commerce.useDemoDetails')}
                   </button>
                 </>

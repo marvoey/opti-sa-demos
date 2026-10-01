@@ -23,6 +23,8 @@ declare global {
         attributes?: Record<string, unknown>,
       ) => void
       event: (eventName: string, data?: Record<string, unknown>) => void
+      /** Starts a new anonymous vuid (ODP web SDK). */
+      anonymize?: () => void
     }
   }
 }
@@ -72,6 +74,25 @@ function resolveUserId(): string {
 /** Expose the canonical id so callers (ODP attributes, event rows) can stamp it consistently. */
 export function getVisitorId(): string {
   return resolveUserId()
+}
+
+/**
+ * Replace the visitor id with a fresh one (demo sign-out / switch shopper — see
+ * lib/commerce/identify.ts). Same cookie attributes as proxy.ts mints, so the
+ * server's decide() uses the new id from the next request. A running client is
+ * closed (flushing events queued under the old id) and rebuilt for the new id.
+ */
+export function rotateVisitorId(): void {
+  if (typeof document === 'undefined') return
+  const id = crypto.randomUUID()
+  const secure = location.protocol === 'https:' ? '; Secure' : ''
+  document.cookie = `optimizely_user_id=${id}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax${secure}`
+  const wasStarted = initPromise !== null
+  const old = readySnapshot
+  initPromise = null
+  readySnapshot = null
+  if (old) void old.client.close().catch(() => { /* ignore */ })
+  if (wasStarted) void initBrowserFxClient()
 }
 
 /**

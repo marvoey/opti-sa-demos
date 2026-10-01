@@ -59,6 +59,9 @@ async function startDrain(): Promise<void> {
       dispatchToOdpDirect(evt)
     }
   }
+  // Allow a later drain: with no FX key, or after rotateVisitorId() rebuilds the
+  // client, events queue again and need a fresh pass.
+  drainStarted = false
 }
 
 /**

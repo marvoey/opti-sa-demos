@@ -9,7 +9,9 @@
  * Trust nothing from the browser except WHAT was bought: SKUs and quantities
  * are re-priced here from the catalog (with the request's FX price treatment),
  * so totals can't be forged. No name, email or address is accepted or stored:
- * the customer is the fictitious demo persona's id, or an anonymous visitor id.
+ * the customer is the fictitious demo persona's id (or a generated shopper's
+ * tier and boutique city) suffixed with the browser's demo id — matching the
+ * per-demo ODP profile (lib/commerce/identify.ts) — or an anonymous visitor id.
  * Host-gated (commerce sites only); a no-op when BigQuery isn't configured.
  */
 import { NextResponse, type NextRequest } from 'next/server'
@@ -21,13 +23,14 @@ import { getCommerceSettings } from '@/lib/commerce/settings'
 import { withPricing } from '@/lib/commerce/pricing'
 import { parseCurrency } from '@/lib/commerce/params'
 import { FREE_SHIPPING_THRESHOLD, SHIPPING } from '@/lib/commerce/money'
-import { getPersona } from '@/lib/commerce/personas'
+import { getPersona, PERSONA_SEGMENTS, SHOPPER_HOMES, SHOPPER_ID, type PersonaSegment } from '@/lib/commerce/personas'
 import { ACQ_COOKIE, parseAcquisition } from '@/lib/acquisition'
 
 export const dynamic = 'force-dynamic'
 
 const ORDER_ID = /^[A-Z]{2}-[A-Z0-9]{4,12}$/
 const SKU = /^[A-Z0-9-]{3,40}$/
+const DEMO_ID = /^[a-z0-9]{6}$/
 
 function channelFor(source: string, medium: string): string {
   const m = medium.toLowerCase(), s = source.toLowerCase()
@@ -55,9 +58,17 @@ export async function POST(request: NextRequest) {
   const currency = parseCurrency(typeof body.currency === 'string' ? body.currency : null, commerce.currencyCode)
   const delivery = body.delivery === 'express' || body.delivery === 'collect' ? body.delivery : 'standard'
   const device = body.device === 'mobile' || body.device === 'tablet' ? body.device : 'desktop'
-  const persona = getPersona(typeof body.personaId === 'string' ? body.personaId : null)
+  const demoId = typeof body.demoId === 'string' && DEMO_ID.test(body.demoId) ? body.demoId : 'nodemo'
+  const personaId = typeof body.personaId === 'string' ? body.personaId : null
+  // A generated shopper: only its tier and (known) boutique city are accepted.
+  const shopperHome = SHOPPER_HOMES.find((h) => h.city === body.city)
+  const persona = personaId === SHOPPER_ID
+    ? { segment: PERSONA_SEGMENTS.includes(body.segment as PersonaSegment) ? body.segment as PersonaSegment : 'new', address: { city: shopperHome?.city ?? 'New York, NY', country: shopperHome?.country ?? 'United States' } }
+    : getPersona(personaId)
   const visitor = request.cookies.get('optimizely_user_id')?.value?.replace(/[^\w-]/g, '').slice(0, 12)
-  const customerId = persona ? `persona-${persona.id}` : `visitor-${visitor || 'anonymous'}`
+  const customerId = personaId === SHOPPER_ID ? `shopper-${demoId}`
+    : persona ? `persona-${personaId}-${demoId}`
+    : `visitor-${visitor || 'anonymous'}`
   const acq = parseAcquisition(request.cookies.get(ACQ_COOKIE)?.value)
 
   // Re-price from the catalog (same FX treatment the shopper saw).
