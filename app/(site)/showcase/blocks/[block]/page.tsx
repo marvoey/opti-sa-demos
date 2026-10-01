@@ -2774,7 +2774,7 @@ function CommerceFlowShowcase() {
       <VariantGroup label="mode: bag · surface summary" />
       <div className="border-t border-fg/5">
         <CommerceProvider catalogId="showcase-bag" currency="USD" locale="en" seed={{ bag }}>
-          <CommerceFlowBlock mode="bag" assurance="Free returns within 30 days. Free repairs for life with Tessel Circle." summaryStyle="surface" />
+          <CommerceFlowBlock mode="bag" assurance="Free returns within 30 days. Free repairs for life for members." summaryStyle="surface" />
         </CommerceProvider>
       </div>
 

@@ -37,12 +37,14 @@ export function priceIn(prices: Money[], currency: CurrencyCode): Money {
 
 export function toCardData(p: Product, currency: CurrencyCode): ProductCardData {
   const firstImages = p.colours[0]?.images ?? []
+  // Hover swap only when there is a genuinely different second image.
+  const alt = firstImages[1] ?? p.colours[1]?.images[0] ?? null
   return {
     handle:       p.handle,
     name:         p.name,
     url:          p.url,
     image:        firstImages[0] ?? null,
-    hoverImage:   firstImages[1] ?? p.colours[1]?.images[0] ?? null,
+    hoverImage:   alt && alt !== firstImages[0] ? alt : null,
     price:        priceIn(p.fromPrices, currency),
     badges:       p.badges,
     colours:      p.colours.map(({ code, name, hex }) => ({ code, name, hex })),

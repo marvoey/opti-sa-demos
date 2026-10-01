@@ -1,6 +1,6 @@
 {
   "catalogId": "apparel",
-  "brand": "Tessel",
+  "brand": "Apple & Ivey",
   "currencies": [
     "USD",
     "GBP",
@@ -165,7 +165,7 @@
       "handle": "loden-wool-car-coat",
       "styleId": "W01",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Loden Wool Car Coat",
       "description": "Cut from Tyrolean loden that is boiled, felted and brushed until it sheds rain on its own. A car-coat length that clears the knee when you sit, with a hidden placket and deep side-entry pockets.",
       "gender": "women",
@@ -207,8 +207,7 @@
           "name": "Loden",
           "hex": "#4b5e45",
           "images": [
-            "/globalassets/tessel-assets/product/tessel-p-loden-wool-car-coat.jpg",
-            "/globalassets/tessel-assets/product/tessel-p-loden-wool-car-coat-2.jpg"
+            "/globalassets/tessel-assets/product/tessel-p-loden-wool-car-coat.jpg"
           ]
         },
         {
@@ -216,7 +215,6 @@
           "name": "Ink",
           "hex": "#1f2430",
           "images": [
-            "/globalassets/tessel-assets/product/tessel-p-loden-wool-car-coat-2.jpg",
             "/globalassets/tessel-assets/product/tessel-p-loden-wool-car-coat.jpg"
           ]
         }
@@ -487,7 +485,7 @@
       "handle": "double-faced-wrap-coat",
       "styleId": "W02",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Double-Faced Wrap Coat",
       "description": "Two layers of wool-cashmere woven together and hand-finished at every edge, so there is no lining and no bulk. Ties at the waist or wears open.",
       "gender": "women",
@@ -804,7 +802,7 @@
       "handle": "quilted-liner-jacket-women",
       "styleId": "W03",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Quilted Liner Jacket",
       "description": "A diamond-quilted layer made to sit under the Loden Coat or on its own through October. Packs into its own pocket.",
       "gender": "women",
@@ -1120,7 +1118,7 @@
       "handle": "shearling-collar-suede-jacket",
       "styleId": "W04",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Shearling-Collar Suede Jacket",
       "description": "A numbered run of 300. Soft goat suede from a single Italian tannery, finished with a detachable shearling collar.",
       "gender": "women",
@@ -1314,7 +1312,7 @@
       "handle": "merino-rib-crewneck",
       "styleId": "W05",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Merino Rib Crewneck",
       "description": "Extrafine 18.5-micron merino in a 2x2 rib that holds its shape after a hundred washes. Our most repeated piece.",
       "gender": "women",
@@ -1353,8 +1351,7 @@
           "name": "Chalk",
           "hex": "#ece9e1",
           "images": [
-            "/globalassets/tessel-assets/product/tessel-p-merino-rib-crewneck.jpg",
-            "/globalassets/tessel-assets/product/tessel-p-merino-rib-crewneck-2.jpg"
+            "/globalassets/tessel-assets/product/tessel-p-merino-rib-crewneck.jpg"
           ]
         },
         {
@@ -1362,7 +1359,6 @@
           "name": "Ochre",
           "hex": "#c99a3e",
           "images": [
-            "/globalassets/tessel-assets/product/tessel-p-merino-rib-crewneck-2.jpg",
             "/globalassets/tessel-assets/product/tessel-p-merino-rib-crewneck.jpg"
           ]
         },
@@ -1371,7 +1367,6 @@
           "name": "Ink",
           "hex": "#1f2430",
           "images": [
-            "/globalassets/tessel-assets/product/tessel-p-merino-rib-crewneck-2.jpg",
             "/globalassets/tessel-assets/product/tessel-p-merino-rib-crewneck.jpg"
           ]
         },
@@ -1380,7 +1375,6 @@
           "name": "Loden",
           "hex": "#4b5e45",
           "images": [
-            "/globalassets/tessel-assets/product/tessel-p-merino-rib-crewneck-2.jpg",
             "/globalassets/tessel-assets/product/tessel-p-merino-rib-crewneck.jpg"
           ]
         }
@@ -1881,7 +1875,7 @@
       "handle": "cashmere-boxy-cardigan",
       "styleId": "W06",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Cashmere Boxy Cardigan",
       "description": "Twelve-gauge Mongolian cashmere knitted boxy and dropped at the shoulder. Horn buttons, fully fashioned seams.",
       "gender": "women",
@@ -2199,7 +2193,7 @@
       "handle": "fisherman-roll-neck",
       "styleId": "W07",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Fisherman Roll-neck",
       "description": "A dense cable roll-neck in undyed British lambswool, knitted slowly on hand-flat machines in the Scottish Borders.",
       "gender": "women",
@@ -2514,7 +2508,7 @@
       "handle": "fine-gauge-merino-polo",
       "styleId": "W08",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Fine-Gauge Merino Polo",
       "description": "A knitted polo in fine-gauge merino, fitted at the rib and clean at the collar. Wears under tailoring.",
       "gender": "women",
@@ -2827,7 +2821,7 @@
       "handle": "oversized-poplin-shirt",
       "styleId": "W09",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Oversized Poplin Shirt",
       "description": "Crisp organic poplin cut long and wide, with a curved hem and a single chest pocket. Tucks or doesn’t.",
       "gender": "women",
@@ -3140,7 +3134,7 @@
       "handle": "silk-crepe-blouse",
       "styleId": "W10",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Silk Crepe Blouse",
       "description": "Weighted silk crepe with a soft stand collar and covered buttons. Catches the last of the light.",
       "gender": "women",
@@ -3453,7 +3447,7 @@
       "handle": "heavyweight-jersey-tee-women",
       "styleId": "W11",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Heavyweight Jersey Tee",
       "description": "A 240gsm organic jersey tee with a tight neck rib that stays flat. The base layer everything else is built on.",
       "gender": "women",
@@ -3889,7 +3883,7 @@
       "handle": "wide-leg-wool-trouser",
       "styleId": "W12",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Wide-Leg Wool Trouser",
       "description": "High-waisted, full-length and wide, in a stretch wool twill that recovers after a long day. Pressed front crease.",
       "gender": "women",
@@ -4296,7 +4290,7 @@
       "handle": "pleated-barrel-trouser",
       "styleId": "W13",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Pleated Barrel Trouser",
       "description": "A double-pleated barrel leg in gabardine that tapers to a cropped hem. Made to show a boot.",
       "gender": "women",
@@ -4702,7 +4696,7 @@
       "handle": "straight-selvedge-jean-women",
       "styleId": "W14",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Straight Selvedge Jean",
       "description": "13.5oz Japanese selvedge in a mid-rise straight leg. Rigid at first; yours after a month.",
       "gender": "women",
@@ -5203,7 +5197,7 @@
       "handle": "merino-knit-midi-dress",
       "styleId": "W15",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Merino Knit Midi Dress",
       "description": "A fine rib midi in extrafine merino that moves with you. Wear alone or over a roll-neck.",
       "gender": "women",
@@ -5519,7 +5513,7 @@
       "handle": "satin-slip-skirt",
       "styleId": "W16",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Satin Slip Skirt",
       "description": "A bias-cut slip skirt in recycled satin with an elasticated waist. Pairs with anything knitted.",
       "gender": "women",
@@ -5832,7 +5826,7 @@
       "handle": "wool-twill-shirt-dress",
       "styleId": "W17",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Wool Twill Shirt Dress",
       "description": "A numbered run of 250. A long shirt dress in brushed wool twill with a self-tie belt.",
       "gender": "women",
@@ -6023,7 +6017,7 @@
       "handle": "relaxed-wool-blazer",
       "styleId": "W18",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Relaxed Wool Blazer",
       "description": "A half-lined single-breasted blazer with soft shoulders and a longer body. Tailoring without the stiffness.",
       "gender": "women",
@@ -6431,7 +6425,7 @@
       "handle": "tailored-waistcoat",
       "styleId": "W19",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Tailored Waistcoat",
       "description": "A fitted waistcoat with an adjustable back strap. Wears as a top or a layer.",
       "gender": "women",
@@ -6670,7 +6664,7 @@
       "handle": "cropped-wool-overshirt",
       "styleId": "W20",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Cropped Wool Overshirt",
       "description": "From AW25. A cropped overshirt in brushed wool, now in a final few sizes. We don’t remake past collections.",
       "gender": "women",
@@ -6861,7 +6855,7 @@
       "handle": "loden-wool-overcoat",
       "styleId": "M01",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Loden Wool Overcoat",
       "description": "Boiled Tyrolean loden cut into a single-breasted overcoat that sits over a blazer. Naturally water-repellent, finished by hand in Austria.",
       "gender": "men",
@@ -6903,8 +6897,7 @@
           "name": "Loden",
           "hex": "#4b5e45",
           "images": [
-            "/globalassets/tessel-assets/product/tessel-p-loden-wool-overcoat.jpg",
-            "/globalassets/tessel-assets/product/tessel-p-loden-wool-overcoat-2.jpg"
+            "/globalassets/tessel-assets/product/tessel-p-loden-wool-overcoat.jpg"
           ]
         },
         {
@@ -6912,7 +6905,6 @@
           "name": "Ink",
           "hex": "#1f2430",
           "images": [
-            "/globalassets/tessel-assets/product/tessel-p-loden-wool-overcoat-2.jpg",
             "/globalassets/tessel-assets/product/tessel-p-loden-wool-overcoat.jpg"
           ]
         }
@@ -7183,7 +7175,7 @@
       "handle": "waxed-cotton-field-jacket",
       "styleId": "M02",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Waxed Cotton Field Jacket",
       "description": "Paraffin-waxed cotton with four bellows pockets and a moleskin collar. Re-wax each winter and it lasts decades.",
       "gender": "men",
@@ -7497,7 +7489,7 @@
       "handle": "quilted-liner-jacket-men",
       "styleId": "M03",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Quilted Liner Jacket",
       "description": "A diamond-quilted layer made to sit under an overcoat or alone on mild days. Packs into its own pocket.",
       "gender": "men",
@@ -7811,7 +7803,7 @@
       "handle": "wool-cashmere-chore-coat",
       "styleId": "M04",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Wool-Cashmere Chore Coat",
       "description": "A numbered run of 300. The workwear chore coat, rebuilt in wool-cashmere with patch pockets and corozo buttons.",
       "gender": "men",
@@ -8126,7 +8118,7 @@
       "handle": "lambswool-crewneck",
       "styleId": "M05",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Lambswool Crewneck",
       "description": "British lambswool, spun and knitted in the Scottish Borders, in a saddle-shoulder crew that softens with every wear.",
       "gender": "men",
@@ -8165,8 +8157,7 @@
           "name": "Ochre",
           "hex": "#c99a3e",
           "images": [
-            "/globalassets/tessel-assets/product/tessel-p-lambswool-crewneck.jpg",
-            "/globalassets/tessel-assets/product/tessel-p-lambswool-crewneck-2.jpg"
+            "/globalassets/tessel-assets/product/tessel-p-lambswool-crewneck.jpg"
           ]
         },
         {
@@ -8174,7 +8165,6 @@
           "name": "Loden",
           "hex": "#4b5e45",
           "images": [
-            "/globalassets/tessel-assets/product/tessel-p-lambswool-crewneck-2.jpg",
             "/globalassets/tessel-assets/product/tessel-p-lambswool-crewneck.jpg"
           ]
         },
@@ -8183,7 +8173,6 @@
           "name": "Ink",
           "hex": "#1f2430",
           "images": [
-            "/globalassets/tessel-assets/product/tessel-p-lambswool-crewneck-2.jpg",
             "/globalassets/tessel-assets/product/tessel-p-lambswool-crewneck.jpg"
           ]
         },
@@ -8192,7 +8181,6 @@
           "name": "Ecru",
           "hex": "#e6dcc6",
           "images": [
-            "/globalassets/tessel-assets/product/tessel-p-lambswool-crewneck-2.jpg",
             "/globalassets/tessel-assets/product/tessel-p-lambswool-crewneck.jpg"
           ]
         }
@@ -8693,7 +8681,7 @@
       "handle": "merino-half-zip",
       "styleId": "M06",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Merino Half-Zip",
       "description": "A fine merino half-zip with a funnel neck and a metal zip that runs smooth. Travels well.",
       "gender": "men",
@@ -9006,7 +8994,7 @@
       "handle": "shawl-cardigan",
       "styleId": "M07",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Shawl Cardigan",
       "description": "A heavy shawl-collar cardigan in undyed lambswool with leather buttons. The Sunday coat.",
       "gender": "men",
@@ -9199,7 +9187,7 @@
       "handle": "cashmere-roll-neck",
       "styleId": "M08",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Cashmere Roll-neck",
       "description": "Twelve-gauge cashmere in a close roll-neck that sits cleanly under a blazer or overcoat.",
       "gender": "men",
@@ -9517,7 +9505,7 @@
       "handle": "brushed-flannel-overshirt",
       "styleId": "M09",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Brushed Flannel Overshirt",
       "description": "Heavy brushed flannel cut as an overshirt, with two flap pockets and a curved hem. A shirt in September, a jacket in October.",
       "gender": "men",
@@ -9832,7 +9820,7 @@
       "handle": "oxford-button-down",
       "styleId": "M10",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Oxford Button-Down",
       "description": "Organic oxford cloth with an unlined button-down collar that rolls rather than points.",
       "gender": "men",
@@ -10145,7 +10133,7 @@
       "handle": "heavyweight-jersey-tee-men",
       "styleId": "M11",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Heavyweight Jersey Tee",
       "description": "A 240gsm organic jersey tee with a tight neck rib that stays flat. Built to be layered.",
       "gender": "men",
@@ -10581,7 +10569,7 @@
       "handle": "waffle-long-sleeve",
       "styleId": "M12",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Waffle Long-Sleeve",
       "description": "From AW25. A long-sleeve waffle base layer, now in a final few sizes. We don’t remake past collections.",
       "gender": "men",
@@ -10770,7 +10758,7 @@
       "handle": "pleated-wool-trouser",
       "styleId": "M13",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Pleated Wool Trouser",
       "description": "Single-pleated wool flannel with a tapered leg and side adjusters. Wears with an overcoat or a sweater.",
       "gender": "men",
@@ -11130,7 +11118,7 @@
       "handle": "relaxed-cord-trouser",
       "styleId": "M14",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Relaxed Cord Trouser",
       "description": "Eight-wale corduroy in a relaxed straight leg that softens and fades at the knee.",
       "gender": "men",
@@ -11489,7 +11477,7 @@
       "handle": "straight-selvedge-jean-men",
       "styleId": "M15",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Straight Selvedge Jean",
       "description": "14oz Japanese selvedge in a straight leg. Rigid at first; repaired free for life with Circle.",
       "gender": "men",
@@ -11703,7 +11691,7 @@
       "handle": "drawstring-wool-trouser",
       "styleId": "M16",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Drawstring Wool Trouser",
       "description": "From AW25. A drawstring trouser in soft wool blend, now in a final few sizes. We don’t remake past collections.",
       "gender": "men",
@@ -11916,7 +11904,7 @@
       "handle": "unstructured-wool-blazer",
       "styleId": "M17",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Unstructured Wool Blazer",
       "description": "A half-lined, unstructured blazer with patch pockets. Tailoring you can fold into a bag.",
       "gender": "men",
@@ -12277,7 +12265,7 @@
       "handle": "fleece-gilet",
       "styleId": "M18",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Fleece Gilet",
       "description": "From AW25. A recycled fleece gilet, now in a final few sizes. We don’t remake past collections.",
       "gender": "men",
@@ -12468,7 +12456,7 @@
       "handle": "structured-leather-tote",
       "styleId": "A01",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Structured Leather Tote",
       "description": "Vegetable-tanned leather from a single Tuscan tannery, stitched by hand. Fits a 16-inch laptop and darkens with use.",
       "gender": "unisex",
@@ -12503,8 +12491,7 @@
           "name": "Tobacco",
           "hex": "#8a5a36",
           "images": [
-            "/globalassets/tessel-assets/product/tessel-p-structured-leather-tote.jpg",
-            "/globalassets/tessel-assets/product/tessel-p-structured-leather-tote-2.jpg"
+            "/globalassets/tessel-assets/product/tessel-p-structured-leather-tote.jpg"
           ]
         },
         {
@@ -12512,7 +12499,6 @@
           "name": "Ink",
           "hex": "#1f2430",
           "images": [
-            "/globalassets/tessel-assets/product/tessel-p-structured-leather-tote-2.jpg",
             "/globalassets/tessel-assets/product/tessel-p-structured-leather-tote.jpg"
           ]
         }
@@ -12594,7 +12580,7 @@
       "handle": "soft-leather-crossbody",
       "styleId": "A02",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Soft Leather Crossbody",
       "description": "A small crossbody in supple nappa with an adjustable strap and a magnetic flap.",
       "gender": "unisex",
@@ -12721,7 +12707,7 @@
       "handle": "waxed-canvas-weekender",
       "styleId": "A03",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Waxed Canvas Weekender",
       "description": "A numbered run of 200. Waxed canvas with bridle leather handles, sized for cabin luggage.",
       "gender": "unisex",
@@ -12819,7 +12805,7 @@
       "handle": "oversized-lambswool-scarf",
       "styleId": "A04",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Oversized Lambswool Scarf",
       "description": "A long, wide lambswool scarf woven in the Scottish Borders and finished with a hand-twisted fringe.",
       "gender": "unisex",
@@ -12945,7 +12931,7 @@
       "handle": "cashmere-rib-beanie",
       "styleId": "A05",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Cashmere Rib Beanie",
       "description": "A deep-cuffed cashmere beanie in a 2x2 rib.",
       "gender": "unisex",
@@ -13104,7 +13090,7 @@
       "handle": "leather-palm-knit-gloves",
       "styleId": "A06",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Leather-Palm Knit Gloves",
       "description": "Merino-knit gloves with a lambskin palm for grip on the wheel.",
       "gender": "unisex",
@@ -13275,7 +13261,7 @@
       "handle": "suede-chelsea-boot",
       "styleId": "A07",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Suede Chelsea Boot",
       "description": "Water-repellent calf suede on a Goodyear-welted commando sole, resoleable at any Tessel store.",
       "gender": "unisex",
@@ -13314,8 +13300,7 @@
           "name": "Tobacco",
           "hex": "#8a5a36",
           "images": [
-            "/globalassets/tessel-assets/product/tessel-p-suede-chelsea-boot.jpg",
-            "/globalassets/tessel-assets/product/tessel-p-suede-chelsea-boot-2.jpg"
+            "/globalassets/tessel-assets/product/tessel-p-suede-chelsea-boot.jpg"
           ]
         },
         {
@@ -13323,7 +13308,6 @@
           "name": "Ink",
           "hex": "#1f2430",
           "images": [
-            "/globalassets/tessel-assets/product/tessel-p-suede-chelsea-boot-2.jpg",
             "/globalassets/tessel-assets/product/tessel-p-suede-chelsea-boot.jpg"
           ]
         }
@@ -13687,7 +13671,7 @@
       "handle": "leather-derby",
       "styleId": "A08",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Leather Derby",
       "description": "A plain-toe derby on a Goodyear-welted leather sole, made in Portugal.",
       "gender": "unisex",
@@ -14095,7 +14079,7 @@
       "handle": "wide-leather-belt",
       "styleId": "A09",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Wide Leather Belt",
       "description": "From AW25. A wide vegetable-tanned belt with a solid brass buckle, now in a final few sizes.",
       "gender": "unisex",
@@ -14261,7 +14245,7 @@
       "handle": "merino-sock-set",
       "styleId": "A10",
       "catalogId": "apparel",
-      "brand": "Tessel",
+      "brand": "Apple & Ivey",
       "name": "Merino Sock Set (3)",
       "description": "Three pairs of ribbed merino socks in Loden, Ochre and Ink, boxed.",
       "gender": "unisex",
