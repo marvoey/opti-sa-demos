@@ -36,7 +36,7 @@ import { buildPageMetadata, type PageSeoFields } from '@/lib/metadata'
 import { buildJsonLd }         from '@/lib/structured-data'
 import JsonLd                  from '@/components/seo/JsonLd'
 import type { Locale }         from '@/lib/i18n/config'
-import { getCommerceSettings, currencyForLocale } from '@/lib/commerce/settings'
+import { getCommerceSettings, currencyForLocale, getMarketCookie } from '@/lib/commerce/settings'
 import { matchPdpPath, resolvePdp, previewProductFor } from '@/lib/commerce/pdp'
 import ProductDetailPage from '@/components/pages/ProductDetailPage'
 
@@ -532,7 +532,7 @@ async function CmsPage({ params, searchParams }: Props) {
           <ProductDetailPage
             product={pdp.product}
             template={pdp.template}
-            currency={currencyForLocale(commerce, locale)}
+            currency={currencyForLocale(commerce, locale, await getMarketCookie())}
             locale={locale}
             site={settings ?? {}}
             pageUrl={fullPageUrl}
@@ -620,7 +620,7 @@ async function CmsPage({ params, searchParams }: Props) {
           <ProductDetailPage
             product={product}
             template={exp}
-            currency={currencyForLocale(commerce, locale)}
+            currency={currencyForLocale(commerce, locale, await getMarketCookie())}
             locale={locale}
             site={settings ?? {}}
             pageUrl={fullPageUrl}

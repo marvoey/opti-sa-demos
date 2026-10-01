@@ -7,10 +7,11 @@
  * in the block adapter instead. Host-gated: 404 on sites without commerce.
  */
 import { type NextRequest, NextResponse } from 'next/server'
-import { isValidHandle } from '@/lib/catalog'
+import { isValidHandle, withCatalogLocale } from '@/lib/catalog'
 import { getCommerceSettings } from '@/lib/commerce/settings'
 import { isRecStrategy, recommend } from '@/lib/commerce/recommend'
 import { toCardData } from '@/lib/commerce/card'
+import { withPricing } from '@/lib/commerce/pricing'
 import { parseCurrency } from '@/lib/commerce/params'
 
 const list = (v: string | null, max: number) =>
@@ -28,14 +29,14 @@ export async function GET(request: NextRequest) {
   const limit = Number.parseInt(q.get('limit') ?? '4', 10)
   const currency = parseCurrency(q.get('currency'), settings.currencyCode)
 
-  const products = await recommend({
+  const products = await withCatalogLocale(q.get('locale'), () => recommend({
     catalogId: settings.catalogId,
     strategy,
     seeds:     list(q.get('seeds'), 24),
     exclude:   list(q.get('exclude'), 48),
     category:  category && isValidHandle(category) ? category : undefined,
     limit:     Number.isFinite(limit) ? limit : 4,
-  })
+  }).then(withPricing))
   return NextResponse.json(
     { products: products.map((p) => toCardData(p, currency)) },
     { headers: { 'Cache-Control': 'private, max-age=60' } },

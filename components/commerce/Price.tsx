@@ -21,7 +21,8 @@ const SIZE = { sm: 'text-sm', md: 'text-body', lg: 'text-title' } as const
  * "Was / Now" wording rather than relying on the strikethrough.
  *
  * Server- and client-safe (no hooks). The FX price treatment (APP-019) is
- * resolved upstream (lib/commerce/pricing.ts) and arrives here as `price`.
+ * resolved upstream (lib/commerce/pricing.ts) and arrives here as `price`,
+ * with an optional `label` ("Reserve price") shown before the amount.
  */
 export default function Price({ price, locale = 'en', from = false, size = 'md', className = '', labels = {} }: Props) {
   const current = formatMoney(price.amount, price.currency, locale)
@@ -29,6 +30,9 @@ export default function Price({ price, locale = 'en', from = false, size = 'md',
 
   return (
     <p className={`${SIZE[size]} tabular-nums text-fg ${className}`}>
+      {price.label && (
+        <span className="mr-2 align-middle text-[0.6875rem] font-semibold uppercase tracking-label text-fg-muted">{price.label}</span>
+      )}
       {hasCompare ? (
         <>
           <span className="sr-only">{labels.was ?? 'Was'} </span>

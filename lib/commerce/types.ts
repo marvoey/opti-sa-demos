@@ -7,6 +7,8 @@
  * never touches a component.
  */
 
+import type { SizeSystem } from '@/lib/commerce/sizes'
+
 export type CurrencyCode = 'USD' | 'GBP' | 'EUR'
 
 export const CURRENCY_CODES: readonly CurrencyCode[] = ['USD', 'GBP', 'EUR']
@@ -16,6 +18,8 @@ export type Money = {
   currency:  CurrencyCode
   amount:    number
   compareAt: number | null
+  /** Set by an FX price treatment (lib/commerce/pricing.ts), e.g. "Reserve price". */
+  label?:    string
 }
 
 export type Colour = {
@@ -70,6 +74,8 @@ export type Product = {
   variants:        Variant[]
   fromPrices:      Money[]
   pairsWith:       string[]
+  /** CMS override of `description` from a handle-scoped PDP template (sanitized HTML). */
+  descriptionHtml?: string
 }
 
 export type Category = {
@@ -92,6 +98,8 @@ export type CartLine = {
   name:       string
   colourName: string
   size:       string
+  /** Size convention of the product (lib/commerce/sizes.ts) for market labels. */
+  sizeSystem?: SizeSystem
   image:      string | null
   prices:     Money[]
   quantity:   number
@@ -118,6 +126,8 @@ export type Order = {
   delivery:    'standard' | 'express' | 'collect'
   /** Shown on the confirmation page only; kept in sessionStorage. No card data is stored. */
   address:     OrderAddress
+  /** First-touch acquisition (lib/acquisition.ts), if recorded. */
+  acquisition?: { source: string; medium: string; campaign: string }
 }
 
 /** Site-level commerce settings, resolved per host from OT_ThemeManager. */

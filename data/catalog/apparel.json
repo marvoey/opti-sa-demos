@@ -13,7 +13,18 @@
       "parentHandle": null,
       "gender": "women",
       "url": "/women",
-      "sortRank": 1
+      "sortRank": 1,
+      "i18n": {
+        "fr": {
+          "name": "Femme"
+        },
+        "de": {
+          "name": "Damen"
+        },
+        "es": {
+          "name": "Mujer"
+        }
+      }
     },
     {
       "handle": "women-coats-and-jackets",
@@ -21,7 +32,18 @@
       "parentHandle": "women",
       "gender": "women",
       "url": "/women/coats-and-jackets",
-      "sortRank": 2
+      "sortRank": 2,
+      "i18n": {
+        "fr": {
+          "name": "Manteaux et vestes"
+        },
+        "de": {
+          "name": "Mäntel & Jacken"
+        },
+        "es": {
+          "name": "Abrigos y chaquetas"
+        }
+      }
     },
     {
       "handle": "women-knitwear",
@@ -29,7 +51,18 @@
       "parentHandle": "women",
       "gender": "women",
       "url": "/women/knitwear",
-      "sortRank": 3
+      "sortRank": 3,
+      "i18n": {
+        "fr": {
+          "name": "Maille"
+        },
+        "de": {
+          "name": "Strick"
+        },
+        "es": {
+          "name": "Punto"
+        }
+      }
     },
     {
       "handle": "women-shirts-and-tops",
@@ -37,7 +70,18 @@
       "parentHandle": "women",
       "gender": "women",
       "url": "/women/shirts-and-tops",
-      "sortRank": 4
+      "sortRank": 4,
+      "i18n": {
+        "fr": {
+          "name": "Chemises et hauts"
+        },
+        "de": {
+          "name": "Blusen & Tops"
+        },
+        "es": {
+          "name": "Camisas y tops"
+        }
+      }
     },
     {
       "handle": "women-trousers-and-denim",
@@ -45,7 +89,18 @@
       "parentHandle": "women",
       "gender": "women",
       "url": "/women/trousers-and-denim",
-      "sortRank": 5
+      "sortRank": 5,
+      "i18n": {
+        "fr": {
+          "name": "Pantalons et denim"
+        },
+        "de": {
+          "name": "Hosen & Jeans"
+        },
+        "es": {
+          "name": "Pantalones y vaqueros"
+        }
+      }
     },
     {
       "handle": "women-dresses-and-skirts",
@@ -53,7 +108,18 @@
       "parentHandle": "women",
       "gender": "women",
       "url": "/women/dresses-and-skirts",
-      "sortRank": 6
+      "sortRank": 6,
+      "i18n": {
+        "fr": {
+          "name": "Robes et jupes"
+        },
+        "de": {
+          "name": "Kleider & Röcke"
+        },
+        "es": {
+          "name": "Vestidos y faldas"
+        }
+      }
     },
     {
       "handle": "women-tailoring",
@@ -61,7 +127,18 @@
       "parentHandle": "women",
       "gender": "women",
       "url": "/women/tailoring",
-      "sortRank": 7
+      "sortRank": 7,
+      "i18n": {
+        "fr": {
+          "name": "Tailleur"
+        },
+        "de": {
+          "name": "Tailoring"
+        },
+        "es": {
+          "name": "Sastrería"
+        }
+      }
     },
     {
       "handle": "men",
@@ -69,7 +146,18 @@
       "parentHandle": null,
       "gender": "men",
       "url": "/men",
-      "sortRank": 8
+      "sortRank": 8,
+      "i18n": {
+        "fr": {
+          "name": "Homme"
+        },
+        "de": {
+          "name": "Herren"
+        },
+        "es": {
+          "name": "Hombre"
+        }
+      }
     },
     {
       "handle": "men-coats-and-jackets",
@@ -77,7 +165,18 @@
       "parentHandle": "men",
       "gender": "men",
       "url": "/men/coats-and-jackets",
-      "sortRank": 9
+      "sortRank": 9,
+      "i18n": {
+        "fr": {
+          "name": "Manteaux et vestes"
+        },
+        "de": {
+          "name": "Mäntel & Jacken"
+        },
+        "es": {
+          "name": "Abrigos y chaquetas"
+        }
+      }
     },
     {
       "handle": "men-knitwear",
@@ -85,7 +184,18 @@
       "parentHandle": "men",
       "gender": "men",
       "url": "/men/knitwear",
-      "sortRank": 10
+      "sortRank": 10,
+      "i18n": {
+        "fr": {
+          "name": "Maille"
+        },
+        "de": {
+          "name": "Strick"
+        },
+        "es": {
+          "name": "Punto"
+        }
+      }
     },
     {
       "handle": "men-shirts-and-overshirts",
@@ -93,7 +203,18 @@
       "parentHandle": "men",
       "gender": "men",
       "url": "/men/shirts-and-overshirts",
-      "sortRank": 11
+      "sortRank": 11,
+      "i18n": {
+        "fr": {
+          "name": "Chemises et surchemises"
+        },
+        "de": {
+          "name": "Hemden & Overshirts"
+        },
+        "es": {
+          "name": "Camisas y sobrecamisas"
+        }
+      }
     },
     {
       "handle": "men-trousers-and-denim",
@@ -101,7 +222,18 @@
       "parentHandle": "men",
       "gender": "men",
       "url": "/men/trousers-and-denim",
-      "sortRank": 12
+      "sortRank": 12,
+      "i18n": {
+        "fr": {
+          "name": "Pantalons et denim"
+        },
+        "de": {
+          "name": "Hosen & Jeans"
+        },
+        "es": {
+          "name": "Pantalones y vaqueros"
+        }
+      }
     },
     {
       "handle": "men-jersey",
@@ -109,7 +241,18 @@
       "parentHandle": "men",
       "gender": "men",
       "url": "/men/jersey",
-      "sortRank": 13
+      "sortRank": 13,
+      "i18n": {
+        "fr": {
+          "name": "Jersey"
+        },
+        "de": {
+          "name": "Jersey"
+        },
+        "es": {
+          "name": "Camisetas"
+        }
+      }
     },
     {
       "handle": "men-tailoring",
@@ -117,7 +260,18 @@
       "parentHandle": "men",
       "gender": "men",
       "url": "/men/tailoring",
-      "sortRank": 14
+      "sortRank": 14,
+      "i18n": {
+        "fr": {
+          "name": "Tailleur"
+        },
+        "de": {
+          "name": "Tailoring"
+        },
+        "es": {
+          "name": "Sastrería"
+        }
+      }
     },
     {
       "handle": "accessories",
@@ -125,7 +279,18 @@
       "parentHandle": null,
       "gender": "unisex",
       "url": "/accessories",
-      "sortRank": 15
+      "sortRank": 15,
+      "i18n": {
+        "fr": {
+          "name": "Accessoires"
+        },
+        "de": {
+          "name": "Accessoires"
+        },
+        "es": {
+          "name": "Accesorios"
+        }
+      }
     },
     {
       "handle": "accessories-bags",
@@ -133,7 +298,18 @@
       "parentHandle": "accessories",
       "gender": "unisex",
       "url": "/accessories/bags",
-      "sortRank": 16
+      "sortRank": 16,
+      "i18n": {
+        "fr": {
+          "name": "Sacs"
+        },
+        "de": {
+          "name": "Taschen"
+        },
+        "es": {
+          "name": "Bolsos"
+        }
+      }
     },
     {
       "handle": "accessories-scarves-and-knit",
@@ -141,7 +317,18 @@
       "parentHandle": "accessories",
       "gender": "unisex",
       "url": "/accessories/scarves-and-knit",
-      "sortRank": 17
+      "sortRank": 17,
+      "i18n": {
+        "fr": {
+          "name": "Écharpes et accessoires en maille"
+        },
+        "de": {
+          "name": "Schals & Strickaccessoires"
+        },
+        "es": {
+          "name": "Bufandas y accesorios de punto"
+        }
+      }
     },
     {
       "handle": "accessories-gloves-and-belts",
@@ -149,7 +336,18 @@
       "parentHandle": "accessories",
       "gender": "unisex",
       "url": "/accessories/gloves-and-belts",
-      "sortRank": 18
+      "sortRank": 18,
+      "i18n": {
+        "fr": {
+          "name": "Gants, ceintures et chaussettes"
+        },
+        "de": {
+          "name": "Handschuhe, Gürtel & Socken"
+        },
+        "es": {
+          "name": "Guantes, cinturones y calcetines"
+        }
+      }
     },
     {
       "handle": "accessories-footwear",
@@ -157,7 +355,18 @@
       "parentHandle": "accessories",
       "gender": "unisex",
       "url": "/accessories/footwear",
-      "sortRank": 19
+      "sortRank": 19,
+      "i18n": {
+        "fr": {
+          "name": "Chaussures"
+        },
+        "de": {
+          "name": "Schuhe"
+        },
+        "es": {
+          "name": "Calzado"
+        }
+      }
     }
   ],
   "products": [
@@ -479,7 +688,51 @@
         "cashmere-boxy-cardigan",
         "wide-leg-wool-trouser",
         "oversized-lambswool-scarf"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Manteau court en laine loden",
+          "description": "Taillé dans un loden tyrolien bouilli, foulé et brossé jusqu’à repousser naturellement la pluie. Une longueur trois-quarts qui dégage le genou en position assise, avec patte de boutonnage cachée et poches profondes à ouverture latérale.",
+          "fitNotes": "Coupe ample au niveau du corps. Prenez votre taille habituelle ; une taille en dessous pour des épaules plus ajustées.",
+          "materials": [
+            "100 % laine loden bouillie",
+            "Doublure en cupro"
+          ],
+          "care": [
+            "Brosser après chaque port",
+            "Aérer plutôt que laver",
+            "Nettoyage à sec professionnel uniquement"
+          ]
+        },
+        "de": {
+          "name": "Kurzmantel aus Lodenwolle",
+          "description": "Gefertigt aus Tiroler Loden, der gewalkt, verfilzt und gebürstet wird, bis er Regen ganz von selbst abweist. Eine Kurzmantel-Länge, die im Sitzen über dem Knie endet – mit verdeckter Knopfleiste und tiefen, seitlich eingesetzten Taschen.",
+          "fitNotes": "Locker am Körper. Wählen Sie Ihre gewohnte Größe; für eine schmalere Schulter eine Größe kleiner.",
+          "materials": [
+            "100 % gewalkte Lodenwolle",
+            "Futter aus Cupro"
+          ],
+          "care": [
+            "Nach dem Tragen ausbürsten",
+            "Lüften statt waschen",
+            "Nur professionelle chemische Reinigung"
+          ]
+        },
+        "es": {
+          "name": "Abrigo corto de lana loden",
+          "description": "Confeccionado en loden tirolés cocido, abatanado y cepillado hasta repeler la lluvia por sí solo. Un largo de abrigo corto que queda por encima de la rodilla al sentarse, con tapeta oculta y bolsillos laterales profundos.",
+          "fitNotes": "Holgado en el cuerpo. Elige tu talla habitual; una talla menos para un hombro más ajustado.",
+          "materials": [
+            "100 % lana loden cocida",
+            "Forro de cupro"
+          ],
+          "care": [
+            "Cepillar después de usar",
+            "Airear en lugar de lavar",
+            "Solo limpieza en seco profesional"
+          ]
+        }
+      }
     },
     {
       "handle": "double-faced-wrap-coat",
@@ -796,7 +1049,45 @@
         "silk-crepe-blouse",
         "pleated-barrel-trouser",
         "suede-chelsea-boot"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Manteau portefeuille double face",
+          "description": "Deux épaisseurs de laine et cachemire tissées ensemble et finies à la main sur chaque bord : ni doublure, ni volume superflu. Se noue à la taille ou se porte ouvert.",
+          "fitNotes": "Croisé généreux ; la ceinture marque la taille. Taille normalement.",
+          "materials": [
+            "90 % laine vierge, 10 % cachemire"
+          ],
+          "care": [
+            "Défroisser à la vapeur, ne pas repasser",
+            "Nettoyage à sec uniquement"
+          ]
+        },
+        "de": {
+          "name": "Wickelmantel aus Double-Face",
+          "description": "Zwei Lagen Woll-Kaschmir, miteinander verwebt und an jeder Kante von Hand versäubert – ganz ohne Futter, ganz ohne Volumen. Mit Bindegürtel in der Taille oder offen getragen.",
+          "fitNotes": "Großzügig geschnitten; der Gürtel formt die Taille. Fällt normal aus.",
+          "materials": [
+            "90 % Schurwolle, 10 % Kaschmir"
+          ],
+          "care": [
+            "Dämpfen, nicht bügeln",
+            "Nur chemische Reinigung"
+          ]
+        },
+        "es": {
+          "name": "Abrigo cruzado de doble faz",
+          "description": "Dos capas de lana y cachemir tejidas juntas y rematadas a mano en cada borde: sin forro y sin volumen. Se anuda a la cintura o se lleva abierto.",
+          "fitNotes": "Cruce amplio; el cinturón marca la cintura. Talla fiel.",
+          "materials": [
+            "90 % lana virgen, 10 % cachemir"
+          ],
+          "care": [
+            "Vaporizar, no planchar",
+            "Solo limpieza en seco"
+          ]
+        }
+      }
     },
     {
       "handle": "quilted-liner-jacket-women",
@@ -1112,7 +1403,48 @@
       "pairsWith": [
         "merino-rib-crewneck",
         "straight-selvedge-jean-women"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Veste matelassée légère",
+          "description": "Une couche matelassée en losanges, pensée pour se glisser sous le manteau en loden ou se porter seule jusqu’en octobre. Se range dans sa propre poche.",
+          "fitNotes": "Assez près du corps pour se porter sous un manteau. Taille normalement.",
+          "materials": [
+            "Extérieur en nylon recyclé",
+            "Garnissage en polyester recyclé"
+          ],
+          "care": [
+            "Lavage en machine à froid",
+            "Séchage sur fil"
+          ]
+        },
+        "de": {
+          "name": "Gesteppte Linerjacke",
+          "description": "Eine Lage mit Rautensteppung – gemacht für unter den Lodenmantel oder solo bis in den Oktober. Lässt sich in der eigenen Tasche verstauen.",
+          "fitNotes": "Schmal genug für unter Mänteln und Jacken. Fällt normal aus.",
+          "materials": [
+            "Obermaterial aus recyceltem Nylon",
+            "Füllung aus recyceltem Polyester"
+          ],
+          "care": [
+            "Maschinenwäsche kalt",
+            "Auf der Leine trocknen"
+          ]
+        },
+        "es": {
+          "name": "Chaqueta acolchada interior",
+          "description": "Una capa con acolchado de rombos pensada para llevar bajo el abrigo de loden o sola hasta bien entrado octubre. Se guarda en su propio bolsillo.",
+          "fitNotes": "Lo bastante ajustada para llevar bajo otras prendas de abrigo. Talla fiel.",
+          "materials": [
+            "Exterior de nailon reciclado",
+            "Relleno de poliéster reciclado"
+          ],
+          "care": [
+            "Lavar a máquina en frío",
+            "Secar tendido"
+          ]
+        }
+      }
     },
     {
       "handle": "shearling-collar-suede-jacket",
@@ -1306,7 +1638,48 @@
         "fisherman-roll-neck",
         "straight-selvedge-jean-women",
         "structured-leather-tote"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Veste en suède à col en peau lainée",
+          "description": "Une série numérotée de 300 pièces. Un suède de chèvre tout en souplesse, issu d’une unique tannerie italienne, rehaussé d’un col amovible en peau lainée.",
+          "fitNotes": "Longueur aux hanches. Prenez une taille au-dessus pour la porter sur une maille épaisse.",
+          "materials": [
+            "Suède de chèvre",
+            "Col en peau lainée"
+          ],
+          "care": [
+            "Nettoyage par un spécialiste du cuir uniquement",
+            "Ranger sur un cintre large"
+          ]
+        },
+        "de": {
+          "name": "Velourslederjacke mit Lammfellkragen",
+          "description": "Nummerierte Auflage von 300 Stück. Weiches Ziegenveloursleder aus einer einzigen italienischen Gerberei, vollendet mit abnehmbarem Lammfellkragen.",
+          "fitNotes": "Kurz geschnitten, endet an der Hüfte. Über dickem Strick eine Größe größer wählen.",
+          "materials": [
+            "Ziegenveloursleder",
+            "Kragen aus Lammfell"
+          ],
+          "care": [
+            "Nur Spezialreinigung für Leder",
+            "Auf einem breiten Bügel aufbewahren"
+          ]
+        },
+        "es": {
+          "name": "Chaqueta de ante con cuello de borrego",
+          "description": "Una edición numerada de 300 unidades. Suave ante de cabra de una única curtiduría italiana, rematado con un cuello de borrego desmontable.",
+          "fitNotes": "Corta a la altura de la cadera. Una talla más para llevarla sobre punto grueso.",
+          "materials": [
+            "Ante de cabra",
+            "Cuello de borrego"
+          ],
+          "care": [
+            "Solo limpieza especializada en piel",
+            "Guardar en una percha ancha"
+          ]
+        }
+      }
     },
     {
       "handle": "merino-rib-crewneck",
@@ -1869,7 +2242,45 @@
         "wide-leg-wool-trouser",
         "satin-slip-skirt",
         "cashmere-rib-beanie"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Pull col rond côtelé en mérinos",
+          "description": "Un mérinos extrafin de 18,5 microns en côtes 2x2, qui garde sa tenue après une centaine de lavages. Notre pièce la plus rééditée.",
+          "fitNotes": "Près du corps, légèrement court. Taille normalement.",
+          "materials": [
+            "100 % mérinos extrafin, 18,5 microns"
+          ],
+          "care": [
+            "Lavage à la main à froid",
+            "Séchage à plat"
+          ]
+        },
+        "de": {
+          "name": "Rippstrickpullover aus Merinowolle",
+          "description": "Extrafeine Merinowolle mit 18,5 Mikron im 2x2-Rippenstrick, der auch nach hundert Wäschen seine Form behält. Unser meistnachbestelltes Teil.",
+          "fitNotes": "Körpernah, leicht verkürzt. Fällt normal aus.",
+          "materials": [
+            "100 % extrafeine Merinowolle, 18,5 Mikron"
+          ],
+          "care": [
+            "Handwäsche kalt",
+            "Liegend trocknen"
+          ]
+        },
+        "es": {
+          "name": "Jersey de canalé de merino con cuello redondo",
+          "description": "Merino extrafino de 18,5 micras en canalé 2x2 que mantiene la forma tras cien lavados. Nuestra prenda más repetida.",
+          "fitNotes": "Ajustado en el cuerpo, ligeramente corto. Talla fiel.",
+          "materials": [
+            "100 % merino extrafino, 18,5 micras"
+          ],
+          "care": [
+            "Lavar a mano en frío",
+            "Secar en plano"
+          ]
+        }
+      }
     },
     {
       "handle": "cashmere-boxy-cardigan",
@@ -2187,7 +2598,48 @@
       "pairsWith": [
         "heavyweight-jersey-tee-women",
         "pleated-barrel-trouser"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Cardigan carré en cachemire",
+          "description": "Un cachemire de Mongolie en jauge 12, tricoté dans une coupe carrée à épaules tombantes. Boutons en corne, coutures diminuées.",
+          "fitNotes": "Volontairement oversize. Prenez une taille en dessous pour une allure plus nette.",
+          "materials": [
+            "100 % cachemire de Mongolie"
+          ],
+          "care": [
+            "Lavage à la main à froid",
+            "Séchage à plat",
+            "Retirer les bouloches au peigne"
+          ]
+        },
+        "de": {
+          "name": "Boxy Cardigan aus Kaschmir",
+          "description": "Mongolisches Kaschmir in 12-Gauge, kastig gestrickt mit überschnittenen Schultern. Hornknöpfe und vollständig formgestrickte Nähte.",
+          "fitNotes": "Bewusst oversized. Für eine schmalere Passform eine Größe kleiner.",
+          "materials": [
+            "100 % mongolisches Kaschmir"
+          ],
+          "care": [
+            "Handwäsche kalt",
+            "Liegend trocknen",
+            "Knötchen mit einem Kamm entfernen"
+          ]
+        },
+        "es": {
+          "name": "Cárdigan amplio de cachemir",
+          "description": "Cachemir mongol de galga 12 tejido con corte amplio y hombro caído. Botones de asta y costuras menguadas.",
+          "fitNotes": "Oversize por diseño. Una talla menos para un ajuste más limpio.",
+          "materials": [
+            "100 % cachemir mongol"
+          ],
+          "care": [
+            "Lavar a mano en frío",
+            "Secar en plano",
+            "Quitar bolitas con un peine"
+          ]
+        }
+      }
     },
     {
       "handle": "fisherman-roll-neck",
@@ -2502,7 +2954,45 @@
       "pairsWith": [
         "shearling-collar-suede-jacket",
         "straight-selvedge-jean-women"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Pull col roulé pêcheur",
+          "description": "Un col roulé aux torsades denses en laine d’agneau britannique non teinte, tricoté lentement sur des métiers rectilignes manuels dans les Scottish Borders.",
+          "fitNotes": "Coupe ample, manches longues. Taille normalement.",
+          "materials": [
+            "100 % laine d’agneau britannique"
+          ],
+          "care": [
+            "Lavage à la main à froid",
+            "Séchage à plat"
+          ]
+        },
+        "de": {
+          "name": "Fisherman-Rollkragenpullover",
+          "description": "Ein dichter Rollkragenpullover mit Zopfmuster aus ungefärbter britischer Lammwolle, langsam auf Handflachstrickmaschinen in den Scottish Borders gestrickt.",
+          "fitNotes": "Locker mit langen Ärmeln. Fällt normal aus.",
+          "materials": [
+            "100 % britische Lammwolle"
+          ],
+          "care": [
+            "Handwäsche kalt",
+            "Liegend trocknen"
+          ]
+        },
+        "es": {
+          "name": "Jersey de cuello alto de ochos",
+          "description": "Un denso jersey de ochos con cuello alto en lana de cordero británica sin teñir, tejido lentamente en máquinas manuales en los Scottish Borders.",
+          "fitNotes": "Holgado, con mangas largas. Talla fiel.",
+          "materials": [
+            "100 % lana de cordero británica"
+          ],
+          "care": [
+            "Lavar a mano en frío",
+            "Secar en plano"
+          ]
+        }
+      }
     },
     {
       "handle": "fine-gauge-merino-polo",
@@ -2815,7 +3305,45 @@
       "pairsWith": [
         "relaxed-wool-blazer",
         "wide-leg-wool-trouser"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Polo en maille fine de mérinos",
+          "description": "Un polo en maille fine de mérinos, ajusté aux bords côtes, au col net. Se porte sous une veste de tailleur.",
+          "fitNotes": "Coupe ajustée. Prenez une taille au-dessus pour un tombé plus décontracté.",
+          "materials": [
+            "100 % mérinos extrafin"
+          ],
+          "care": [
+            "Lavage à la main à froid",
+            "Séchage à plat"
+          ]
+        },
+        "de": {
+          "name": "Feinstrick-Polo aus Merinowolle",
+          "description": "Ein Strickpolo aus feiner Merinowolle, tailliert am Bündchen, klar am Kragen. Passt unter jedes Sakko.",
+          "fitNotes": "Schmale Passform. Für einen lässigeren Look eine Größe größer.",
+          "materials": [
+            "100 % extrafeine Merinowolle"
+          ],
+          "care": [
+            "Handwäsche kalt",
+            "Liegend trocknen"
+          ]
+        },
+        "es": {
+          "name": "Polo de punto fino de merino",
+          "description": "Un polo de punto en merino de galga fina, ajustado en el canalé y limpio en el cuello. Para llevar bajo la sastrería.",
+          "fitNotes": "Corte entallado. Una talla más para un look más holgado.",
+          "materials": [
+            "100 % merino extrafino"
+          ],
+          "care": [
+            "Lavar a mano en frío",
+            "Secar en plano"
+          ]
+        }
+      }
     },
     {
       "handle": "oversized-poplin-shirt",
@@ -3128,7 +3656,45 @@
       "pairsWith": [
         "pleated-barrel-trouser",
         "satin-slip-skirt"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Chemise oversize en popeline",
+          "description": "Une popeline biologique au tombé net, coupée longue et ample, avec ourlet arrondi et une seule poche poitrine. À rentrer, ou non.",
+          "fitNotes": "Oversize, épaules tombantes. Prenez une taille en dessous pour une coupe plus près du corps.",
+          "materials": [
+            "100 % popeline de coton biologique"
+          ],
+          "care": [
+            "Lavage en machine à 40 °C",
+            "Repasser encore humide"
+          ]
+        },
+        "de": {
+          "name": "Oversized-Hemd aus Popeline",
+          "description": "Knackige Bio-Popeline, lang und weit geschnitten, mit abgerundetem Saum und einer Brusttasche. Eingesteckt oder offen getragen.",
+          "fitNotes": "Oversized mit überschnittenen Schultern. Für eine schmalere Passform eine Größe kleiner.",
+          "materials": [
+            "100 % Bio-Baumwollpopeline"
+          ],
+          "care": [
+            "Maschinenwäsche 40 °C",
+            "Feucht bügeln"
+          ]
+        },
+        "es": {
+          "name": "Camisa oversize de popelín",
+          "description": "Popelín orgánico de tacto nítido, con corte largo y amplio, bajo curvo y un solo bolsillo en el pecho. Por dentro o por fuera.",
+          "fitNotes": "Oversize, con hombro caído. Una talla menos para un ajuste más ceñido.",
+          "materials": [
+            "100 % popelín de algodón orgánico"
+          ],
+          "care": [
+            "Lavar a máquina a 40 °C",
+            "Planchar aún húmeda"
+          ]
+        }
+      }
     },
     {
       "handle": "silk-crepe-blouse",
@@ -3441,7 +4007,45 @@
       "pairsWith": [
         "double-faced-wrap-coat",
         "wide-leg-wool-trouser"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Blouse en crêpe de soie",
+          "description": "Un crêpe de soie lesté, à col officier souple et boutons recouverts. Il capte les dernières lueurs du jour.",
+          "fitNotes": "Coupe ample au niveau du corps. Taille normalement.",
+          "materials": [
+            "100 % crêpe de Chine de soie"
+          ],
+          "care": [
+            "Lavage à la main à froid",
+            "Repassage doux sur l’envers"
+          ]
+        },
+        "de": {
+          "name": "Bluse aus Seidenkrepp",
+          "description": "Schwerer Seidenkrepp mit weichem Stehkragen und bezogenen Knöpfen. Fängt das letzte Licht des Tages ein.",
+          "fitNotes": "Locker am Körper. Fällt normal aus.",
+          "materials": [
+            "100 % Seide, Crêpe de Chine"
+          ],
+          "care": [
+            "Handwäsche kalt",
+            "Auf links bei niedriger Temperatur bügeln"
+          ]
+        },
+        "es": {
+          "name": "Blusa de crepé de seda",
+          "description": "Crepé de seda con peso, cuello mao suave y botones forrados. Atrapa la última luz del día.",
+          "fitNotes": "Holgada en el cuerpo. Talla fiel.",
+          "materials": [
+            "100 % crepé de china de seda"
+          ],
+          "care": [
+            "Lavar a mano en frío",
+            "Planchar a baja temperatura del revés"
+          ]
+        }
+      }
     },
     {
       "handle": "heavyweight-jersey-tee-women",
@@ -3877,7 +4481,45 @@
       "pairsWith": [
         "cashmere-boxy-cardigan",
         "straight-selvedge-jean-women"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "T-shirt en jersey épais",
+          "description": "Un T-shirt en jersey biologique de 240 g/m², à l’encolure côtelée serrée qui reste bien à plat. La base de toute la garde-robe.",
+          "fitNotes": "Coupe classique. Taille normalement.",
+          "materials": [
+            "100 % coton biologique, 240 g/m²"
+          ],
+          "care": [
+            "Lavage en machine à 30 °C",
+            "Ne pas sécher en machine"
+          ]
+        },
+        "de": {
+          "name": "T-Shirt aus schwerem Jersey",
+          "description": "Ein T-Shirt aus Bio-Jersey mit 240 g/m² und festem Halsbündchen, das flach anliegt. Die Basis, auf der alles andere aufbaut.",
+          "fitNotes": "Normale Passform. Fällt normal aus.",
+          "materials": [
+            "100 % Bio-Baumwolle, 240 g/m²"
+          ],
+          "care": [
+            "Maschinenwäsche 30 °C",
+            "Nicht im Trockner trocknen"
+          ]
+        },
+        "es": {
+          "name": "Camiseta de punto grueso",
+          "description": "Una camiseta de punto orgánico de 240 g/m² con un canalé de cuello firme que no se deforma. La base sobre la que se construye todo lo demás.",
+          "fitNotes": "Corte regular. Talla fiel.",
+          "materials": [
+            "100 % algodón orgánico, 240 g/m²"
+          ],
+          "care": [
+            "Lavar a máquina a 30 °C",
+            "No usar secadora"
+          ]
+        }
+      }
     },
     {
       "handle": "wide-leg-wool-trouser",
@@ -4284,7 +4926,45 @@
       "pairsWith": [
         "merino-rib-crewneck",
         "loden-wool-car-coat"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Pantalon large en laine",
+          "description": "Taille haute, longueur intégrale et jambe large, dans un sergé de laine stretch qui reprend sa forme après une longue journée. Pli marqué sur le devant.",
+          "fitNotes": "Taille haute, jambe large. Prenez votre taille habituelle.",
+          "materials": [
+            "98 % laine, 2 % élasthanne"
+          ],
+          "care": [
+            "Nettoyage à sec",
+            "Rafraîchir à la vapeur"
+          ]
+        },
+        "de": {
+          "name": "Weite Hose aus Wolle",
+          "description": "Hoch geschnitten, bodenlang und weit – aus elastischem Wolltwill, der auch nach einem langen Tag in Form bleibt. Mit gebügelter Bügelfalte.",
+          "fitNotes": "Hoher Bund, weites Bein. Wählen Sie Ihre gewohnte Größe.",
+          "materials": [
+            "98 % Wolle, 2 % Elasthan"
+          ],
+          "care": [
+            "Chemische Reinigung",
+            "Zum Auffrischen dämpfen"
+          ]
+        },
+        "es": {
+          "name": "Pantalón ancho de lana",
+          "description": "De talle alto, largo completo y pierna ancha, en sarga de lana elástica que recupera la forma tras un día largo. Raya delantera planchada.",
+          "fitNotes": "Talle alto, pierna ancha. Elige tu talla habitual.",
+          "materials": [
+            "98 % lana, 2 % elastano"
+          ],
+          "care": [
+            "Limpieza en seco",
+            "Vaporizar para refrescar"
+          ]
+        }
+      }
     },
     {
       "handle": "pleated-barrel-trouser",
@@ -4690,7 +5370,42 @@
       "pairsWith": [
         "cashmere-boxy-cardigan",
         "suede-chelsea-boot"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Pantalon tonneau à pinces",
+          "description": "Une jambe tonneau à double pince en gabardine, qui s’affine vers un ourlet court. Pensé pour laisser voir la bottine.",
+          "fitNotes": "Ample à la cuisse, resserré à la cheville. Taille normalement.",
+          "materials": [
+            "Gabardine laine et coton"
+          ],
+          "care": [
+            "Nettoyage à sec"
+          ]
+        },
+        "de": {
+          "name": "Barrel-Hose mit Bundfalten",
+          "description": "Ein Barrel-Bein mit doppelten Bundfalten aus Gabardine, das zu einem verkürzten Saum hin schmaler wird. Gemacht, um Stiefel zu zeigen.",
+          "fitNotes": "Weit am Oberschenkel, schmal am Knöchel. Fällt normal aus.",
+          "materials": [
+            "Gabardine aus Wolle und Baumwolle"
+          ],
+          "care": [
+            "Chemische Reinigung"
+          ]
+        },
+        "es": {
+          "name": "Pantalón barrel con pinzas",
+          "description": "Pierna barrel con doble pinza en gabardina, que se estrecha hacia un bajo tobillero. Pensado para dejar ver la bota.",
+          "fitNotes": "Amplio en el muslo, estrecho en el tobillo. Talla fiel.",
+          "materials": [
+            "Gabardina de lana y algodón"
+          ],
+          "care": [
+            "Limpieza en seco"
+          ]
+        }
+      }
     },
     {
       "handle": "straight-selvedge-jean-women",
@@ -5191,7 +5906,45 @@
       "pairsWith": [
         "fisherman-roll-neck",
         "heavyweight-jersey-tee-women"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Jean droit en denim selvedge",
+          "description": "Un denim selvedge japonais de 13,5 oz, taille mi-haute et jambe droite. Rigide au début ; le vôtre au bout d’un mois.",
+          "fitNotes": "Taille mi-haute, jambe droite. Denim brut : entre deux tailles, prenez la plus petite.",
+          "materials": [
+            "100 % coton, denim selvedge, 13,5 oz"
+          ],
+          "care": [
+            "Laver rarement, sur l’envers",
+            "Séchage sur fil"
+          ]
+        },
+        "de": {
+          "name": "Gerade Selvedge-Jeans",
+          "description": "Japanischer Selvedge-Denim mit 13,5 oz, mittelhoher Bund und gerades Bein. Anfangs fest – nach einem Monat ganz Ihre.",
+          "fitNotes": "Mittelhoher Bund, gerades Bein. Fester Denim – im Zweifel eine Größe kleiner.",
+          "materials": [
+            "100 % Baumwolle, Selvedge-Denim, 13,5 oz"
+          ],
+          "care": [
+            "Selten und auf links waschen",
+            "Auf der Leine trocknen"
+          ]
+        },
+        "es": {
+          "name": "Vaquero recto de denim selvedge",
+          "description": "Denim selvedge japonés de 13,5 oz con talle medio y pierna recta. Rígido al principio; tuyo al cabo de un mes.",
+          "fitNotes": "Talle medio, pierna recta. Denim rígido: si dudas entre dos tallas, elige la menor.",
+          "materials": [
+            "100 % denim selvedge de algodón, 13,5 oz"
+          ],
+          "care": [
+            "Lavar con poca frecuencia, del revés",
+            "Secar tendido"
+          ]
+        }
+      }
     },
     {
       "handle": "merino-knit-midi-dress",
@@ -5507,7 +6260,45 @@
       "pairsWith": [
         "suede-chelsea-boot",
         "oversized-lambswool-scarf"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Robe midi en maille de mérinos",
+          "description": "Une robe midi en côtes fines de mérinos extrafin, qui accompagne chaque mouvement. Seule, ou portée sur un col roulé.",
+          "fitNotes": "Coupe près du corps, extensible. Taille normalement.",
+          "materials": [
+            "100 % mérinos extrafin"
+          ],
+          "care": [
+            "Lavage à la main à froid",
+            "Séchage à plat"
+          ]
+        },
+        "de": {
+          "name": "Midikleid aus Merinostrick",
+          "description": "Ein Midikleid in feinem Rippenstrick aus extrafeiner Merinowolle, das jede Bewegung mitgeht. Solo oder über einem Rollkragenpullover tragen.",
+          "fitNotes": "Körpernah und dehnbar. Fällt normal aus.",
+          "materials": [
+            "100 % extrafeine Merinowolle"
+          ],
+          "care": [
+            "Handwäsche kalt",
+            "Liegend trocknen"
+          ]
+        },
+        "es": {
+          "name": "Vestido midi de punto de merino",
+          "description": "Un vestido midi de canalé fino en merino extrafino que se mueve contigo. Solo o sobre un jersey de cuello alto.",
+          "fitNotes": "Ajustado y elástico. Talla fiel.",
+          "materials": [
+            "100 % merino extrafino"
+          ],
+          "care": [
+            "Lavar a mano en frío",
+            "Secar en plano"
+          ]
+        }
+      }
     },
     {
       "handle": "satin-slip-skirt",
@@ -5820,7 +6611,45 @@
       "pairsWith": [
         "merino-rib-crewneck",
         "oversized-poplin-shirt"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Jupe nuisette en satin",
+          "description": "Une jupe nuisette coupée en biais dans un satin recyclé, à taille élastiquée. S’accorde avec toutes les mailles.",
+          "fitNotes": "Se porte à la taille naturelle. Taille normalement.",
+          "materials": [
+            "Satin recyclé"
+          ],
+          "care": [
+            "Lavage à la main à froid",
+            "Séchage sur cintre"
+          ]
+        },
+        "de": {
+          "name": "Slip-Rock aus Satin",
+          "description": "Ein schräg geschnittener Slip-Rock aus recyceltem Satin mit elastischem Bund. Passt zu allem Gestrickten.",
+          "fitNotes": "Sitzt in der natürlichen Taille. Fällt normal aus.",
+          "materials": [
+            "Recycelter Satin"
+          ],
+          "care": [
+            "Handwäsche kalt",
+            "Hängend trocknen"
+          ]
+        },
+        "es": {
+          "name": "Falda lencera de satén",
+          "description": "Una falda lencera cortada al bies en satén reciclado, con cintura elástica. Combina con cualquier prenda de punto.",
+          "fitNotes": "Se sitúa en la cintura natural. Talla fiel.",
+          "materials": [
+            "Satén reciclado"
+          ],
+          "care": [
+            "Lavar a mano en frío",
+            "Secar colgada"
+          ]
+        }
+      }
     },
     {
       "handle": "wool-twill-shirt-dress",
@@ -6011,7 +6840,42 @@
       "pairsWith": [
         "structured-leather-tote",
         "suede-chelsea-boot"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Robe chemise en sergé de laine",
+          "description": "Une série numérotée de 250 pièces. Une longue robe chemise en sergé de laine brossé, avec ceinture à nouer assortie.",
+          "fitNotes": "Coupe ample ; la ceinture structure la silhouette. Taille normalement.",
+          "materials": [
+            "100 % sergé de laine"
+          ],
+          "care": [
+            "Nettoyage à sec uniquement"
+          ]
+        },
+        "de": {
+          "name": "Hemdblusenkleid aus Wolltwill",
+          "description": "Nummerierte Auflage von 250 Stück. Ein langes Hemdblusenkleid aus gebürstetem Wolltwill mit Bindegürtel aus gleichem Stoff.",
+          "fitNotes": "Locker; mit Gürtel tailliert. Fällt normal aus.",
+          "materials": [
+            "100 % Wolltwill"
+          ],
+          "care": [
+            "Nur chemische Reinigung"
+          ]
+        },
+        "es": {
+          "name": "Vestido camisero de sarga de lana",
+          "description": "Una edición numerada de 250 unidades. Un vestido camisero largo en sarga de lana cepillada, con cinturón de la misma tela.",
+          "fitNotes": "Holgado; con cinturón para marcar la silueta. Talla fiel.",
+          "materials": [
+            "100 % sarga de lana"
+          ],
+          "care": [
+            "Solo limpieza en seco"
+          ]
+        }
+      }
     },
     {
       "handle": "relaxed-wool-blazer",
@@ -6419,7 +7283,45 @@
       "pairsWith": [
         "fine-gauge-merino-polo",
         "wide-leg-wool-trouser"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Blazer décontracté en laine",
+          "description": "Un blazer droit semi-doublé, aux épaules souples et à la longueur allongée. L’allure du tailleur, sans la raideur.",
+          "fitNotes": "Coupe ample au niveau du corps. Taille normalement ; une taille en dessous pour une ligne plus nette.",
+          "materials": [
+            "100 % laine",
+            "Doublure en viscose"
+          ],
+          "care": [
+            "Nettoyage à sec uniquement"
+          ]
+        },
+        "de": {
+          "name": "Lässiger Blazer aus Wolle",
+          "description": "Ein halb gefütterter Einreiher-Blazer mit weichen Schultern und längerem Schnitt. Tailoring ohne Steifheit.",
+          "fitNotes": "Locker am Körper. Fällt normal aus; für eine klarere Linie eine Größe kleiner.",
+          "materials": [
+            "100 % Wolle",
+            "Futter aus Viskose"
+          ],
+          "care": [
+            "Nur chemische Reinigung"
+          ]
+        },
+        "es": {
+          "name": "Blazer holgada de lana",
+          "description": "Una blazer de botonadura sencilla con medio forro, hombros suaves y cuerpo más largo. Sastrería sin rigidez.",
+          "fitNotes": "Holgada en el cuerpo. Talla fiel; una talla menos para una línea más definida.",
+          "materials": [
+            "100 % lana",
+            "Forro de viscosa"
+          ],
+          "care": [
+            "Solo limpieza en seco"
+          ]
+        }
+      }
     },
     {
       "handle": "tailored-waistcoat",
@@ -6658,7 +7560,42 @@
       "pairsWith": [
         "oversized-poplin-shirt",
         "wide-leg-wool-trouser"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Gilet de tailleur",
+          "description": "Un gilet ajusté, avec patte de serrage au dos. Se porte seul ou en superposition.",
+          "fitNotes": "Coupe ajustée. Prenez une taille au-dessus pour le porter sur une chemise.",
+          "materials": [
+            "100 % laine"
+          ],
+          "care": [
+            "Nettoyage à sec uniquement"
+          ]
+        },
+        "de": {
+          "name": "Taillierte Weste",
+          "description": "Eine taillierte Weste mit verstellbarem Rückenriegel. Als Oberteil oder zum Lagenlook getragen.",
+          "fitNotes": "Körpernah. Über einem Hemd eine Größe größer wählen.",
+          "materials": [
+            "100 % Wolle"
+          ],
+          "care": [
+            "Nur chemische Reinigung"
+          ]
+        },
+        "es": {
+          "name": "Chaleco de sastre",
+          "description": "Un chaleco entallado con trabilla ajustable en la espalda. Se lleva como top o como capa.",
+          "fitNotes": "Ajustado. Una talla más para llevarlo sobre camisa.",
+          "materials": [
+            "100 % lana"
+          ],
+          "care": [
+            "Solo limpieza en seco"
+          ]
+        }
+      }
     },
     {
       "handle": "cropped-wool-overshirt",
@@ -6849,7 +7786,42 @@
       "pairsWith": [
         "heavyweight-jersey-tee-women",
         "straight-selvedge-jean-women"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Surchemise courte en laine",
+          "description": "Issue de la collection AH25. Une surchemise courte en laine brossée, disponible dans quelques dernières tailles. Nous ne rééditons pas les collections passées.",
+          "fitNotes": "Longueur aux hanches. Taille normalement.",
+          "materials": [
+            "80 % laine, 20 % nylon"
+          ],
+          "care": [
+            "Nettoyage à sec"
+          ]
+        },
+        "de": {
+          "name": "Kurzes Overshirt aus Wolle",
+          "description": "Aus der Kollektion HW25. Ein kurzes Overshirt aus gebürsteter Wolle, nur noch in wenigen Größen. Vergangene Kollektionen legen wir nicht neu auf.",
+          "fitNotes": "Kurz geschnitten, endet an der Hüfte. Fällt normal aus.",
+          "materials": [
+            "80 % Wolle, 20 % Nylon"
+          ],
+          "care": [
+            "Chemische Reinigung"
+          ]
+        },
+        "es": {
+          "name": "Sobrecamisa corta de lana",
+          "description": "De OI25. Una sobrecamisa corta en lana cepillada, con las últimas tallas disponibles. No reeditamos colecciones pasadas.",
+          "fitNotes": "Corta a la altura de la cadera. Talla fiel.",
+          "materials": [
+            "80 % lana, 20 % nailon"
+          ],
+          "care": [
+            "Limpieza en seco"
+          ]
+        }
+      }
     },
     {
       "handle": "loden-wool-overcoat",
@@ -7169,7 +8141,51 @@
         "lambswool-crewneck",
         "pleated-wool-trouser",
         "oversized-lambswool-scarf"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Pardessus en laine loden",
+          "description": "Un loden tyrolien bouilli, taillé en pardessus droit qui se porte par-dessus un blazer. Naturellement déperlant, fini à la main en Autriche.",
+          "fitNotes": "Coupe classique, avec l’aisance nécessaire pour une veste de costume. Taille normalement.",
+          "materials": [
+            "100 % laine loden bouillie",
+            "Doublure en cupro"
+          ],
+          "care": [
+            "Brosser après chaque port",
+            "Aérer plutôt que laver",
+            "Nettoyage à sec professionnel uniquement"
+          ]
+        },
+        "de": {
+          "name": "Mantel aus Lodenwolle",
+          "description": "Gewalkter Tiroler Loden, geschnitten zu einem einreihigen Mantel, der über einem Sakko sitzt. Von Natur aus wasserabweisend, in Österreich von Hand vollendet.",
+          "fitNotes": "Normale Passform mit Raum für ein Sakko darunter. Fällt normal aus.",
+          "materials": [
+            "100 % gewalkte Lodenwolle",
+            "Futter aus Cupro"
+          ],
+          "care": [
+            "Nach dem Tragen ausbürsten",
+            "Lüften statt waschen",
+            "Nur professionelle chemische Reinigung"
+          ]
+        },
+        "es": {
+          "name": "Abrigo de lana loden",
+          "description": "Loden tirolés cocido en un abrigo de botonadura sencilla pensado para llevar sobre blazer. Repelente al agua de forma natural y rematado a mano en Austria.",
+          "fitNotes": "Corte regular con holgura para prendas de sastrería. Talla fiel.",
+          "materials": [
+            "100 % lana loden cocida",
+            "Forro de cupro"
+          ],
+          "care": [
+            "Cepillar después de usar",
+            "Airear en lugar de lavar",
+            "Solo limpieza en seco profesional"
+          ]
+        }
+      }
     },
     {
       "handle": "waxed-cotton-field-jacket",
@@ -7483,7 +8499,48 @@
       "pairsWith": [
         "brushed-flannel-overshirt",
         "relaxed-cord-trouser"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Veste de terrain en coton ciré",
+          "description": "Un coton ciré à la paraffine, avec quatre poches soufflets et un col en moleskine. Recirée chaque hiver, elle traverse les décennies.",
+          "fitNotes": "Coupe classique. Taille normalement.",
+          "materials": [
+            "Coton ciré",
+            "Col en moleskine de coton"
+          ],
+          "care": [
+            "Nettoyer à l’éponge",
+            "Recirer une fois par an"
+          ]
+        },
+        "de": {
+          "name": "Fieldjacket aus gewachster Baumwolle",
+          "description": "Mit Paraffin gewachste Baumwolle, vier Blasebalgtaschen und ein Kragen aus Moleskin. Jeden Winter nachwachsen – und sie hält Jahrzehnte.",
+          "fitNotes": "Normale Passform. Fällt normal aus.",
+          "materials": [
+            "Gewachste Baumwolle",
+            "Kragen aus Baumwoll-Moleskin"
+          ],
+          "care": [
+            "Mit einem Schwamm reinigen",
+            "Jährlich nachwachsen"
+          ]
+        },
+        "es": {
+          "name": "Chaqueta field de algodón encerado",
+          "description": "Algodón encerado con parafina, cuatro bolsillos de fuelle y cuello de moleskin. Vuelve a encerarla cada invierno y durará décadas.",
+          "fitNotes": "Corte regular. Talla fiel.",
+          "materials": [
+            "Algodón encerado",
+            "Cuello de moleskin de algodón"
+          ],
+          "care": [
+            "Limpiar con una esponja",
+            "Volver a encerar una vez al año"
+          ]
+        }
+      }
     },
     {
       "handle": "quilted-liner-jacket-men",
@@ -7797,7 +8854,48 @@
       "pairsWith": [
         "lambswool-crewneck",
         "straight-selvedge-jean-men"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Veste matelassée légère",
+          "description": "Une couche matelassée en losanges, pensée pour se glisser sous un pardessus ou se porter seule les jours doux. Se range dans sa propre poche.",
+          "fitNotes": "Assez près du corps pour la superposition. Taille normalement.",
+          "materials": [
+            "Extérieur en nylon recyclé",
+            "Garnissage en polyester recyclé"
+          ],
+          "care": [
+            "Lavage en machine à froid",
+            "Séchage sur fil"
+          ]
+        },
+        "de": {
+          "name": "Gesteppte Linerjacke",
+          "description": "Eine Lage mit Rautensteppung – gemacht für unter den Mantel oder solo an milden Tagen. Lässt sich in der eigenen Tasche verstauen.",
+          "fitNotes": "Schmal genug für den Lagenlook. Fällt normal aus.",
+          "materials": [
+            "Obermaterial aus recyceltem Nylon",
+            "Füllung aus recyceltem Polyester"
+          ],
+          "care": [
+            "Maschinenwäsche kalt",
+            "Auf der Leine trocknen"
+          ]
+        },
+        "es": {
+          "name": "Chaqueta acolchada interior",
+          "description": "Una capa con acolchado de rombos pensada para llevar bajo un abrigo o sola en días templados. Se guarda en su propio bolsillo.",
+          "fitNotes": "Lo bastante ajustada para llevar en capas. Talla fiel.",
+          "materials": [
+            "Exterior de nailon reciclado",
+            "Relleno de poliéster reciclado"
+          ],
+          "care": [
+            "Lavar a máquina en frío",
+            "Secar tendido"
+          ]
+        }
+      }
     },
     {
       "handle": "wool-cashmere-chore-coat",
@@ -8112,7 +9210,42 @@
       "pairsWith": [
         "cashmere-roll-neck",
         "pleated-wool-trouser"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Veste de travail en laine et cachemire",
+          "description": "Une série numérotée de 300 pièces. La veste de travail réinventée en laine et cachemire, avec poches plaquées et boutons en corozo.",
+          "fitNotes": "Coupe ample et carrée. Prenez une taille en dessous pour une coupe plus près du corps.",
+          "materials": [
+            "85 % laine, 15 % cachemire"
+          ],
+          "care": [
+            "Nettoyage à sec uniquement"
+          ]
+        },
+        "de": {
+          "name": "Chore Coat aus Woll-Kaschmir",
+          "description": "Nummerierte Auflage von 300 Stück. Die klassische Arbeitsjacke, neu interpretiert in Woll-Kaschmir mit aufgesetzten Taschen und Corozo-Knöpfen.",
+          "fitNotes": "Locker und kastig. Für eine schmalere Passform eine Größe kleiner.",
+          "materials": [
+            "85 % Wolle, 15 % Kaschmir"
+          ],
+          "care": [
+            "Nur chemische Reinigung"
+          ]
+        },
+        "es": {
+          "name": "Chaqueta de trabajo de lana y cachemir",
+          "description": "Una edición numerada de 300 unidades. La clásica chaqueta de trabajo, reinterpretada en lana y cachemir con bolsillos de parche y botones de corozo.",
+          "fitNotes": "Holgada y de corte recto. Una talla menos para un ajuste más ceñido.",
+          "materials": [
+            "85 % lana, 15 % cachemir"
+          ],
+          "care": [
+            "Solo limpieza en seco"
+          ]
+        }
+      }
     },
     {
       "handle": "lambswool-crewneck",
@@ -8675,7 +9808,45 @@
         "loden-wool-overcoat",
         "relaxed-cord-trouser",
         "cashmere-rib-beanie"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Pull col rond en laine d’agneau",
+          "description": "Une laine d’agneau britannique, filée et tricotée dans les Scottish Borders, en col rond à épaules selle qui s’adoucit à chaque port.",
+          "fitNotes": "Coupe classique. Taille normalement.",
+          "materials": [
+            "100 % laine d’agneau britannique"
+          ],
+          "care": [
+            "Lavage à la main à froid",
+            "Séchage à plat"
+          ]
+        },
+        "de": {
+          "name": "Rundhalspullover aus Lammwolle",
+          "description": "Britische Lammwolle, gesponnen und gestrickt in den Scottish Borders, mit Sattelschulter – wird mit jedem Tragen weicher.",
+          "fitNotes": "Normale Passform. Fällt normal aus.",
+          "materials": [
+            "100 % britische Lammwolle"
+          ],
+          "care": [
+            "Handwäsche kalt",
+            "Liegend trocknen"
+          ]
+        },
+        "es": {
+          "name": "Jersey de lana de cordero con cuello redondo",
+          "description": "Lana de cordero británica, hilada y tejida en los Scottish Borders, en un jersey de cuello redondo con hombro sillín que se suaviza con cada uso.",
+          "fitNotes": "Corte regular. Talla fiel.",
+          "materials": [
+            "100 % lana de cordero británica"
+          ],
+          "care": [
+            "Lavar a mano en frío",
+            "Secar en plano"
+          ]
+        }
+      }
     },
     {
       "handle": "merino-half-zip",
@@ -8988,7 +10159,45 @@
       "pairsWith": [
         "quilted-liner-jacket-men",
         "straight-selvedge-jean-men"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Pull camionneur en mérinos",
+          "description": "Un pull demi-zippé en mérinos fin, à col cheminée et fermeture métallique fluide. Idéal en voyage.",
+          "fitNotes": "Coupe classique. Taille normalement.",
+          "materials": [
+            "100 % mérinos extrafin"
+          ],
+          "care": [
+            "Lavage à la main à froid",
+            "Séchage à plat"
+          ]
+        },
+        "de": {
+          "name": "Troyer aus Merinowolle",
+          "description": "Ein Troyer aus feiner Merinowolle mit Stehkragen und leichtgängigem Metallreißverschluss. Ein idealer Reisebegleiter.",
+          "fitNotes": "Normale Passform. Fällt normal aus.",
+          "materials": [
+            "100 % extrafeine Merinowolle"
+          ],
+          "care": [
+            "Handwäsche kalt",
+            "Liegend trocknen"
+          ]
+        },
+        "es": {
+          "name": "Jersey de merino con media cremallera",
+          "description": "Un jersey de merino fino con media cremallera, cuello chimenea y cremallera metálica que se desliza con suavidad. Ideal para viajar.",
+          "fitNotes": "Corte regular. Talla fiel.",
+          "materials": [
+            "100 % merino extrafino"
+          ],
+          "care": [
+            "Lavar a mano en frío",
+            "Secar en plano"
+          ]
+        }
+      }
     },
     {
       "handle": "shawl-cardigan",
@@ -9181,7 +10390,45 @@
       "pairsWith": [
         "heavyweight-jersey-tee-men",
         "relaxed-cord-trouser"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Cardigan à col châle",
+          "description": "Un cardigan épais à col châle en laine d’agneau non teinte, avec boutons en cuir. Le manteau du dimanche.",
+          "fitNotes": "Coupe ample. Taille normalement.",
+          "materials": [
+            "100 % laine d’agneau britannique"
+          ],
+          "care": [
+            "Lavage à la main à froid",
+            "Séchage à plat"
+          ]
+        },
+        "de": {
+          "name": "Cardigan mit Schalkragen",
+          "description": "Ein schwerer Cardigan mit Schalkragen aus ungefärbter Lammwolle und Lederknöpfen. Der Mantel für den Sonntag.",
+          "fitNotes": "Locker. Fällt normal aus.",
+          "materials": [
+            "100 % britische Lammwolle"
+          ],
+          "care": [
+            "Handwäsche kalt",
+            "Liegend trocknen"
+          ]
+        },
+        "es": {
+          "name": "Cárdigan con cuello chal",
+          "description": "Un cárdigan grueso con cuello chal en lana de cordero sin teñir y botones de piel. El abrigo de los domingos.",
+          "fitNotes": "Holgado. Talla fiel.",
+          "materials": [
+            "100 % lana de cordero británica"
+          ],
+          "care": [
+            "Lavar a mano en frío",
+            "Secar en plano"
+          ]
+        }
+      }
     },
     {
       "handle": "cashmere-roll-neck",
@@ -9499,7 +10746,48 @@
       "pairsWith": [
         "wool-cashmere-chore-coat",
         "unstructured-wool-blazer"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Pull col roulé en cachemire",
+          "description": "Un cachemire en jauge 12, en col roulé ajusté qui se glisse sans faux pli sous un blazer ou un pardessus.",
+          "fitNotes": "Coupe ajustée. Prenez une taille au-dessus pour un tombé plus décontracté.",
+          "materials": [
+            "100 % cachemire de Mongolie"
+          ],
+          "care": [
+            "Lavage à la main à froid",
+            "Séchage à plat",
+            "Retirer les bouloches au peigne"
+          ]
+        },
+        "de": {
+          "name": "Rollkragenpullover aus Kaschmir",
+          "description": "Kaschmir in 12-Gauge, als schmaler Rollkragenpullover, der sauber unter Sakko oder Mantel sitzt.",
+          "fitNotes": "Schmale Passform. Für einen lässigeren Look eine Größe größer.",
+          "materials": [
+            "100 % mongolisches Kaschmir"
+          ],
+          "care": [
+            "Handwäsche kalt",
+            "Liegend trocknen",
+            "Knötchen mit einem Kamm entfernen"
+          ]
+        },
+        "es": {
+          "name": "Jersey de cuello alto de cachemir",
+          "description": "Cachemir de galga 12 en un jersey de cuello alto ajustado que queda impecable bajo una blazer o un abrigo.",
+          "fitNotes": "Corte entallado. Una talla más para un look más holgado.",
+          "materials": [
+            "100 % cachemir mongol"
+          ],
+          "care": [
+            "Lavar a mano en frío",
+            "Secar en plano",
+            "Quitar bolitas con un peine"
+          ]
+        }
+      }
     },
     {
       "handle": "brushed-flannel-overshirt",
@@ -9814,7 +11102,45 @@
       "pairsWith": [
         "heavyweight-jersey-tee-men",
         "straight-selvedge-jean-men"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Surchemise en flanelle brossée",
+          "description": "Une flanelle brossée épaisse coupée en surchemise, avec deux poches à rabat et un ourlet arrondi. Chemise en septembre, veste en octobre.",
+          "fitNotes": "Coupe ample pour la superposition. Taille normalement.",
+          "materials": [
+            "100 % flanelle de coton brossée"
+          ],
+          "care": [
+            "Lavage en machine à 30 °C",
+            "Séchage sur fil"
+          ]
+        },
+        "de": {
+          "name": "Overshirt aus gebürstetem Flanell",
+          "description": "Schwerer, gebürsteter Flanell, geschnitten als Overshirt, mit zwei Pattentaschen und abgerundetem Saum. Im September ein Hemd, im Oktober eine Jacke.",
+          "fitNotes": "Locker für den Lagenlook. Fällt normal aus.",
+          "materials": [
+            "100 % gebürsteter Baumwollflanell"
+          ],
+          "care": [
+            "Maschinenwäsche 30 °C",
+            "Auf der Leine trocknen"
+          ]
+        },
+        "es": {
+          "name": "Sobrecamisa de franela cepillada",
+          "description": "Franela gruesa cepillada con corte de sobrecamisa, dos bolsillos con solapa y bajo curvo. Camisa en septiembre, chaqueta en octubre.",
+          "fitNotes": "Holgada para llevar en capas. Talla fiel.",
+          "materials": [
+            "100 % franela de algodón cepillada"
+          ],
+          "care": [
+            "Lavar a máquina a 30 °C",
+            "Secar tendida"
+          ]
+        }
+      }
     },
     {
       "handle": "oxford-button-down",
@@ -10127,7 +11453,45 @@
       "pairsWith": [
         "pleated-wool-trouser",
         "unstructured-wool-blazer"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Chemise Oxford à col boutonné",
+          "description": "Une toile Oxford biologique, avec un col boutonné non entoilé qui s’arrondit au lieu de pointer.",
+          "fitNotes": "Coupe classique. Taille normalement.",
+          "materials": [
+            "100 % coton Oxford biologique"
+          ],
+          "care": [
+            "Lavage en machine à 40 °C",
+            "Repasser encore humide"
+          ]
+        },
+        "de": {
+          "name": "Oxford-Hemd mit Button-down-Kragen",
+          "description": "Bio-Oxfordgewebe mit ungefüttertem Button-down-Kragen, der sich weich rollt statt spitz absteht.",
+          "fitNotes": "Normale Passform. Fällt normal aus.",
+          "materials": [
+            "100 % Bio-Baumwolle, Oxford"
+          ],
+          "care": [
+            "Maschinenwäsche 40 °C",
+            "Feucht bügeln"
+          ]
+        },
+        "es": {
+          "name": "Camisa Oxford button-down",
+          "description": "Tejido Oxford orgánico con cuello button-down sin entretela que se curva en lugar de quedar en punta.",
+          "fitNotes": "Corte regular. Talla fiel.",
+          "materials": [
+            "100 % Oxford de algodón orgánico"
+          ],
+          "care": [
+            "Lavar a máquina a 40 °C",
+            "Planchar aún húmeda"
+          ]
+        }
+      }
     },
     {
       "handle": "heavyweight-jersey-tee-men",
@@ -10563,7 +11927,45 @@
       "pairsWith": [
         "brushed-flannel-overshirt",
         "straight-selvedge-jean-men"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "T-shirt en jersey épais",
+          "description": "Un T-shirt en jersey biologique de 240 g/m², à l’encolure côtelée serrée qui reste bien à plat. Conçu pour la superposition.",
+          "fitNotes": "Coupe classique. Taille normalement.",
+          "materials": [
+            "100 % coton biologique, 240 g/m²"
+          ],
+          "care": [
+            "Lavage en machine à 30 °C",
+            "Ne pas sécher en machine"
+          ]
+        },
+        "de": {
+          "name": "T-Shirt aus schwerem Jersey",
+          "description": "Ein T-Shirt aus Bio-Jersey mit 240 g/m² und festem Halsbündchen, das flach anliegt. Gemacht für den Lagenlook.",
+          "fitNotes": "Normale Passform. Fällt normal aus.",
+          "materials": [
+            "100 % Bio-Baumwolle, 240 g/m²"
+          ],
+          "care": [
+            "Maschinenwäsche 30 °C",
+            "Nicht im Trockner trocknen"
+          ]
+        },
+        "es": {
+          "name": "Camiseta de punto grueso",
+          "description": "Una camiseta de punto orgánico de 240 g/m² con un canalé de cuello firme que no se deforma. Pensada para llevar en capas.",
+          "fitNotes": "Corte regular. Talla fiel.",
+          "materials": [
+            "100 % algodón orgánico, 240 g/m²"
+          ],
+          "care": [
+            "Lavar a máquina a 30 °C",
+            "No usar secadora"
+          ]
+        }
+      }
     },
     {
       "handle": "waffle-long-sleeve",
@@ -10752,7 +12154,42 @@
       "pairsWith": [
         "waxed-cotton-field-jacket",
         "relaxed-cord-trouser"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "T-shirt manches longues en maille gaufrée",
+          "description": "Issu de la collection AH25. Une première couche à manches longues en maille gaufrée, disponible dans quelques dernières tailles. Nous ne rééditons pas les collections passées.",
+          "fitNotes": "Coupe classique. Taille normalement.",
+          "materials": [
+            "100 % coton gaufré"
+          ],
+          "care": [
+            "Lavage en machine à 30 °C"
+          ]
+        },
+        "de": {
+          "name": "Langarmshirt mit Waffelstruktur",
+          "description": "Aus der Kollektion HW25. Ein Langarmshirt mit Waffelstruktur als Basisschicht, nur noch in wenigen Größen. Vergangene Kollektionen legen wir nicht neu auf.",
+          "fitNotes": "Normale Passform. Fällt normal aus.",
+          "materials": [
+            "100 % Baumwolle, Waffelpiqué"
+          ],
+          "care": [
+            "Maschinenwäsche 30 °C"
+          ]
+        },
+        "es": {
+          "name": "Camiseta de manga larga de punto gofre",
+          "description": "De OI25. Una primera capa de manga larga en punto gofre, con las últimas tallas disponibles. No reeditamos colecciones pasadas.",
+          "fitNotes": "Corte regular. Talla fiel.",
+          "materials": [
+            "100 % algodón de punto gofre"
+          ],
+          "care": [
+            "Lavar a máquina a 30 °C"
+          ]
+        }
+      }
     },
     {
       "handle": "pleated-wool-trouser",
@@ -11112,7 +12549,45 @@
       "pairsWith": [
         "loden-wool-overcoat",
         "oxford-button-down"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Pantalon à pince en laine",
+          "description": "Une flanelle de laine à pince simple, jambe fuselée et pattes de serrage latérales. Se porte avec un pardessus ou un pull.",
+          "fitNotes": "Ample à la cuisse, fuselé. Prenez votre tour de taille habituel.",
+          "materials": [
+            "100 % flanelle de laine"
+          ],
+          "care": [
+            "Nettoyage à sec",
+            "Rafraîchir à la vapeur"
+          ]
+        },
+        "de": {
+          "name": "Bundfaltenhose aus Wolle",
+          "description": "Wollflanell mit einfacher Bundfalte, schmal zulaufendem Bein und seitlichen Weitenreglern. Passt zum Mantel wie zum Pullover.",
+          "fitNotes": "Locker am Oberschenkel, schmal zulaufend. Nach Bundweite wählen.",
+          "materials": [
+            "100 % Wollflanell"
+          ],
+          "care": [
+            "Chemische Reinigung",
+            "Zum Auffrischen dämpfen"
+          ]
+        },
+        "es": {
+          "name": "Pantalón de lana con pinzas",
+          "description": "Franela de lana con una pinza, pierna estrecha en el bajo y ajustadores laterales. Con abrigo o con jersey.",
+          "fitNotes": "Holgado en el muslo y estrecho en el bajo. Elige tu talla de cintura.",
+          "materials": [
+            "100 % franela de lana"
+          ],
+          "care": [
+            "Limpieza en seco",
+            "Vaporizar para refrescar"
+          ]
+        }
+      }
     },
     {
       "handle": "relaxed-cord-trouser",
@@ -11471,7 +12946,42 @@
       "pairsWith": [
         "lambswool-crewneck",
         "shawl-cardigan"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Pantalon décontracté en velours côtelé",
+          "description": "Un velours à 8 côtes, en jambe droite décontractée qui s’assouplit et se patine au genou.",
+          "fitNotes": "Coupe ample, jambe droite. Prenez votre tour de taille habituel.",
+          "materials": [
+            "100 % coton, velours 8 côtes"
+          ],
+          "care": [
+            "Lavage en machine à 30 °C, sur l’envers"
+          ]
+        },
+        "de": {
+          "name": "Lässige Cordhose",
+          "description": "Breitcord mit acht Rippen pro Zoll und lässig geradem Bein, das am Knie weicher wird und schön verblasst.",
+          "fitNotes": "Locker, gerades Bein. Nach Bundweite wählen.",
+          "materials": [
+            "100 % Baumwolle, Cord mit 8 Rippen"
+          ],
+          "care": [
+            "Maschinenwäsche 30 °C, auf links"
+          ]
+        },
+        "es": {
+          "name": "Pantalón holgado de pana",
+          "description": "Pana de 8 canales con pierna recta y holgada que se suaviza y se desgasta en la rodilla.",
+          "fitNotes": "Holgado, pierna recta. Elige tu talla de cintura.",
+          "materials": [
+            "100 % pana de algodón de 8 canales"
+          ],
+          "care": [
+            "Lavar a máquina a 30 °C del revés"
+          ]
+        }
+      }
     },
     {
       "handle": "straight-selvedge-jean-men",
@@ -11479,7 +12989,7 @@
       "catalogId": "apparel",
       "brand": "Apple & Ivey",
       "name": "Straight Selvedge Jean",
-      "description": "14oz Japanese selvedge in a straight leg. Rigid at first; repaired free for life with Circle.",
+      "description": "14oz Japanese selvedge in a straight leg. Rigid at first; repaired free for life with The Ivey Circle.",
       "gender": "men",
       "primaryCategory": "men-trousers-and-denim",
       "categoryHandles": [
@@ -11685,7 +13195,45 @@
       "pairsWith": [
         "merino-half-zip",
         "brushed-flannel-overshirt"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Jean droit en denim selvedge",
+          "description": "Un denim selvedge japonais de 14 oz, en jambe droite. Rigide au début ; réparé gratuitement à vie avec The Ivey Circle.",
+          "fitNotes": "Taille mi-haute, jambe droite. Denim brut : entre deux tailles, prenez la plus petite.",
+          "materials": [
+            "100 % coton, denim selvedge, 14 oz"
+          ],
+          "care": [
+            "Laver rarement, sur l’envers",
+            "Séchage sur fil"
+          ]
+        },
+        "de": {
+          "name": "Gerade Selvedge-Jeans",
+          "description": "Japanischer Selvedge-Denim mit 14 oz und geradem Bein. Anfangs fest – mit The Ivey Circle ein Leben lang kostenlos repariert.",
+          "fitNotes": "Mittelhoher Bund, gerades Bein. Fester Denim – im Zweifel eine Größe kleiner.",
+          "materials": [
+            "100 % Baumwolle, Selvedge-Denim, 14 oz"
+          ],
+          "care": [
+            "Selten und auf links waschen",
+            "Auf der Leine trocknen"
+          ]
+        },
+        "es": {
+          "name": "Vaquero recto de denim selvedge",
+          "description": "Denim selvedge japonés de 14 oz con pierna recta. Rígido al principio; reparaciones gratuitas de por vida con The Ivey Circle.",
+          "fitNotes": "Talle medio, pierna recta. Denim rígido: si dudas entre dos tallas, elige la menor.",
+          "materials": [
+            "100 % denim selvedge de algodón, 14 oz"
+          ],
+          "care": [
+            "Lavar con poca frecuencia, del revés",
+            "Secar tendido"
+          ]
+        }
+      }
     },
     {
       "handle": "drawstring-wool-trouser",
@@ -11898,7 +13446,42 @@
       "pairsWith": [
         "merino-half-zip",
         "heavyweight-jersey-tee-men"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Pantalon à cordon en laine",
+          "description": "Issu de la collection AH25. Un pantalon à cordon de serrage en laine mélangée tout en douceur, disponible dans quelques dernières tailles. Nous ne rééditons pas les collections passées.",
+          "fitNotes": "Coupe ample. Prenez votre tour de taille habituel.",
+          "materials": [
+            "Laine mélangée"
+          ],
+          "care": [
+            "Nettoyage à sec"
+          ]
+        },
+        "de": {
+          "name": "Wollhose mit Tunnelzug",
+          "description": "Aus der Kollektion HW25. Eine Hose mit Tunnelzug aus weichem Wollmix, nur noch in wenigen Größen. Vergangene Kollektionen legen wir nicht neu auf.",
+          "fitNotes": "Locker. Nach Bundweite wählen.",
+          "materials": [
+            "Wollmischung"
+          ],
+          "care": [
+            "Chemische Reinigung"
+          ]
+        },
+        "es": {
+          "name": "Pantalón de lana con cordón",
+          "description": "De OI25. Un pantalón con cordón en suave mezcla de lana, con las últimas tallas disponibles. No reeditamos colecciones pasadas.",
+          "fitNotes": "Holgado. Elige tu talla de cintura.",
+          "materials": [
+            "Mezcla de lana"
+          ],
+          "care": [
+            "Limpieza en seco"
+          ]
+        }
+      }
     },
     {
       "handle": "unstructured-wool-blazer",
@@ -12259,7 +13842,45 @@
       "pairsWith": [
         "cashmere-roll-neck",
         "pleated-wool-trouser"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Blazer déstructuré en laine",
+          "description": "Un blazer déstructuré et semi-doublé, à poches plaquées. Une veste de tailleur qui se plie dans un sac.",
+          "fitNotes": "Coupe classique. Prenez votre tour de poitrine.",
+          "materials": [
+            "100 % laine",
+            "Semi-doublé"
+          ],
+          "care": [
+            "Nettoyage à sec uniquement"
+          ]
+        },
+        "de": {
+          "name": "Unstrukturierter Blazer aus Wolle",
+          "description": "Ein halb gefütterter, unstrukturierter Blazer mit aufgesetzten Taschen. Tailoring, das man zusammengefaltet in die Tasche stecken kann.",
+          "fitNotes": "Normale Passform. Nach Brustweite wählen.",
+          "materials": [
+            "100 % Wolle",
+            "Halbgefüttert"
+          ],
+          "care": [
+            "Nur chemische Reinigung"
+          ]
+        },
+        "es": {
+          "name": "Blazer desestructurada de lana",
+          "description": "Una blazer desestructurada con medio forro y bolsillos de parche. Sastrería que puedes doblar y guardar en la bolsa.",
+          "fitNotes": "Corte regular. Elige tu talla de pecho.",
+          "materials": [
+            "100 % lana",
+            "Medio forro"
+          ],
+          "care": [
+            "Solo limpieza en seco"
+          ]
+        }
+      }
     },
     {
       "handle": "fleece-gilet",
@@ -12450,7 +14071,42 @@
       "pairsWith": [
         "lambswool-crewneck",
         "relaxed-cord-trouser"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Gilet sans manches en polaire",
+          "description": "Issu de la collection AH25. Un gilet sans manches en polaire recyclée, disponible dans quelques dernières tailles. Nous ne rééditons pas les collections passées.",
+          "fitNotes": "Coupe classique. Taille normalement.",
+          "materials": [
+            "Polaire en polyester recyclé"
+          ],
+          "care": [
+            "Lavage en machine à 30 °C"
+          ]
+        },
+        "de": {
+          "name": "Fleece-Weste",
+          "description": "Aus der Kollektion HW25. Eine Weste aus recyceltem Fleece, nur noch in wenigen Größen. Vergangene Kollektionen legen wir nicht neu auf.",
+          "fitNotes": "Normale Passform. Fällt normal aus.",
+          "materials": [
+            "Fleece aus recyceltem Polyester"
+          ],
+          "care": [
+            "Maschinenwäsche 30 °C"
+          ]
+        },
+        "es": {
+          "name": "Chaleco de forro polar",
+          "description": "De OI25. Un chaleco de forro polar reciclado, con las últimas tallas disponibles. No reeditamos colecciones pasadas.",
+          "fitNotes": "Corte regular. Talla fiel.",
+          "materials": [
+            "Forro polar de poliéster reciclado"
+          ],
+          "care": [
+            "Lavar a máquina a 30 °C"
+          ]
+        }
+      }
     },
     {
       "handle": "structured-leather-tote",
@@ -12574,7 +14230,42 @@
       "pairsWith": [
         "shearling-collar-suede-jacket",
         "leather-palm-knit-gloves"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Cabas structuré en cuir",
+          "description": "Un cuir à tannage végétal issu d’une unique tannerie toscane, cousu main. Accueille un ordinateur portable 16 pouces et fonce avec le temps.",
+          "fitNotes": "Accueille un ordinateur portable 16 pouces. 38 × 32 × 14 cm.",
+          "materials": [
+            "Cuir à tannage végétal"
+          ],
+          "care": [
+            "Nourrir le cuir deux fois par an"
+          ]
+        },
+        "de": {
+          "name": "Strukturierte Ledertasche",
+          "description": "Pflanzlich gegerbtes Leder aus einer einzigen toskanischen Gerberei, von Hand genäht. Fasst einen 16-Zoll-Laptop und dunkelt mit der Zeit schön nach.",
+          "fitNotes": "Fasst einen 16-Zoll-Laptop. 38 × 32 × 14 cm.",
+          "materials": [
+            "Pflanzlich gegerbtes Leder"
+          ],
+          "care": [
+            "Zweimal im Jahr mit Lederpflege behandeln"
+          ]
+        },
+        "es": {
+          "name": "Bolso tote estructurado de piel",
+          "description": "Piel de curtido vegetal de una única curtiduría toscana, cosida a mano. Cabe un portátil de 16 pulgadas y se oscurece con el uso.",
+          "fitNotes": "Admite un portátil de 16 pulgadas. 38 × 32 × 14 cm.",
+          "materials": [
+            "Piel de curtido vegetal"
+          ],
+          "care": [
+            "Nutrir dos veces al año"
+          ]
+        }
+      }
     },
     {
       "handle": "soft-leather-crossbody",
@@ -12701,7 +14392,42 @@
       "pairsWith": [
         "double-faced-wrap-coat",
         "merino-knit-midi-dress"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Sac bandoulière en cuir souple",
+          "description": "Un petit sac bandoulière en cuir nappa souple, avec bandoulière réglable et rabat aimanté.",
+          "fitNotes": "22 × 15 × 6 cm. Bandoulière réglable.",
+          "materials": [
+            "Cuir nappa"
+          ],
+          "care": [
+            "Nourrir le cuir deux fois par an"
+          ]
+        },
+        "de": {
+          "name": "Crossbody-Tasche aus weichem Leder",
+          "description": "Eine kleine Crossbody-Tasche aus geschmeidigem Nappaleder mit verstellbarem Riemen und Magnetverschluss.",
+          "fitNotes": "22 × 15 × 6 cm. Verstellbarer Riemen.",
+          "materials": [
+            "Nappaleder"
+          ],
+          "care": [
+            "Zweimal im Jahr mit Lederpflege behandeln"
+          ]
+        },
+        "es": {
+          "name": "Bolso bandolera de piel suave",
+          "description": "Un pequeño bolso bandolera en napa flexible, con correa ajustable y solapa magnética.",
+          "fitNotes": "22 × 15 × 6 cm. Correa ajustable.",
+          "materials": [
+            "Piel napa"
+          ],
+          "care": [
+            "Nutrir dos veces al año"
+          ]
+        }
+      }
     },
     {
       "handle": "waxed-canvas-weekender",
@@ -12799,7 +14525,48 @@
       "pairsWith": [
         "waxed-cotton-field-jacket",
         "lambswool-crewneck"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Sac week-end en toile cirée",
+          "description": "Une série numérotée de 200 pièces. Une toile cirée aux anses en cuir bridle, au format bagage cabine.",
+          "fitNotes": "50 × 28 × 24 cm. Format cabine.",
+          "materials": [
+            "Toile de coton cirée",
+            "Finitions en cuir"
+          ],
+          "care": [
+            "Nettoyer à l’éponge",
+            "Recirer une fois par an"
+          ]
+        },
+        "de": {
+          "name": "Weekender aus gewachstem Canvas",
+          "description": "Nummerierte Auflage von 200 Stück. Gewachstes Canvas mit Griffen aus Zaumleder, im Format für das Handgepäck.",
+          "fitNotes": "50 × 28 × 24 cm. Handgepäckgröße.",
+          "materials": [
+            "Gewachstes Baumwoll-Canvas",
+            "Lederbesätze"
+          ],
+          "care": [
+            "Mit einem Schwamm reinigen",
+            "Jährlich nachwachsen"
+          ]
+        },
+        "es": {
+          "name": "Bolsa de viaje de lona encerada",
+          "description": "Una edición numerada de 200 unidades. Lona encerada con asas de piel bridle, con medidas de equipaje de cabina.",
+          "fitNotes": "50 × 28 × 24 cm. Tamaño cabina.",
+          "materials": [
+            "Lona de algodón encerada",
+            "Detalles de piel"
+          ],
+          "care": [
+            "Limpiar con una esponja",
+            "Volver a encerar una vez al año"
+          ]
+        }
+      }
     },
     {
       "handle": "oversized-lambswool-scarf",
@@ -12925,7 +14692,45 @@
       "pairsWith": [
         "loden-wool-car-coat",
         "loden-wool-overcoat"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Grande écharpe en laine d’agneau",
+          "description": "Une écharpe longue et large en laine d’agneau, tissée dans les Scottish Borders et terminée par des franges torsadées à la main.",
+          "fitNotes": "200 × 60 cm.",
+          "materials": [
+            "100 % laine d’agneau britannique"
+          ],
+          "care": [
+            "Lavage à la main à froid",
+            "Séchage à plat"
+          ]
+        },
+        "de": {
+          "name": "Oversized-Schal aus Lammwolle",
+          "description": "Ein langer, breiter Schal aus Lammwolle, gewebt in den Scottish Borders und mit handgedrehten Fransen vollendet.",
+          "fitNotes": "200 × 60 cm.",
+          "materials": [
+            "100 % britische Lammwolle"
+          ],
+          "care": [
+            "Handwäsche kalt",
+            "Liegend trocknen"
+          ]
+        },
+        "es": {
+          "name": "Bufanda oversize de lana de cordero",
+          "description": "Una bufanda larga y ancha de lana de cordero, tejida en los Scottish Borders y rematada con flecos retorcidos a mano.",
+          "fitNotes": "200 × 60 cm.",
+          "materials": [
+            "100 % lana de cordero británica"
+          ],
+          "care": [
+            "Lavar a mano en frío",
+            "Secar en plano"
+          ]
+        }
+      }
     },
     {
       "handle": "cashmere-rib-beanie",
@@ -13084,7 +14889,45 @@
       "pairsWith": [
         "merino-rib-crewneck",
         "lambswool-crewneck"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Bonnet côtelé en cachemire",
+          "description": "Un bonnet en cachemire à large revers, en côtes 2x2.",
+          "fitNotes": "Taille unique, extensible.",
+          "materials": [
+            "100 % cachemire de Mongolie"
+          ],
+          "care": [
+            "Lavage à la main à froid",
+            "Séchage à plat"
+          ]
+        },
+        "de": {
+          "name": "Rippstrick-Beanie aus Kaschmir",
+          "description": "Eine Beanie aus Kaschmir im 2x2-Rippenstrick mit breitem Umschlag.",
+          "fitNotes": "Einheitsgröße, dehnbar.",
+          "materials": [
+            "100 % mongolisches Kaschmir"
+          ],
+          "care": [
+            "Handwäsche kalt",
+            "Liegend trocknen"
+          ]
+        },
+        "es": {
+          "name": "Gorro de canalé de cachemir",
+          "description": "Un gorro de cachemir en canalé 2x2 con vuelta ancha.",
+          "fitNotes": "Talla única, elástico.",
+          "materials": [
+            "100 % cachemir mongol"
+          ],
+          "care": [
+            "Lavar a mano en frío",
+            "Secar en plano"
+          ]
+        }
+      }
     },
     {
       "handle": "leather-palm-knit-gloves",
@@ -13255,7 +15098,45 @@
       "pairsWith": [
         "oversized-lambswool-scarf",
         "loden-wool-overcoat"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Gants en maille à paume en cuir",
+          "description": "Des gants en maille de mérinos, à paume en cuir d’agneau pour une bonne prise du volant.",
+          "fitNotes": "Le S/M convient à la plupart des femmes ; le M/L à la plupart des hommes.",
+          "materials": [
+            "Maille de mérinos",
+            "Paume en cuir d’agneau"
+          ],
+          "care": [
+            "Nettoyage localisé"
+          ]
+        },
+        "de": {
+          "name": "Strickhandschuhe mit Lederinnenfläche",
+          "description": "Handschuhe aus Merinostrick mit Innenfläche aus Lammleder für sicheren Griff am Lenkrad.",
+          "fitNotes": "S/M passt den meisten Damen, M/L den meisten Herren.",
+          "materials": [
+            "Merinostrick",
+            "Innenfläche aus Lammleder"
+          ],
+          "care": [
+            "Punktuell reinigen"
+          ]
+        },
+        "es": {
+          "name": "Guantes de punto con palma de piel",
+          "description": "Guantes de punto de merino con palma de piel de cordero para un buen agarre al volante.",
+          "fitNotes": "S/M sienta bien a la mayoría de mujeres; M/L, a la mayoría de hombres.",
+          "materials": [
+            "Punto de merino",
+            "Palma de piel de cordero"
+          ],
+          "care": [
+            "Limpiar las manchas localmente"
+          ]
+        }
+      }
     },
     {
       "handle": "suede-chelsea-boot",
@@ -13263,7 +15144,7 @@
       "catalogId": "apparel",
       "brand": "Apple & Ivey",
       "name": "Suede Chelsea Boot",
-      "description": "Water-repellent calf suede on a Goodyear-welted commando sole, resoleable at any Tessel store.",
+      "description": "Water-repellent calf suede on a Goodyear-welted commando sole, resoleable at any Apple & Ivey boutique.",
       "gender": "unisex",
       "primaryCategory": "accessories-footwear",
       "categoryHandles": [
@@ -13665,7 +15546,48 @@
       "pairsWith": [
         "pleated-barrel-trouser",
         "merino-knit-midi-dress"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Bottines Chelsea en suède",
+          "description": "Un suède de veau déperlant monté cousu Goodyear sur semelle crantée, ressemelable dans toutes les boutiques Apple & Ivey.",
+          "fitNotes": "Taille normalement en pointure européenne. Pour les demi-pointures, prenez la pointure au-dessus.",
+          "materials": [
+            "Suède de veau",
+            "Semelle crantée en caoutchouc"
+          ],
+          "care": [
+            "Brosser le suède",
+            "Utiliser un imperméabilisant pour suède"
+          ]
+        },
+        "de": {
+          "name": "Chelsea Boots aus Veloursleder",
+          "description": "Wasserabweisendes Kalbsveloursleder auf rahmengenähter Commando-Sohle (Goodyear) – in jedem Apple & Ivey Store neu besohlbar.",
+          "fitNotes": "Entspricht der EU-Größe. Bei halben Größen eine Größe größer.",
+          "materials": [
+            "Kalbsveloursleder",
+            "Commando-Sohle aus Gummi"
+          ],
+          "care": [
+            "Veloursleder ausbürsten",
+            "Mit Imprägnierspray für Veloursleder schützen"
+          ]
+        },
+        "es": {
+          "name": "Botín Chelsea de ante",
+          "description": "Ante de ternera repelente al agua sobre suela commando con cosido Goodyear, que puede cambiarse en cualquier tienda Apple & Ivey.",
+          "fitNotes": "Talla europea fiel. Si usas media talla, elige la superior.",
+          "materials": [
+            "Ante de ternera",
+            "Suela commando de goma"
+          ],
+          "care": [
+            "Cepillar el ante",
+            "Usar un protector para ante"
+          ]
+        }
+      }
     },
     {
       "handle": "leather-derby",
@@ -14073,7 +15995,48 @@
       "pairsWith": [
         "pleated-wool-trouser",
         "unstructured-wool-blazer"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Derbies en cuir",
+          "description": "Un derby à bout uni monté cousu Goodyear sur semelle en cuir, fabriqué au Portugal.",
+          "fitNotes": "Taille normalement en pointure européenne. Pour les demi-pointures, prenez la pointure en dessous.",
+          "materials": [
+            "Cuir de veau",
+            "Semelle en cuir"
+          ],
+          "care": [
+            "Cirer régulièrement",
+            "Utiliser des embauchoirs"
+          ]
+        },
+        "de": {
+          "name": "Derby-Schuh aus Leder",
+          "description": "Ein Derby ohne Kappe auf rahmengenähter Ledersohle (Goodyear), gefertigt in Portugal.",
+          "fitNotes": "Entspricht der EU-Größe. Bei halben Größen eine Größe kleiner.",
+          "materials": [
+            "Kalbsleder",
+            "Ledersohle"
+          ],
+          "care": [
+            "Regelmäßig polieren",
+            "Schuhspanner verwenden"
+          ]
+        },
+        "es": {
+          "name": "Zapato Derby de piel",
+          "description": "Un Derby de puntera lisa con suela de cuero y cosido Goodyear, fabricado en Portugal.",
+          "fitNotes": "Talla europea fiel. Si usas media talla, elige la inferior.",
+          "materials": [
+            "Piel de ternera",
+            "Suela de cuero"
+          ],
+          "care": [
+            "Lustrar con regularidad",
+            "Usar hormas"
+          ]
+        }
+      }
     },
     {
       "handle": "wide-leather-belt",
@@ -14239,7 +16202,45 @@
       "pairsWith": [
         "wide-leg-wool-trouser",
         "straight-selvedge-jean-men"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Ceinture large en cuir",
+          "description": "Issue de la collection AH25. Une ceinture large en cuir à tannage végétal, à boucle en laiton massif, disponible dans quelques dernières tailles.",
+          "fitNotes": "Prenez votre tour de taille en cm.",
+          "materials": [
+            "Cuir à tannage végétal",
+            "Boucle en laiton"
+          ],
+          "care": [
+            "Nourrir le cuir de temps en temps"
+          ]
+        },
+        "de": {
+          "name": "Breiter Ledergürtel",
+          "description": "Aus der Kollektion HW25. Ein breiter Gürtel aus pflanzlich gegerbtem Leder mit massiver Messingschnalle, nur noch in wenigen Größen.",
+          "fitNotes": "Nach Bundweite in cm wählen.",
+          "materials": [
+            "Pflanzlich gegerbtes Leder",
+            "Schnalle aus Messing"
+          ],
+          "care": [
+            "Gelegentlich mit Lederpflege behandeln"
+          ]
+        },
+        "es": {
+          "name": "Cinturón ancho de piel",
+          "description": "De OI25. Un cinturón ancho de curtido vegetal con hebilla de latón macizo, con las últimas tallas disponibles.",
+          "fitNotes": "Elige tu contorno de cintura en cm.",
+          "materials": [
+            "Piel de curtido vegetal",
+            "Hebilla de latón"
+          ],
+          "care": [
+            "Nutrir de vez en cuando"
+          ]
+        }
+      }
     },
     {
       "handle": "merino-sock-set",
@@ -14380,7 +16381,42 @@
       "pairsWith": [
         "leather-derby",
         "suede-chelsea-boot"
-      ]
+      ],
+      "i18n": {
+        "fr": {
+          "name": "Coffret de chaussettes en mérinos (3)",
+          "description": "Trois paires de chaussettes côtelées en mérinos, coloris Loden, Ocre et Encre, présentées en coffret.",
+          "fitNotes": "S : 36–39, M : 40–43, L : 44–47.",
+          "materials": [
+            "Mérinos mélangé"
+          ],
+          "care": [
+            "Lavage en machine à 30 °C"
+          ]
+        },
+        "de": {
+          "name": "Socken-Set aus Merinowolle (3)",
+          "description": "Drei Paar gerippte Merinosocken in Loden, Ocker und Tinte, in einer Geschenkbox.",
+          "fitNotes": "S: 36–39, M: 40–43, L: 44–47.",
+          "materials": [
+            "Merinomischung"
+          ],
+          "care": [
+            "Maschinenwäsche 30 °C"
+          ]
+        },
+        "es": {
+          "name": "Set de calcetines de merino (3)",
+          "description": "Tres pares de calcetines de canalé de merino en loden, ocre y tinta, presentados en caja.",
+          "fitNotes": "S: 36–39, M: 40–43, L: 44–47.",
+          "materials": [
+            "Mezcla de merino"
+          ],
+          "care": [
+            "Lavar a máquina a 30 °C"
+          ]
+        }
+      }
     }
   ]
 }

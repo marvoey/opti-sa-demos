@@ -4,6 +4,7 @@ import { createContext, useCallback, useContext, useMemo, useState, useSyncExter
 import { createCommerceStore, type CommerceState, type CommerceStore } from '@/lib/commerce/store'
 import { priceIn } from '@/lib/commerce/card'
 import type { CartLine, CurrencyCode } from '@/lib/commerce/types'
+import type { Market } from '@/lib/commerce/market'
 
 /**
  * Mock-storefront context: bag, wishlist, recently viewed, the demo persona and
@@ -20,6 +21,8 @@ type CommerceContextValue = {
   catalogId:   string
   currency:    CurrencyCode
   locale:      string
+  /** Shopping market (currency + size labels), see lib/commerce/market.ts. */
+  market:      Market
   state:       CommerceState
   bagCount:    number
   subtotal:    number
@@ -41,7 +44,7 @@ const noop = () => {}
 const INERT_STATE: CommerceState = { bag: [], wishlist: [], viewed: [], lastOrder: null, persona: null, hydrated: false }
 
 const CommerceContext = createContext<CommerceContextValue>({
-  enabled: false, catalogId: '', currency: 'USD', locale: 'en', state: INERT_STATE,
+  enabled: false, catalogId: '', currency: 'USD', locale: 'en', market: 'default', state: INERT_STATE,
   bagCount: 0, subtotal: 0, bagOpen: false, lastAdded: null,
   openBag: noop, closeBag: noop, addLine: () => null, setQuantity: noop, removeLine: noop,
   toggleWishlist: () => false, recordView: noop, completeOrder: noop, signIn: noop, signOut: noop,
@@ -60,12 +63,13 @@ type Props = {
   catalogId: string
   currency:  CurrencyCode
   locale:    string
+  market?:   Market
   /** Showcase only: pre-fill an empty store (in memory until changed). */
   seed?:     { bag?: CartLine[]; wishlist?: string[] }
   children:  ReactNode
 }
 
-export default function CommerceProvider({ catalogId, currency, locale, seed, children }: Props) {
+export default function CommerceProvider({ catalogId, currency, locale, market = 'default', seed, children }: Props) {
   const [store] = useState(() => createCommerceStore(catalogId, seed))
   const state = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getServerSnapshot)
   const [bagOpen, setBagOpen] = useState(false)
@@ -83,6 +87,7 @@ export default function CommerceProvider({ catalogId, currency, locale, seed, ch
     catalogId,
     currency,
     locale,
+    market,
     state,
     bagCount: state.bag.reduce((n, l) => n + l.quantity, 0),
     subtotal: bagSubtotal(state.bag, currency),
@@ -98,7 +103,7 @@ export default function CommerceProvider({ catalogId, currency, locale, seed, ch
     completeOrder:  store.completeOrder,
     signIn:         store.signIn,
     signOut:        store.signOut,
-  }), [catalogId, currency, locale, state, bagOpen, lastAdded, addLine, store])
+  }), [catalogId, currency, locale, market, state, bagOpen, lastAdded, addLine, store])
 
   return <CommerceContext.Provider value={value}>{children}</CommerceContext.Provider>
 }

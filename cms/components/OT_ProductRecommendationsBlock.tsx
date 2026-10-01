@@ -5,10 +5,11 @@ import ProductRecommendationsBlock from '@/components/blocks/ProductRecommendati
 import CatalogRecommendations from '@/components/blocks/CatalogRecommendations'
 import type { ProductRecColor } from '@/components/blocks/ProductRecommendationsBlock'
 import { getRequestDomain, getRequestLocale } from '@/lib/optimizely'
-import { getCommerceSettings, currencyForLocale } from '@/lib/commerce/settings'
+import { getCommerceSettings, currencyForLocale, getMarketCookie } from '@/lib/commerce/settings'
 import { isRecStrategy, recommend } from '@/lib/commerce/recommend'
 import { getPdpProduct } from '@/lib/commerce/pdp-context'
 import { toCardData } from '@/lib/commerce/card'
+import { withPricing } from '@/lib/commerce/pricing'
 
 type Props = {
   content:          ContentProps<typeof OT_ProductRecommendationsBlockContentType>
@@ -38,6 +39,7 @@ export default async function OT_ProductRecommendationsBlockAdapter({
     const strategy = isRecStrategy(content.strategy) ? content.strategy : 'trending'
     const count = Math.max(initialCount, 4)
     const pdpProduct = getPdpProduct()
+    const currency = currencyForLocale(commerce, locale, await getMarketCookie())
 
     const dynamic = strategy === 'recentlyViewed' || strategy === 'nextBest' ? strategy : undefined
     const initial = dynamic
@@ -51,7 +53,7 @@ export default async function OT_ProductRecommendationsBlockAdapter({
           category: content.categoryHandle?.trim() || undefined,
           exclude: pdpProduct ? [pdpProduct.handle] : [],
           limit: count,
-        })).map((p) => toCardData(p, currencyForLocale(commerce, locale)))
+        }).then(withPricing)).map((p) => toCardData(p, currency))
 
     return (
       <div {...pa(content.__composition)} className="w-full">
@@ -62,6 +64,7 @@ export default async function OT_ProductRecommendationsBlockAdapter({
           count={count}
           initial={initial}
           dynamic={dynamic}
+          strategy={strategy}
           exclude={pdpProduct?.handle}
           pa={pa}
         />

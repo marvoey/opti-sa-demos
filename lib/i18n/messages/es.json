@@ -182,6 +182,8 @@
     "signInHint": "Perfiles ficticios para demostraciones. Nada sale de este navegador.",
     "signOut": "Cerrar sesión",
     "continueAsGuest": "Continuar como invitado",
+    "resetDemo": "Restablecer la demo",
+    "resetDemoHint": "Vacía la cesta, la lista de deseos, el inicio de sesión y el ID de visitante.",
     "hiName": "Hola, {name}",
     "signedInAs": "Sesión iniciada como {name}.",
     "notYou": "¿No eres tú? Cerrar sesión",

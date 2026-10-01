@@ -10,6 +10,8 @@ export type CatalogRecommendationsProps = {
   initial?:     ProductCardData[]
   dynamic?:     'recentlyViewed' | 'nextBest'
   exclude?:     string
+  /** Recommendation strategy, reported with recs_click events. */
+  strategy?:    string
   pa?:          (prop: string) => Record<string, unknown>
 }
 
@@ -26,7 +28,7 @@ const BG_CLASS: Record<ProductRecColor, string> = {
  * the whole shelf, heading included.
  */
 export default function CatalogRecommendations({
-  heading, subheading, color = 'canvas', count, initial, dynamic, exclude, pa = () => ({}),
+  heading, subheading, color = 'canvas', count, initial, dynamic, exclude, strategy, pa = () => ({}),
 }: CatalogRecommendationsProps) {
   const onBrand = color === 'brand'
   if (!dynamic && !initial?.length) return null
@@ -49,7 +51,7 @@ export default function CatalogRecommendations({
   return (
     <section className={`${BG_CLASS[color]} px-md py-xl lg:px-lg [&:not(:has(li))]:hidden`} {...(onBrand ? { 'data-theme': 'dark' } : {})}>
       <div className="mx-auto max-w-[96rem]">
-        <CatalogRecommendationsClient initial={initial} dynamic={dynamic} exclude={exclude} count={count} header={header} onBrand={onBrand} />
+        <CatalogRecommendationsClient initial={initial} dynamic={dynamic} exclude={exclude} strategy={strategy ?? dynamic ?? 'manual'} count={count} header={header} onBrand={onBrand} />
       </div>
     </section>
   )

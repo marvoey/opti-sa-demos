@@ -1,10 +1,11 @@
 'use client'
 
 import { useEffect, useId, useRef, useState } from 'react'
-import { Check, UserRound } from 'lucide-react'
+import { Check, RotateCcw, UserRound } from 'lucide-react'
 import { useCommerce } from '@/components/commerce/CommerceProvider'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import { DEMO_PERSONAS, getPersona } from '@/lib/commerce/personas'
+import { resetDemoState } from '@/lib/demo/state'
 import type { MessageKey } from '@/lib/i18n/t'
 
 const iconBtn =
@@ -102,6 +103,15 @@ export default function PersonaSignIn() {
           className="mt-xs w-full border-t border-fg/10 px-xs pt-sm text-left text-sm text-fg-muted underline-offset-4 hover:text-fg hover:underline"
         >
           {persona ? t('commerce.signOut') : t('commerce.continueAsGuest')}
+        </button>
+        <button
+          type="button"
+          onClick={() => { resetDemoState(); window.location.reload() }}
+          title={t('commerce.resetDemoHint')}
+          className="mt-xs flex w-full items-center gap-xs px-xs pb-xs text-left text-xs text-fg-muted underline-offset-4 hover:text-fg hover:underline"
+        >
+          <RotateCcw size={12} aria-hidden />
+          {t('commerce.resetDemo')}
         </button>
       </div>
     </div>

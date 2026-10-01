@@ -182,6 +182,8 @@
     "signInHint": "Fictitious profiles for demonstrations. Nothing leaves this browser.",
     "signOut": "Sign out",
     "continueAsGuest": "Continue as guest",
+    "resetDemo": "Reset demo",
+    "resetDemoHint": "Clears the bag, wishlist, sign-in and visitor id.",
     "hiName": "Hi, {name}",
     "signedInAs": "Signed in as {name}.",
     "notYou": "Not you? Sign out",

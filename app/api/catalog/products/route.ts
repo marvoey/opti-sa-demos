@@ -6,9 +6,10 @@
  * recently viewed). Host-gated: 404 on sites without mock commerce enabled.
  */
 import { type NextRequest, NextResponse } from 'next/server'
-import { getProductsByHandles, isValidHandle } from '@/lib/catalog'
+import { getProductsByHandles, isValidHandle, withCatalogLocale } from '@/lib/catalog'
 import { getCommerceSettings } from '@/lib/commerce/settings'
 import { toCardData } from '@/lib/commerce/card'
+import { withPricing } from '@/lib/commerce/pricing'
 import { parseCurrency } from '@/lib/commerce/params'
 
 const MAX_HANDLES = 24
@@ -21,7 +22,7 @@ export async function GET(request: NextRequest) {
     .split(',').map((h) => h.trim()).filter(isValidHandle).slice(0, MAX_HANDLES)
   const currency = parseCurrency(request.nextUrl.searchParams.get('currency'), settings.currencyCode)
 
-  const products = await getProductsByHandles(settings.catalogId, handles)
+  const products = await withCatalogLocale(request.nextUrl.searchParams.get('locale'), () => getProductsByHandles(settings.catalogId, handles).then(withPricing))
   return NextResponse.json(
     { products: products.map((p) => toCardData(p, currency)) },
     { headers: { 'Cache-Control': 'private, max-age=60' } },

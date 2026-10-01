@@ -8,6 +8,7 @@ import { useCommerce } from '@/components/commerce/CommerceProvider'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import { localizedHref } from '@/lib/i18n/config'
 import { trackAddToCart, trackWishlistAdd } from '@/lib/commerce/track'
+import { sizeConvention, sizeLabel, sizeSystemFor } from '@/lib/commerce/sizes'
 import { priceIn } from '@/lib/commerce/card'
 import type { ProductCardData } from '@/lib/commerce/card'
 import type { MessageKey } from '@/lib/i18n/t'
@@ -34,10 +35,12 @@ type Props = {
  */
 export default function ProductCard({ product, priority = false, aspect = 'portrait', sizes }: Props) {
   const { t, locale } = useTranslation()
-  const { enabled, state, toggleWishlist, addLine, currency } = useCommerce()
+  const { enabled, state, toggleWishlist, addLine, currency, market } = useCommerce()
   const saved = state.wishlist.includes(product.handle)
   const href = localizedHref(product.url, locale)
   const badge = product.badges.find((b) => b !== 'signature') ?? null
+  const sizeSystem = sizeSystemFor(product)
+  const convention = sizeConvention(sizeSystem, market)
   const extraSwatches = product.colours.length - MAX_SWATCHES
 
   const onHeart = () => {
@@ -64,8 +67,8 @@ export default function ProductCard({ product, priority = false, aspect = 'portr
 
   const addVariant = (v: NonNullable<typeof quick>['variants'][number]) => {
     if (!quick || v.stock <= 0) return
-    const line = addLine({ sku: v.sku, handle: product.handle, name: product.name, colourName: quick.colourName, size: v.size, image: product.image, prices: v.prices })
-    if (line) trackAddToCart(line, currency, priceIn(v.prices, currency).amount)
+    const line = addLine({ sku: v.sku, handle: product.handle, name: product.name, colourName: quick.colourName, size: v.size, sizeSystem, image: product.image, prices: v.prices })
+    if (line) trackAddToCart(line, currency, priceIn(v.prices, currency).amount, 'quick_add')
     setPicking(false)
   }
   const onQuick = () => {
@@ -149,7 +152,7 @@ export default function ProductCard({ product, priority = false, aspect = 'portr
               className="pointer-events-auto absolute inset-x-xs bottom-xs flex flex-col gap-xs bg-canvas/95 p-xs shadow-[0_8px_24px_oklch(from_var(--ot-fg)_l_c_h/0.12)] motion-safe:animate-fade-in"
             >
               <div className="flex items-center justify-between px-1">
-                <span className="text-label font-semibold uppercase tracking-label text-fg">{t('commerce.selectSize')}</span>
+                <span className="text-label font-semibold uppercase tracking-label text-fg">{t('commerce.selectSize')}{convention ? ` (${convention})` : ''}</span>
                 <button type="button" onClick={() => { setPicking(false); triggerRef.current?.focus() }} aria-label={t('commerce.closeQuickAdd')} className="inline-flex h-8 w-8 items-center justify-center text-fg-muted hover:text-fg focus-visible:outline-2 focus-visible:outline-brand">
                   <X size={16} aria-hidden />
                 </button>
@@ -162,10 +165,10 @@ export default function ProductCard({ product, priority = false, aspect = 'portr
                     type="button"
                     disabled={v.stock <= 0}
                     onClick={() => addVariant(v)}
-                    aria-label={t('commerce.quickAddSize', { name: product.name, size: v.size })}
+                    aria-label={t('commerce.quickAddSize', { name: product.name, size: sizeLabel(v.size, sizeSystem, market) })}
                     className="h-9 min-w-11 flex-1 border border-fg/20 px-2 text-sm text-fg hover:border-fg focus-visible:outline-2 focus-visible:outline-brand disabled:cursor-not-allowed disabled:text-fg-muted/60 disabled:line-through"
                   >
-                    {v.size}
+                    {sizeLabel(v.size, sizeSystem, market)}
                   </button>
                 ))}
               </div>

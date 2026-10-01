@@ -1,5 +1,7 @@
 import 'server-only'
+import { AsyncLocalStorage } from 'node:async_hooks'
 import { cache } from 'react'
+import { getRequestLocale } from '@/lib/optimizely'
 import type { Category, Colour, CurrencyCode, Money, Product, ProductGender, Variant } from '@/lib/commerce/types'
 
 /**
@@ -21,6 +23,13 @@ import type { Category, Colour, CurrencyCode, Money, Product, ProductGender, Var
  *
  * The whole catalog is small (48 products), so every read loads the full
  * catalog once per request (React cache + fetch cache) and filters in memory.
+ *
+ * Localization: English documents carry everything; fr / de / es documents
+ * (same ids, other `language_routing`) carry only the translated text — name,
+ * description, fit notes, materials, care, category names — which is laid over
+ * the English catalog. Anything untranslated stays English. The locale is the
+ * request's (next-intl) or, in route handlers outside the proxy, the one set
+ * with withCatalogLocale().
  */
 
 const GRAPH_URL = 'https://cg.optimizely.com/content/v2'
@@ -28,6 +37,22 @@ const REVALIDATE_SECONDS = 300
 export const CATALOG_CACHE_TAG = 'catalog'
 
 const HANDLE_RE = /^[a-z0-9][a-z0-9-]{0,79}$/
+
+/** Locales with translated catalog text (English is the base). */
+const TRANSLATED_LOCALES = new Set(['fr', 'de', 'es'])
+
+const localeStore = new AsyncLocalStorage<string>()
+
+/** Run `fn` with catalog reads localized to `locale` (route handlers pass the client's locale). */
+export function withCatalogLocale<T>(locale: string | null | undefined, fn: () => Promise<T>): Promise<T> {
+  return locale && (locale === 'en' || TRANSLATED_LOCALES.has(locale)) ? localeStore.run(locale, fn) : fn()
+}
+
+async function activeLocale(): Promise<string> {
+  const stored = localeStore.getStore()
+  if (stored) return stored
+  try { return await getRequestLocale() } catch { return 'en' }
+}
 
 export function isValidHandle(handle: string): boolean {
   return HANDLE_RE.test(handle)
@@ -48,7 +73,7 @@ const PRODUCT_FIELDS = `
 
 const PRODUCTS_QUERY = `
   query CatalogProducts($catalogId: String, $cursor: String) {
-    ret_Product(where: { CatalogId: { eq: $catalogId } }, limit: 100, cursor: $cursor) {
+    ret_Product(locale: [en], where: { CatalogId: { eq: $catalogId } }, limit: 100, cursor: $cursor) {
       cursor
       items { ${PRODUCT_FIELDS} }
     }
@@ -57,7 +82,7 @@ const PRODUCTS_QUERY = `
 
 const CATEGORIES_QUERY = `
   query CatalogCategories($catalogId: String) {
-    ret_Category(where: { CatalogId: { eq: $catalogId } }, limit: 100) {
+    ret_Category(locale: [en], where: { CatalogId: { eq: $catalogId } }, limit: 100) {
       items { Handle Name ParentHandle Gender Url SortRank }
     }
   }
@@ -154,7 +179,11 @@ async function graphCategories(catalogId: string): Promise<Category[]> {
 
 // ─── Local provider ────────────────────────────────────────────────────────────
 
-type LocalCatalog = { catalogId: string; categories: Category[]; products: Product[] }
+type SeedText = { name?: string; description?: string; fitNotes?: string; materials?: string[]; care?: string[] }
+/** Seed file shape: catalog records plus optional per-locale text (`i18n`). */
+type SeedProduct = Product & { i18n?: Record<string, SeedText> }
+type SeedCategory = Category & { i18n?: Record<string, { name?: string }> }
+type LocalCatalog = { catalogId: string; categories: SeedCategory[]; products: SeedProduct[] }
 const EMPTY_CATALOG: LocalCatalog = { catalogId: '', categories: [], products: [] }
 
 const loadLocal = cache(async (catalogId: string): Promise<LocalCatalog> => {
@@ -168,14 +197,83 @@ const loadLocal = cache(async (catalogId: string): Promise<LocalCatalog> => {
   }
 })
 
-const localProducts   = async (catalogId: string) => (await loadLocal(catalogId)).products
-const localCategories = async (catalogId: string) => (await loadLocal(catalogId)).categories
+// Seed `i18n` blocks feed the translation overlay only — never the product objects.
+const localProducts   = async (catalogId: string): Promise<Product[]> =>
+  (await loadLocal(catalogId)).products.map(({ i18n: _i18n, ...p }) => p) // eslint-disable-line @typescript-eslint/no-unused-vars
+const localCategories = async (catalogId: string): Promise<Category[]> =>
+  (await loadLocal(catalogId)).categories.map(({ i18n: _i18n, ...c }) => c) // eslint-disable-line @typescript-eslint/no-unused-vars
+
+// ─── Translations (overlay on the English catalog) ─────────────────────────────
+
+type ProductText = SeedText
+type Overlay = { products: Map<string, ProductText>; categories: Map<string, string> }
+const EMPTY_OVERLAY: Overlay = { products: new Map(), categories: new Map() }
+
+// Locale is an enum literal in Graph; only TRANSLATED_LOCALES values reach here.
+const OVERLAY_QUERY = (locale: string) => `
+  query CatalogText($catalogId: String) {
+    ret_Product(locale: [${locale}], where: { CatalogId: { eq: $catalogId } }, limit: 100) {
+      items { Handle Name Description FitNotes Materials Care }
+    }
+    ret_Category(locale: [${locale}], where: { CatalogId: { eq: $catalogId } }, limit: 100) {
+      items { Handle Name }
+    }
+  }
+`
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+async function graphOverlay(catalogId: string, locale: string): Promise<Overlay> {
+  const data = await graphGet<{ ret_Product: { items: any[] }; ret_Category: { items: any[] } }>(OVERLAY_QUERY(locale), { catalogId })
+  return {
+    products: new Map(data.ret_Product.items.map((p) => [p.Handle, {
+      name: p.Name ?? undefined, description: p.Description ?? undefined, fitNotes: p.FitNotes ?? undefined,
+      materials: p.Materials ?? undefined, care: p.Care ?? undefined,
+    }])),
+    categories: new Map(data.ret_Category.items.filter((c) => c.Name).map((c) => [c.Handle, c.Name])),
+  }
+}
+/* eslint-enable @typescript-eslint/no-explicit-any */
+
+async function localOverlay(catalogId: string, locale: string): Promise<Overlay> {
+  const raw = await loadLocal(catalogId)
+  return {
+    products: new Map(raw.products.filter((p) => p.i18n?.[locale]).map((p) => [p.handle, p.i18n![locale]])),
+    categories: new Map(raw.categories.filter((c) => c.i18n?.[locale]?.name).map((c) => [c.handle, c.i18n![locale].name!])),
+  }
+}
+
+const loadOverlay = cache(async (catalogId: string, locale: string): Promise<Overlay> => {
+  if (!TRANSLATED_LOCALES.has(locale)) return EMPTY_OVERLAY
+  if (!useLocal()) {
+    try {
+      const overlay = await graphOverlay(catalogId, locale)
+      if (overlay.products.size) return overlay
+    } catch (err) {
+      console.warn(`[catalog] Graph ${locale} text read failed — using seed translations: ${(err as Error).message}`)
+    }
+  }
+  return localOverlay(catalogId, locale)
+})
+
+const pick = <T,>(t: T | undefined, base: T): T => (t === undefined || t === null || (Array.isArray(t) && !t.length) || t === '' ? base : t)
+
+function localizeProduct(p: Product, t: ProductText | undefined): Product {
+  if (!t) return p
+  return {
+    ...p,
+    name:        pick(t.name, p.name),
+    description: pick(t.description, p.description),
+    fitNotes:    pick(t.fitNotes, p.fitNotes),
+    materials:   pick(t.materials, p.materials),
+    care:        pick(t.care, p.care),
+  }
+}
 
 // ─── Provider selection (per request) ──────────────────────────────────────────
 
 const useLocal = () => process.env.CATALOG_SOURCE === 'local'
 
-const loadProducts = cache(async (catalogId: string): Promise<Product[]> => {
+const loadBaseProducts = cache(async (catalogId: string): Promise<Product[]> => {
   if (useLocal()) return localProducts(catalogId)
   try {
     const products = await graphProducts(catalogId)
@@ -187,7 +285,7 @@ const loadProducts = cache(async (catalogId: string): Promise<Product[]> => {
   return localProducts(catalogId)
 })
 
-const loadCategories = cache(async (catalogId: string): Promise<Category[]> => {
+const loadBaseCategories = cache(async (catalogId: string): Promise<Category[]> => {
   if (useLocal()) return localCategories(catalogId)
   try {
     const categories = await graphCategories(catalogId)
@@ -197,6 +295,21 @@ const loadCategories = cache(async (catalogId: string): Promise<Category[]> => {
   }
   return localCategories(catalogId)
 })
+
+const loadLocalizedProducts = cache(async (catalogId: string, locale: string): Promise<Product[]> => {
+  const base = await loadBaseProducts(catalogId)
+  const overlay = await loadOverlay(catalogId, locale)
+  return overlay.products.size ? base.map((p) => localizeProduct(p, overlay.products.get(p.handle))) : base
+})
+
+const loadLocalizedCategories = cache(async (catalogId: string, locale: string): Promise<Category[]> => {
+  const base = await loadBaseCategories(catalogId)
+  const overlay = await loadOverlay(catalogId, locale)
+  return overlay.categories.size ? base.map((c) => ({ ...c, name: overlay.categories.get(c.handle) ?? c.name })) : base
+})
+
+const loadProducts   = async (catalogId: string) => loadLocalizedProducts(catalogId, await activeLocale())
+const loadCategories = async (catalogId: string) => loadLocalizedCategories(catalogId, await activeLocale())
 
 // ─── Public API ────────────────────────────────────────────────────────────────
 
@@ -255,4 +368,55 @@ export async function getRelated(catalogId: string, product: Product, n = 4, exc
 
 export async function getAllHandles(catalogId: string): Promise<string[]> {
   return (await loadProducts(catalogId)).map((p) => p.handle)
+}
+
+// ─── Search ────────────────────────────────────────────────────────────────────
+
+const SEARCH_QUERY = (semantic: boolean, locale: string) => `
+  query CatalogSearch($catalogId: String, $q: String, $limit: Int) {
+    ret_Product(
+      locale: [${locale}]
+      where: { CatalogId: { eq: $catalogId }, _fulltext: { match: $q${semantic ? '' : ', fuzzy: true'} } }
+      orderBy: { _ranking: ${semantic ? 'SEMANTIC' : 'RELEVANCE'} }
+      limit: $limit
+    ) {
+      items { Handle }
+    }
+  }
+`
+
+/**
+ * Full-text product search (site search, C4). Graph ranks the matches on the
+ * searchable Name/Description fields (semantic when asked); the full products
+ * then come from the same cached catalog as every other read. Falls back to a
+ * simple term match over the local catalog when Graph is unavailable.
+ */
+export async function searchProducts(catalogId: string, q: string, opts: { semantic?: boolean; limit?: number } = {}): Promise<Product[]> {
+  const term = q.trim().slice(0, 100)
+  const limit = Math.min(opts.limit ?? 8, 24)
+  if (term.length < 2 || !isValidHandle(catalogId)) return []
+  if (process.env.CATALOG_SOURCE !== 'local') {
+    try {
+      // Search the shopper's language (its documents hold the translated name and
+      // description); English when that locale has no translations.
+      const locale = await activeLocale()
+      const data = await graphGet<{ ret_Product: { items: { Handle: string }[] } }>(
+        SEARCH_QUERY(!!opts.semantic, TRANSLATED_LOCALES.has(locale) ? locale : 'en'), { catalogId, q: term, limit },
+      )
+      return getProductsByHandles(catalogId, data.ret_Product.items.map((i) => i.Handle))
+    } catch (err) {
+      console.warn(`[catalog] Graph search failed — matching locally: ${(err as Error).message}`)
+    }
+  }
+  const words = term.toLowerCase().split(/\s+/).filter((w) => w.length > 1)
+  const score = (p: Product) => {
+    const hay = `${p.name} ${p.description} ${p.materials.join(' ')} ${p.primaryCategory}`.toLowerCase()
+    return words.reduce((n, w) => n + (hay.includes(w) ? (p.name.toLowerCase().includes(w) ? 3 : 1) : 0), 0)
+  }
+  return (await loadProducts(catalogId))
+    .map((p) => ({ p, s: score(p) }))
+    .filter((x) => x.s > 0)
+    .sort((a, b) => b.s - a.s || a.p.sortRank - b.p.sortRank)
+    .slice(0, limit)
+    .map((x) => x.p)
 }

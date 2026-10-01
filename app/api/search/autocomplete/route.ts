@@ -1,6 +1,8 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { getClient } from '@/lib/optimizely'
-import { DEFAULT_LOCALE } from '@/lib/i18n/config'
+import { DEFAULT_LOCALE, isSupportedLocale } from '@/lib/i18n/config'
+import { searchProducts, withCatalogLocale } from '@/lib/catalog'
+import { getCommerceSettings } from '@/lib/commerce/settings'
 
 const SCOPE_QUERY = `
   query GetSearchScope {
@@ -49,7 +51,8 @@ export async function GET(req: NextRequest) {
   const q = (req.nextUrl.searchParams.get('q') ?? '').trim()
   if (q.length < 2) return NextResponse.json([])
 
-  const locale = req.headers.get('x-locale') ?? DEFAULT_LOCALE
+  const localeParam = req.nextUrl.searchParams.get('locale')
+  const locale = isSupportedLocale(localeParam) ? localeParam : (req.headers.get('x-locale') ?? DEFAULT_LOCALE)
   const host   = req.nextUrl.host
 
   let filterBase: string | null = null
@@ -80,6 +83,14 @@ export async function GET(req: NextRequest) {
 
     const seen        = new Set<string>()
     const suggestions: string[] = []
+
+    // Storefront sites: up to three product names lead the suggestions.
+    const commerce = await getCommerceSettings(req.headers.get('host') ?? host).catch(() => null)
+    if (commerce) {
+      for (const p of (await withCatalogLocale(locale, () => searchProducts(commerce.catalogId, q, { limit: 3 })).catch(() => []))) {
+        if (!seen.has(p.name)) { seen.add(p.name); suggestions.push(p.name) }
+      }
+    }
     const items: any[] = (data as any)?._Content?.items ?? []
 
     for (const item of items) {

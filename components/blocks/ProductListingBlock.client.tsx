@@ -8,6 +8,7 @@ import ProductCard from '@/components/commerce/ProductCard'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import { formatMoney } from '@/lib/commerce/money'
 import { FIT_LABELS, TRAIT_LABELS, materialFamilies, priceBands, sortProducts, SORT_KEYS, type SortKey } from '@/lib/commerce/facets'
+import { trackFilterApply } from '@/lib/commerce/track'
 import type { ProductCardData } from '@/lib/commerce/card'
 import type { CurrencyCode } from '@/lib/commerce/types'
 import type { MessageKey } from '@/lib/i18n/t'
@@ -119,8 +120,11 @@ export default function ProductListingClient({
     const qs = q.toString()
     router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
   }
-  const setFacet = (id: Facet['id'], keys: string[]) =>
+  const setFacet = (id: Facet['id'], keys: string[]) => {
+    const before = new Set(selected(id))
+    for (const k of keys) if (!before.has(k)) trackFilterApply(id, k)
     writeParams((q) => (keys.length ? q.set(id, keys.join(',')) : q.delete(id)))
+  }
   const setSort = (s: SortKey) => writeParams((q) => (s === defaultSort ? q.delete('sort') : q.set('sort', s)))
   const clearAll = () => writeParams((q) => { for (const f of facets) q.delete(f.id) })
 

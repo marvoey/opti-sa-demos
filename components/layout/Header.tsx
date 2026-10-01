@@ -156,7 +156,7 @@ export default async function Header() {
           <div className="lg:hidden flex items-center gap-sm">
             <SearchTrigger />
             <ThemeToggle />
-            {commerce.enabled && <CommerceHeaderActions initialBagCount={commerce.bagCount} showWishlist={false} />}
+            {commerce.enabled && <CommerceHeaderActions initialBagCount={commerce.bagCount} showWishlist={false} showAccount />}
             <MobileMenu navItems={navItems} ctaLabel={showCta ? ctaLabel : ''} ctaHref={ctaHref} enabledLocales={enabledLocales} />
           </div>
 

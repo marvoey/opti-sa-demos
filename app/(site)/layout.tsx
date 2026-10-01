@@ -10,7 +10,8 @@ import { getRequestLocale, getRequestDomain, getSiteSettings } from "@/lib/optim
 import { resolveNavbarStyle } from "@/lib/theme-axes"
 import { getTokenMap } from "@/lib/tokens"
 import { TokenProvider } from "@/components/providers/TokenProvider"
-import { getCommerceSettings, currencyForLocale } from "@/lib/commerce/settings"
+import { getCommerceSettings, currencyForLocale, getMarketCookie } from "@/lib/commerce/settings"
+import { marketFor } from "@/lib/commerce/market"
 import CommerceProvider from "@/components/commerce/CommerceProvider"
 import MiniBag from "@/components/commerce/MiniBag"
 
@@ -28,9 +29,10 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
 
   // Mock storefront — mounted ONLY on sites with ThemeManager enableCommerce.
   // Every other site renders the tree unwrapped and ships no commerce JS.
+  const marketCookie = commerce ? await getMarketCookie() : null
   const withCommerce = (node: React.ReactNode) =>
     commerce ? (
-      <CommerceProvider catalogId={commerce.catalogId} currency={currencyForLocale(commerce, locale)} locale={locale}>
+      <CommerceProvider catalogId={commerce.catalogId} currency={currencyForLocale(commerce, locale, marketCookie)} locale={locale} market={marketFor(locale, marketCookie)}>
         {node}
       </CommerceProvider>
     ) : node

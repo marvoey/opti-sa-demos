@@ -7,6 +7,8 @@ import { useCommerce } from '@/components/commerce/CommerceProvider'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import { localizedHref } from '@/lib/i18n/config'
 import { priceIn } from '@/lib/commerce/card'
+import { trackRemoveFromCart } from '@/lib/commerce/track'
+import { sizeLabel } from '@/lib/commerce/sizes'
 import type { CartLine } from '@/lib/commerce/types'
 
 type Props = {
@@ -20,7 +22,7 @@ type Props = {
 /** One bag line — image, name, variant, quantity stepper, line total, remove. */
 export default function BagLineItem({ line, density = 'compact', readOnly = false }: Props) {
   const { t, locale } = useTranslation()
-  const { currency, setQuantity, removeLine } = useCommerce()
+  const { currency, market, setQuantity, removeLine } = useCommerce()
   const unit = priceIn(line.prices, currency)
   const lineTotal = { ...unit, amount: unit.amount * line.quantity, compareAt: unit.compareAt != null ? unit.compareAt * line.quantity : null }
   const roomy = density === 'roomy'
@@ -41,7 +43,7 @@ export default function BagLineItem({ line, density = 'compact', readOnly = fals
               {line.name}
             </a>
             <p className="mt-1 text-sm text-fg-muted">
-              {line.colourName} · {line.size}
+              {line.colourName} · {sizeLabel(line.size, line.sizeSystem, market)}
               {readOnly && <> · {t('commerce.quantity')} {line.quantity}</>}
             </p>
           </div>
@@ -61,7 +63,7 @@ export default function BagLineItem({ line, density = 'compact', readOnly = fals
             </div>
             <button
               type="button"
-              onClick={() => removeLine(line.sku)}
+              onClick={() => { removeLine(line.sku); trackRemoveFromCart(line) }}
               className="text-sm text-fg-muted underline underline-offset-4 hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
             >
               {t('commerce.remove')}

@@ -6,9 +6,9 @@ import { getProductListingStyles } from '@/cms/styling/OT_ProductListingBlock.st
 import ProductListingBlock from '@/components/blocks/ProductListingBlock'
 import { getRequestDomain, getRequestLocale } from '@/lib/optimizely'
 import { getCategories, getProducts, isValidHandle } from '@/lib/catalog'
-import { getCommerceSettings, currencyForLocale } from '@/lib/commerce/settings'
+import { getCommerceSettings, currencyForLocale, getMarketCookie } from '@/lib/commerce/settings'
 import { toCardData } from '@/lib/commerce/card'
-import { applyTreatment, getPriceTreatment } from '@/lib/commerce/pricing'
+import { withPricing } from '@/lib/commerce/pricing'
 import type { SortKey } from '@/lib/commerce/facets'
 
 type Props = {
@@ -37,17 +37,13 @@ export default async function OT_ProductListingBlockAdapter({ content, displaySe
   const category = content.categoryHandle?.trim() && isValidHandle(content.categoryHandle.trim()) ? content.categoryHandle.trim() : undefined
   const collection = content.collection && content.collection !== 'all' ? content.collection : undefined
   const badge = content.badge && content.badge !== 'any' ? content.badge : undefined
-  const currency = currencyForLocale(commerce, locale)
+  const currency = currencyForLocale(commerce, locale, await getMarketCookie())
 
-  const [products, categories, treatment] = await Promise.all([
-    getProducts(commerce.catalogId, { category, collection, badge }),
+  const [products, categories] = await Promise.all([
+    getProducts(commerce.catalogId, { category, collection, badge }).then(withPricing),
     getCategories(commerce.catalogId),
-    getPriceTreatment(),
   ])
-  const cards = products.map((p) => {
-    const c = toCardData(p, currency)
-    return { ...c, price: applyTreatment(c.price, treatment) }
-  })
+  const cards = products.map((p) => toCardData(p, currency))
   // Sub-categories of the listed category become the Category facet.
   const subCategories = categories
     .filter((c) => (category ? c.parentHandle === category : c.parentHandle === null))

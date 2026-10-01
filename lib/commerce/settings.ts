@@ -4,6 +4,7 @@ import { cookies } from 'next/headers'
 import { getClient, getRequestDomain } from '@/lib/optimizely'
 import { CURRENCY_CODES, type CommerceSettings, type CurrencyCode } from '@/lib/commerce/types'
 import { BAG_COUNT_COOKIE } from '@/lib/commerce/storage'
+import { MARKET_COOKIE, currencyForMarket, marketFor, type Market } from '@/lib/commerce/market'
 
 /**
  * Per-site mock-commerce switch.
@@ -56,11 +57,22 @@ export async function getRequestCommerceSettings(): Promise<CommerceSettings | n
 }
 
 /**
- * Display currency for a locale: fr/de/es shoppers see EUR (the demo's
- * "multi-locale pricing" moment); English uses the site currency.
+ * Display currency for a locale + market cookie (lib/commerce/market.ts):
+ * fr/de/es shoppers see EUR, English (UK) sees GBP, English uses the site
+ * currency. Pass the request's `ot_market` cookie (see getMarketCookie).
  */
-export function currencyForLocale(settings: CommerceSettings, locale: string): CurrencyCode {
-  return ['fr', 'de', 'es'].includes(locale) ? 'EUR' : settings.currencyCode
+export function currencyForLocale(settings: CommerceSettings, locale: string, marketCookie?: string | null): CurrencyCode {
+  return currencyForMarket(settings.currencyCode, marketFor(locale, marketCookie))
+}
+
+/** The request's `ot_market` cookie (server components). */
+export async function getMarketCookie(): Promise<string | null> {
+  try { return (await cookies()).get(MARKET_COOKIE)?.value ?? null } catch { return null }
+}
+
+/** The request's market (server components). */
+export async function getRequestMarket(locale: string): Promise<Market> {
+  return marketFor(locale, await getMarketCookie())
 }
 
 /**

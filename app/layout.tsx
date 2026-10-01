@@ -226,6 +226,11 @@ export default async function RootLayout({
             suppressHydrationWarning
           />
         )}
+        {/* Web Experimentation command queue — events pushed before the async
+            snippet loads are replayed by it (lib/commerce/track.ts). */}
+        {webExpProjectId && (
+          <script dangerouslySetInnerHTML={{ __html: 'window.optimizely=window.optimizely||[];' }} suppressHydrationWarning />
+        )}
         {/* Content Recommendations (Idio) — inline config only; async engine loads after hydration below. */}
         {idioConfig && (
           <script dangerouslySetInnerHTML={{ __html: idioConfig }} suppressHydrationWarning />

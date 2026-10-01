@@ -2,7 +2,7 @@ export type SearchResult = {
   id: string
   title: string
   url: string
-  type: 'Blog' | 'Page' | 'Event' | 'Location' | 'Practitioner'
+  type: 'Blog' | 'Page' | 'Event' | 'Location' | 'Practitioner' | 'Product'
   topic?: string
   published?: string
   excerpt?: string
@@ -19,6 +19,8 @@ export type SearchResult = {
   /** Practitioner-only fields — present when type === 'Practitioner'. */
   credentials?: string
   practitionerTitle?: string
+  /** Product-only — formatted price in the shopper's currency. */
+  price?: string
   /** Opaque URL returned by Content Graph for click-through hit tracking. Fire
    *  a GET request to this URL when the user navigates to the result. */
   _track?: string | null

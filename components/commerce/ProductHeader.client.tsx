@@ -10,6 +10,7 @@ import { localizedHref } from '@/lib/i18n/config'
 import { priceIn } from '@/lib/commerce/card'
 import { formatMoney, FREE_SHIPPING_THRESHOLD } from '@/lib/commerce/money'
 import { trackAddToCart, trackProductView, trackWishlistAdd } from '@/lib/commerce/track'
+import { sizeConvention, sizeLabel, sizeSystemFor } from '@/lib/commerce/sizes'
 import type { CurrencyCode, Product } from '@/lib/commerce/types'
 import type { MessageKey } from '@/lib/i18n/t'
 
@@ -43,19 +44,22 @@ export default function ProductHeaderClient({ product, currency: fallbackCurrenc
   const price = priceIn(variant?.prices ?? product.fromPrices, currency)
   const images = colour?.images?.length ? colour.images : product.colours.flatMap((c) => c.images).slice(0, 4)
   const saved = commerce.state.wishlist.includes(product.handle)
+  const sizeSystem = sizeSystemFor({ gender: product.gender, categories: product.categoryHandles, sizes: product.sizes })
+  const label = (s: string) => sizeLabel(s, sizeSystem, commerce.market)
+  const convention = sizeConvention(sizeSystem, commerce.market)
 
   const { recordView } = commerce
   useEffect(() => {
     recordView(product.handle)
-    trackProductView(product.handle, product.name)
-  }, [product.handle, product.name, recordView])
+    trackProductView(product.handle, product.name, product.primaryCategory)
+  }, [product.handle, product.name, product.primaryCategory, recordView])
 
   const addToBag = () => {
     if (!variant) { setNeedSize(true); return }
     if (variant.stock <= 0) return
     const line = commerce.addLine({
       sku: variant.sku, handle: product.handle, name: product.name, colourName: colour?.name ?? '',
-      size: variant.size, image: images[0] ?? null, prices: variant.prices,
+      size: variant.size, sizeSystem, image: images[0] ?? null, prices: variant.prices,
     }, qty)
     if (line) trackAddToCart(line, currency, priceIn(variant.prices, currency).amount * qty)
   }
@@ -175,7 +179,7 @@ export default function ProductHeaderClient({ product, currency: fallbackCurrenc
             {/* Size */}
             <fieldset aria-describedby={needSize && !size ? `size-error-${product.handle}` : undefined}>
               <legend className="mb-sm flex w-full items-center justify-between text-sm text-fg">
-                <span><span className="text-fg-muted">{t('commerce.size')}: </span>{size ?? '—'}</span>
+                <span><span className="text-fg-muted">{t('commerce.size')}{convention ? ` (${convention})` : ''}: </span>{size ? label(size) : '—'}</span>
                 <a href={sizeGuideHref} className="text-sm text-fg-muted underline underline-offset-4 hover:text-fg">{t('commerce.sizeGuide')}</a>
               </legend>
               <div className="grid grid-cols-4 gap-xs sm:grid-cols-5">
@@ -203,7 +207,7 @@ export default function ProductHeaderClient({ product, currency: fallbackCurrenc
                             : 'border-fg/20 text-fg hover:border-fg peer-checked:border-fg peer-checked:bg-fg peer-checked:text-canvas',
                         ].join(' ')}
                       >
-                        {s}
+                        {label(s)}
                         {out && <span className="sr-only"> — {t('commerce.soldOut')}</span>}
                       </span>
                     </label>
@@ -248,7 +252,10 @@ export default function ProductHeaderClient({ product, currency: fallbackCurrenc
             {/* Details — native disclosure: keyboard + screen reader support with no JS */}
             <div className="mt-sm divide-y divide-fg/10 border-y border-fg/10">
               {[
-                { key: 'details', title: t('commerce.details'), body: <><p>{product.description}</p><p className="mt-sm text-fg-muted">{t('commerce.styleNo', { id: product.styleId })}</p></>, open: true },
+                { key: 'details', title: t('commerce.details'), body: <>{product.descriptionHtml
+                  // Sanitized server-side in lib/commerce/pdp.ts (CMS rich text).
+                  ? <div data-rich-text="" data-size="compact" dangerouslySetInnerHTML={{ __html: product.descriptionHtml }} />
+                  : <p>{product.description}</p>}<p className="mt-sm text-fg-muted">{t('commerce.styleNo', { id: product.styleId })}</p></>, open: true },
                 { key: 'fit', title: t('commerce.fit'), body: <p>{product.fitNotes}</p> },
                 { key: 'materials', title: t('commerce.materials'), body: <ul className="list-disc pl-5">{[...product.materials, ...product.care].map((m) => <li key={m}>{m}</li>)}</ul> },
                 { key: 'delivery', title: t('commerce.deliveryReturns'), body: <p>{t('commerce.deliveryCopy', { amount: formatMoney(FREE_SHIPPING_THRESHOLD, currency, locale) })}</p> },

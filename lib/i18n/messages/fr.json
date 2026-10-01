@@ -182,6 +182,8 @@
     "signInHint": "Profils fictifs pour les démonstrations. Rien ne quitte ce navigateur.",
     "signOut": "Se déconnecter",
     "continueAsGuest": "Continuer en tant qu’invité",
+    "resetDemo": "Réinitialiser la démo",
+    "resetDemoHint": "Vide le panier, les favoris, la connexion et l’identifiant visiteur.",
     "hiName": "Bonjour, {name}",
     "signedInAs": "Connecté en tant que {name}.",
     "notYou": "Pas vous ? Se déconnecter",

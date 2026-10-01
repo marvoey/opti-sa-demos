@@ -11,7 +11,8 @@ import { useCommerce, bagSubtotal } from '@/components/commerce/CommerceProvider
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import { localizedHref } from '@/lib/i18n/config'
 import { formatMoney, FREE_SHIPPING_THRESHOLD, SHIPPING } from '@/lib/commerce/money'
-import { trackPurchase } from '@/lib/commerce/track'
+import { trackPaymentInfo, trackPurchase, trackShippingInfo } from '@/lib/commerce/track'
+import { readAcquisition } from '@/lib/acquisition'
 import { DEFAULT_PERSONA_ID, getPersona, TEST_CARD as DEMO_CARD } from '@/lib/commerce/personas'
 import type { Order, OrderAddress } from '@/lib/commerce/types'
 
@@ -48,6 +49,23 @@ function Field({ id, label, error, children }: { id: string; label: string; erro
  * sessionStorage, and no card data is kept at all. A signed-in demo persona
  * pre-fills every field; guests get a one-click "Use demo details".
  */
+/**
+ * Retail analytics (BigQuery) — fire-and-forget. Only what was bought is sent;
+ * the server re-prices it and never receives name, email or address.
+ */
+function recordOrderForAnalytics(order: Order, personaId: string | null) {
+  const device = window.matchMedia('(max-width: 767px)').matches ? 'mobile' : window.matchMedia('(max-width: 1023px)').matches ? 'tablet' : 'desktop'
+  fetch('/api/bq/retail-order', {
+    method: 'POST',
+    keepalive: true,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      orderId: order.id, currency: order.currency, delivery: order.delivery, device, personaId,
+      lines: order.lines.map((l) => ({ handle: l.handle, sku: l.sku, quantity: l.quantity })),
+    }),
+  }).catch(() => { /* analytics only */ })
+}
+
 export default function CheckoutView({ heading, emptyMessage, continueLabel, continueUrl, assurance, summaryStyle }: FlowCopy) {
   const { t, locale } = useTranslation()
   const router = useRouter()
@@ -111,7 +129,9 @@ export default function CheckoutView({ heading, emptyMessage, continueLabel, con
   const next = () => {
     const e = validate(step)
     setErrors(e)
-    if (Object.keys(e).length === 0) setStep((s) => Math.min(3, s + 1))
+    if (Object.keys(e).length) return
+    if (step === 2) trackShippingInfo(delivery, currency, bagSubtotal(state.bag, currency))
+    setStep((s) => Math.min(3, s + 1))
   }
 
   const placeOrder = () => {
@@ -120,6 +140,7 @@ export default function CheckoutView({ heading, emptyMessage, continueLabel, con
     if (Object.keys(e).length) return
     setPlacing(true)
     const lines = state.bag
+    const acq = readAcquisition()
     const sub = bagSubtotal(lines, currency)
     const order: Order = {
       id: newOrderId(),
@@ -131,9 +152,12 @@ export default function CheckoutView({ heading, emptyMessage, continueLabel, con
       total: sub + shipping,
       delivery,
       address: { ...address, email: address.email.trim() },
+      ...(acq ? { acquisition: { source: acq.source, medium: acq.medium, campaign: acq.campaign } } : {}),
     }
     completeOrder(order)
-    trackPurchase(order)
+    trackPaymentInfo(currency, order.total)
+    trackPurchase(order, acq ? { utm_source: acq.source, utm_medium: acq.medium, utm_campaign: acq.campaign } : {})
+    recordOrderForAnalytics(order, state.persona)
     router.push(localizedHref('/checkout/confirmation', locale))
   }
 

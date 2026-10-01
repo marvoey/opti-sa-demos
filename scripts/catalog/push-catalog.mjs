@@ -17,6 +17,9 @@
  *     otherwise they read back null and full-text search ignores them.
  *   - Deleting uses NDJSON `{"delete":{…}}` lines — DELETE …/data?languages=
  *     returns 204 but removes nothing.
+ *   - Languages: one document per `language_routing`, same _id. English carries
+ *     the full record; fr/de/es carry only the translated text from each
+ *     record's optional `i18n` block (lib/catalog.ts overlays it on English).
  *
  * Usage:
  *   node scripts/catalog/push-catalog.mjs [--dryRun] [--types-only] [--reset] [--catalog apparel]
@@ -34,6 +37,8 @@ const SOURCE_ID = 'ret'
 const GATEWAY = 'https://cg.optimizely.com'
 const CURRENCIES = ['USD', 'GBP', 'EUR']
 const HANDLE_RE = /^[a-z0-9][a-z0-9-]{0,79}$/
+const LANGUAGES = ['en', 'fr', 'de', 'es']
+const TEXT_FIELDS = ['name', 'description', 'fitNotes', 'materials', 'care']
 
 const args = process.argv.slice(2)
 const isDryRun = args.includes('--dryRun')
@@ -63,7 +68,7 @@ const basicAuth = () => 'Basic ' + Buffer.from(`${APP_KEY}:${SECRET}`).toString(
 const prop = (type, searchable = false) => ({ type, searchable })
 const SCHEMA = {
   label: 'Retail product catalog',
-  languages: ['en'],
+  languages: LANGUAGES,
   contentTypes: {
     ret_Product: {
       contentType: [], base: 'Block', displayName: 'Product',
@@ -122,6 +127,10 @@ function validate({ products, categories }) {
     for (const cur of CURRENCIES) if (!p.fromPrices.some((pr) => pr.currency === cur)) errors.push(`${at}: no ${cur} fromPrice`)
   }
   for (const p of products) for (const h of p.pairsWith ?? []) if (!handles.has(h)) errors.push(`product "${p.handle}": pairsWith unknown "${h}"`)
+  for (const p of products) for (const [lang, t] of Object.entries(p.i18n ?? {})) {
+    if (!LANGUAGES.includes(lang) || lang === 'en') errors.push(`product "${p.handle}": unsupported i18n language "${lang}"`)
+    for (const k of Object.keys(t)) if (!TEXT_FIELDS.includes(k)) errors.push(`product "${p.handle}": i18n.${lang}.${k} is not a translatable field`)
+  }
   return errors
 }
 
@@ -139,11 +148,18 @@ function toGraph(value) {
   if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([k, v]) => [pascal(k), toGraph(v)]))
   return value
 }
-function doc(type, obj) {
-  const fields = toGraph({ ...obj, catalogId })
+function doc(type, obj, language = 'en') {
+  const { i18n: _i18n, ...record } = obj // eslint-disable-line no-unused-vars
+  const fields = toGraph({ ...record, catalogId })
   const out = {}
   for (const [k, v] of Object.entries(fields)) out[SEARCHABLE[type].has(k) ? `${k}___searchable` : k] = v
-  return { ...out, ContentType: [type], Status: 'Published', __typename: type, _rbac: 'r:Everyone:Read', Language: { Name: 'en' } }
+  return { ...out, ContentType: [type], Status: 'Published', __typename: type, _rbac: 'r:Everyone:Read', Language: { Name: language } }
+}
+/** Translated text-only document for `language`, or null when the record has none. */
+function textDoc(type, obj, language) {
+  const t = obj.i18n?.[language]
+  if (!t) return null
+  return doc(type, { handle: obj.handle, ...(type === 'ret_Product' ? Object.fromEntries(TEXT_FIELDS.filter((k) => t[k] != null).map((k) => [k, t[k]])) : { name: t.name }) }, language)
 }
 const docId = (type, handle) => `${type === 'ret_Product' ? 'product' : 'category'}-${catalogId}-${handle}`
 
@@ -160,7 +176,7 @@ async function postNdjson(lines) {
   }
 }
 async function existingIds() {
-  const q = `query($c:String){ ret_Product(where:{CatalogId:{eq:$c}},limit:100){ items{ Handle } } ret_Category(where:{CatalogId:{eq:$c}},limit:100){ items{ Handle } } }`
+  const q = `query($c:String){ ret_Product(locale:[en],where:{CatalogId:{eq:$c}},limit:100){ items{ Handle } } ret_Category(locale:[en],where:{CatalogId:{eq:$c}},limit:100){ items{ Handle } } }`
   const url = `${GATEWAY}/content/v2?query=${encodeURIComponent(q)}&variables=${encodeURIComponent(JSON.stringify({ c: catalogId }))}`
   const res = await fetch(url, { headers: { Authorization: `epi-single ${SINGLE_KEY}` } })
   const json = await res.json().catch(() => ({}))
@@ -170,12 +186,19 @@ async function existingIds() {
     ...(json.data?.ret_Category?.items ?? []).map((i) => docId('ret_Category', i.Handle)),
   ]
 }
-const deleteLines = (ids) => ids.map((id) => JSON.stringify({ delete: { _id: id, language_routing: 'en' } }))
+const deleteLines = (ids) => ids.flatMap((id) => LANGUAGES.map((lang) => JSON.stringify({ delete: { _id: id, language_routing: lang } })))
 
 // ── Run ─────────────────────────────────────────────────────────────────────
 const indexLines = [
   ...catalog.categories.flatMap((c) => [JSON.stringify({ index: { _id: docId('ret_Category', c.handle), language_routing: 'en' } }), JSON.stringify(doc('ret_Category', c))]),
   ...catalog.products.flatMap((p) => [JSON.stringify({ index: { _id: docId('ret_Product', p.handle), language_routing: 'en' } }), JSON.stringify(doc('ret_Product', p))]),
+  // Translations: same ids, other language_routing, text fields only.
+  ...LANGUAGES.filter((l) => l !== 'en').flatMap((lang) => [
+    ...catalog.categories.map((c) => [c, 'ret_Category']), ...catalog.products.map((p) => [p, 'ret_Product']),
+  ].flatMap(([obj, type]) => {
+    const d = textDoc(type, obj, lang)
+    return d ? [JSON.stringify({ index: { _id: docId(type, obj.handle), language_routing: lang } }), JSON.stringify(d)] : []
+  })),
 ]
 
 if (isDryRun) {
@@ -198,7 +221,7 @@ try {
   const wanted = new Set([...catalog.categories.map((c) => docId('ret_Category', c.handle)), ...catalog.products.map((p) => docId('ret_Product', p.handle))])
   const stale = (await existingIds()).filter((id) => !wanted.has(id))
   await postNdjson([...deleteLines(stale), ...indexLines])
-  console.log(`✓ pushed ${catalog.categories.length} categories + ${catalog.products.length} products${stale.length ? `, removed ${stale.length} stale` : ''} (indexing takes ~5–10s)`)
+  console.log(`✓ pushed ${catalog.categories.length} categories + ${catalog.products.length} products (${indexLines.length / 2} documents across ${LANGUAGES.join('/')})${stale.length ? `, removed ${stale.length} stale` : ''} (indexing takes ~5–10s)`)
 
   const { CATALOG_REVALIDATE_URL: rvUrl, CATALOG_REVALIDATE_SECRET: rvSecret } = process.env
   if (rvUrl && rvSecret) {

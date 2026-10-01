@@ -14,7 +14,8 @@
     "cms:pull": "node --env-file=.env.$(git branch --show-current | tr / -) node_modules/@optimizely/cms-cli/bin/run.js config pull",
     "catalog:push": "node scripts/catalog/push-catalog.mjs",
     "catalog:push:dry": "node scripts/catalog/push-catalog.mjs --dryRun",
-    "catalog:reset": "node scripts/catalog/push-catalog.mjs --reset"
+    "catalog:reset": "node scripts/catalog/push-catalog.mjs --reset",
+    "fx:events": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/fx/print-events.mjs"
   },
   "dependencies": {
     "@google-cloud/bigquery": "^8.3.1",

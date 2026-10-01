@@ -5,9 +5,9 @@
  *   - FX SDK init in the browser (datafile fetch + createInstance)
  *   - A UserContext bound to the SAME canonical id the server uses
  *     (the `optimizely_user_id` cookie minted by proxy.ts)
- *   - A single TRACK notification listener that forwards every conversion event
- *     into ODP. This is the ONLY place that calls `window.zaius.event()` for
- *     conversion events.
+ *   - A single TRACK notification listener that forwards conversion events into
+ *     ODP — except keys registered with markOdpDirect() (the storefront catalog
+ *     in lib/commerce/events.ts), which send their own native ODP events.
  *
  * Call sites should NOT use this module directly — use `trackConversion()` from
  * `@/lib/fx/track`, which queues events that fire before the client is ready.
@@ -34,6 +34,21 @@ interface BrowserFxClient {
 }
 
 let initPromise: Promise<BrowserFxClient | null> | null = null
+
+/**
+ * Event keys whose callers send their own (native) ODP event — the TRACK
+ * listener and the no-FX fallback skip them so ODP never counts them twice.
+ */
+const odpDirectEvents = new Set<string>()
+
+export function markOdpDirect(keys: Iterable<string>): void {
+  for (const k of keys) odpDirectEvents.add(k)
+}
+
+export function isOdpDirect(key: string): boolean {
+  return odpDirectEvents.has(key)
+}
+
 let readySnapshot: BrowserFxClient | null = null
 
 function readCookie(name: string): string | null {
@@ -119,7 +134,8 @@ export function initBrowserFxClient(): Promise<BrowserFxClient | null> {
     await client.onReady()
 
     const userId = resolveUserId()
-    const userContext = client.createUserContext(userId)
+    const tier = readCookie('ot_persona')
+    const userContext = client.createUserContext(userId, tier ? { loyalty_tier: tier } : undefined)
     if (!userContext) {
       console.error('[FX:browser] createUserContext returned null')
       return null
@@ -137,6 +153,7 @@ export function initBrowserFxClient(): Promise<BrowserFxClient | null> {
         eventTags?: Record<string, unknown>
       }) => {
         if (typeof window === 'undefined' || !window.zaius) return
+        if (odpDirectEvents.has(payload.eventKey)) return
         try {
           window.zaius.event(payload.eventKey, payload.eventTags || {})
         } catch (e) {
@@ -151,6 +168,17 @@ export function initBrowserFxClient(): Promise<BrowserFxClient | null> {
   })()
 
   return initPromise
+}
+
+/**
+ * Set (or clear, with null) a user attribute on the browser user context, so
+ * subsequent trackEvent calls carry it. No-op until the client is ready; the
+ * next init reads `loyalty_tier` from the cookie anyway.
+ */
+export function setFxAttribute(key: string, value: string | null): void {
+  const uc = readySnapshot?.userContext
+  if (!uc) return
+  try { uc.setAttribute(key, value ?? undefined) } catch { /* ignore */ }
 }
 
 /**

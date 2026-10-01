@@ -182,6 +182,8 @@
     "signInHint": "Fiktive Profile für Demos. Nichts verlässt diesen Browser.",
     "signOut": "Abmelden",
     "continueAsGuest": "Als Gast fortfahren",
+    "resetDemo": "Demo zurücksetzen",
+    "resetDemoHint": "Leert Warenkorb, Wunschliste, Anmeldung und Besucher-ID.",
     "hiName": "Hallo, {name}",
     "signedInAs": "Angemeldet als {name}.",
     "notYou": "Nicht Sie? Abmelden",

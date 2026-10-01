@@ -24,12 +24,12 @@ export default function WishlistView({ heading, emptyMessage, continueLabel, con
   useEffect(() => {
     if (!state.hydrated || !key) return
     const controller = new AbortController()
-    fetch(`/api/catalog/products?handles=${encodeURIComponent(key)}&currency=${currency}`, { signal: controller.signal })
+    fetch(`/api/catalog/products?handles=${encodeURIComponent(key)}&currency=${currency}&locale=${locale}`, { signal: controller.signal })
       .then((r) => (r.ok ? r.json() : { products: [] }))
       .then((d: { products?: ProductCardData[] }) => setCards({ key, products: d.products ?? [] }))
       .catch(() => {})
     return () => controller.abort()
-  }, [state.hydrated, key, currency])
+  }, [state.hydrated, key, currency, locale])
 
   if (!state.hydrated) return <div className="min-h-[40vh]" aria-busy="true" />
 

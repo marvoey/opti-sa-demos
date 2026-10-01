@@ -2,7 +2,9 @@ import 'server-only'
 import { cache } from 'react'
 import { getClient, getLocalizedContentByPath } from '@/lib/optimizely'
 import { getProductByHandle, getProducts, isValidHandle } from '@/lib/catalog'
+import { getPriceTreatment, treatProduct } from '@/lib/commerce/pricing'
 import { resolveContentVariant } from '@/lib/fx'
+import { sanitizeCmsHtml } from '@/lib/sanitizeHtml'
 import type { Product } from '@/lib/commerce/types'
 import type { Locale } from '@/lib/i18n/config'
 
@@ -46,14 +48,19 @@ const listTemplates = cache(async (baseUrl: string): Promise<TemplateRow[]> => {
 })
 
 /** Most specific template for `product`: exact handle → category → default (blank). */
+const targetsOf = (t: TemplateRow) => (t.appliesTo ?? '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean)
+
+/** Templates that apply to `product`, most specific first: handle → category → default. */
+export function rankTemplates(templates: TemplateRow[], product: Product): TemplateRow[] {
+  const byHandle   = templates.filter((t) => targetsOf(t).includes(product.handle))
+  const byCategory = templates.filter((t) => !byHandle.includes(t) && targetsOf(t).some((x) => x.startsWith('category:') && product.categoryHandles.includes(x.slice(9))))
+  const fallback   = templates.filter((t) => targetsOf(t).length === 0)
+  return [...byHandle, ...byCategory, ...fallback]
+}
+
+/** The most specific template for `product`, or null. */
 export function pickTemplate(templates: TemplateRow[], product: Product): TemplateRow | null {
-  const targets = (t: TemplateRow) => (t.appliesTo ?? '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean)
-  return (
-    templates.find((t) => targets(t).includes(product.handle)) ??
-    templates.find((t) => targets(t).some((x) => x.startsWith('category:') && product.categoryHandles.includes(x.slice(9)))) ??
-    templates.find((t) => targets(t).length === 0) ??
-    null
-  )
+  return rankTemplates(templates, product)[0] ?? null
 }
 
 /** Path part of a Graph URL (absolute or relative). */
@@ -77,7 +84,7 @@ async function loadTemplate(row: TemplateRow, locale: Locale, baseUrl: string, f
       if (variant?.composition?.nodes) exp = variant
     }
   }
-  return exp?.composition?.nodes ? exp : null
+  return exp ?? null
 }
 
 export type ResolvedPdp = {
@@ -93,10 +100,28 @@ export const resolvePdp = cache(async (
   baseUrl: string,
   fxSdkKey?: string | null,
 ): Promise<ResolvedPdp | null> => {
-  const product = await getProductByHandle(catalogId, handle)
-  if (!product) return null
-  const row = pickTemplate(await listTemplates(baseUrl), product)
-  const template = row ? await loadTemplate(row, locale, baseUrl, fxSdkKey) : null
+  const raw = await getProductByHandle(catalogId, handle)
+  if (!raw) return null
+  let product = treatProduct(raw, await getPriceTreatment())
+
+  // Walk the matching templates, most specific first. A handle-scoped template
+  // may carry only a Product Description (e.g. agent-written copy, APP-013) and
+  // no composition — its description still applies, and the layout falls
+  // through to the category / default template.
+  let template = null
+  for (const row of rankTemplates(await listTemplates(baseUrl), product)) {
+    const exp = await loadTemplate(row, locale, baseUrl, fxSdkKey)
+    if (!exp) continue
+    // Only in the language it was written in — a locale fallback to English
+    // must not replace the translated catalog description.
+    const sameLocale = !exp._metadata?.locale || exp._metadata.locale === locale
+    const html = sameLocale && targetsOf(row).includes(product.handle) ? sanitizeCmsHtml(exp.productDescription?.html) : ''
+    if (html && !product.descriptionHtml) {
+      const text = html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+      product = { ...product, descriptionHtml: html, description: text || product.description }
+    }
+    if (exp.composition?.nodes?.length) { template = exp; break }
+  }
   return { product, template }
 })
 

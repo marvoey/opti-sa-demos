@@ -17,6 +17,9 @@ import { enableExternalPreviewProperty } from './_shared/externalPreview'
 // templates with "Applies To" set to specific handles (loden-wool-car-coat) or
 // categories (category:women-knitwear) to vary the below-the-fold story for a
 // hero product or a category. Most specific wins: handle → category → default.
+// A handle template may also set Product Description (agent-written SKU copy,
+// APP-013) with an empty layout: the description applies and the layout falls
+// through to the category / default template.
 //
 // As an `_experience` it has no adapter and no display template; the slug route
 // renders it. Like any experience it can bind an FX flag for PDP A/B tests.
@@ -38,6 +41,15 @@ export const OT_ProductDetailTemplate = contentType({
       description: 'Blank = the default template for every product on this site. Otherwise a comma-separated list of product handles (loden-wool-car-coat) and/or categories (category:women-knitwear). Most specific match wins: handle, then category, then default.',
       group:       'OT_Content',
       sortOrder:   10,
+    },
+    productDescription: {
+      type:         'richText',
+      isLocalized:  true,
+      displayName:  'Product Description',
+      description:  'Only when "Applies To" names a single product handle: replaces that product\'s catalog description on its page (e.g. copy written by the product description agent). Leave the layout empty to keep the default template\'s layout.',
+      group:        'OT_Content',
+      sortOrder:    15,
+      indexingType: 'searchable',
     },
     previewHandle: {
       type:        'string',
