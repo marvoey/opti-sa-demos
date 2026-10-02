@@ -17,7 +17,6 @@ export async function ReviewCommentsStrip({ contentKey }: { contentKey: string }
 
   return (
     <ReviewCommentsPanel
-      contentKey={key}
       comments={comments.map(c => ({
         id:          c.id,
         name:        c.name,
