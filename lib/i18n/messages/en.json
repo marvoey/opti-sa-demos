@@ -115,7 +115,12 @@
       "rangeMax": "Maximum range",
       "currentOnly": "Current models only",
       "compareLabel": "Compare",
-      "viewModel": "View {model}"
+      "viewModel": "View {model}",
+      "viewLabel": "View",
+      "viewCard": "Cards",
+      "viewList": "List",
+      "seeDetails": "See details",
+      "speed": "Cruise speed"
     },
     "comparison": {
       "aircraft": "Aircraft",
@@ -139,6 +144,13 @@
     "length": "Length",
     "wingspan": "Wingspan",
     "height": "Height",
-    "galleryHint": "Select any image to open the slideshow"
+    "galleryHint": "Select any image to open the slideshow",
+    "nav": {
+      "label": "Breadcrumb",
+      "home": "Home",
+      "fleet": "Fleet",
+      "compare": "Compare",
+      "changeSelection": "Change selection"
+    }
   }
 }

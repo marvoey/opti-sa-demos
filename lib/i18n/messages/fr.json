@@ -115,7 +115,12 @@
       "rangeMax": "Portée maximale",
       "currentOnly": "Modèles actuels seulement",
       "compareLabel": "Comparer",
-      "viewModel": "Voir le {model}"
+      "viewModel": "Voir le {model}",
+      "viewLabel": "Affichage",
+      "viewCard": "Cartes",
+      "viewList": "Liste",
+      "seeDetails": "Voir les détails",
+      "speed": "Vitesse de croisière"
     },
     "comparison": {
       "aircraft": "Appareils",
@@ -139,6 +144,13 @@
     "length": "Longueur",
     "wingspan": "Envergure",
     "height": "Hauteur",
-    "galleryHint": "Sélectionnez une image pour ouvrir le diaporama"
+    "galleryHint": "Sélectionnez une image pour ouvrir le diaporama",
+    "nav": {
+      "label": "Fil d’Ariane",
+      "home": "Accueil",
+      "fleet": "Flotte",
+      "compare": "Comparer",
+      "changeSelection": "Modifier la sélection"
+    }
   }
 }

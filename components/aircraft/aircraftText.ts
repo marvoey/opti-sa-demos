@@ -36,6 +36,8 @@ export function listingText(locale: string) {
     compareHint: l('compareHint'), maxCompare: l('maxCompare'),
     rangeMin: l('rangeMin'), rangeMax: l('rangeMax'), currentOnly: l('currentOnly'),
     compareLabel: l('compareLabel'), viewModel: l('viewModel', { model: '{model}' }),
+    viewLabel: l('viewLabel'), viewCard: l('viewCard'), viewList: l('viewList'),
+    seeDetails: l('seeDetails'), speed: l('speed'),
   }
 }
 
@@ -47,5 +49,13 @@ export function compareText(locale: string) {
     columns:       t(locale, 'aircraft.comparison.columns'),
     showColumn:    t(locale, 'aircraft.comparison.showColumn', { model: '{model}' }),
     tableLabel:    t(locale, 'aircraft.comparison.tableLabel'),
+  }
+}
+
+export function breadcrumbLabels(locale: string) {
+  return {
+    nav:   t(locale, 'aircraft.nav.label'),
+    home:  t(locale, 'aircraft.nav.home'),
+    fleet: t(locale, 'aircraft.nav.fleet'),
   }
 }

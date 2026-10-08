@@ -42,7 +42,7 @@ export default async function OT_AircraftListingBlockAdapter({ content, displayS
 
   const items: ListItem[] = picked.map(a => ({
     key: a.key, modelName: a.modelName, tagline: a.tagline, family: a.family, lifecycleStatus: a.lifecycleStatus,
-    rangeNm: a.rangeNm, maxPassengers: a.maxPassengers, heroImageUrl: a.heroImageUrl, url: a.url,
+    rangeNm: a.rangeNm, maxPassengers: a.maxPassengers, cruiseSpeedMach: a.cruiseSpeedMach, heroImageUrl: a.heroImageUrl, url: a.url,
     comparisonEligible: a.comparisonEligible,
   }))
 
@@ -53,7 +53,7 @@ export default async function OT_AircraftListingBlockAdapter({ content, displayS
 
   return (
     <section {...pa(content.__composition)} className={`${bg} w-full text-fg`}>
-      <div className="mx-auto max-w-6xl px-md py-xl lg:px-xl lg:py-2xl">
+      <div className="mx-auto max-w-[88rem] px-md py-xl lg:px-xl lg:py-2xl">
         {content.heading && (
           <h2 {...pa('heading')} className="text-balance text-[clamp(2rem,4.5vw,3rem)] font-light leading-[1.05] tracking-[-0.02em]">
             {content.heading}

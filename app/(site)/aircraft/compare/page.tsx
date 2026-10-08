@@ -7,7 +7,9 @@ import { specLabel } from '@/lib/aircraftFormat'
 import { localizedHref } from '@/lib/i18n/config'
 import { t } from '@/lib/i18n/t'
 import AircraftCompareTable from '@/components/aircraft/AircraftCompareTable'
-import { compareText, familyLabels } from '@/components/aircraft/aircraftText'
+import BackToFleetLink from '@/components/aircraft/BackToFleetLink'
+import AircraftBreadcrumb from '@/components/aircraft/AircraftBreadcrumb'
+import { breadcrumbLabels, compareText, familyLabels } from '@/components/aircraft/aircraftText'
 
 type Props = { searchParams: Promise<Record<string, string | string[] | undefined>> }
 
@@ -38,12 +40,25 @@ export default async function ComparePage({ searchParams }: Props) {
   }))
 
   return (
+    <>
+    <AircraftBreadcrumb
+      homeHref={localizedHref('/', locale)}
+      fleetHref={localizedHref('/aircraft', locale)}
+      labels={breadcrumbLabels(locale)}
+      current={t(locale, 'aircraft.nav.compare')}
+      widthClass="max-w-[88rem]"
+    />
     <section className="bg-canvas text-fg">
-      <div className="mx-auto max-w-6xl px-md py-xl lg:px-xl lg:py-2xl">
+      <div className="mx-auto max-w-[88rem] px-md py-xl lg:px-xl lg:py-2xl">
         <h1 className="text-balance text-[clamp(2rem,5vw,3.5rem)] font-light leading-[1.05] tracking-[-0.02em]">
           {t(locale, 'aircraft.comparison.compareTitle')}
         </h1>
         <p className="mt-md max-w-[65ch] text-fg/80">{t(locale, 'aircraft.comparison.compareIntro')}</p>
+        {columns.length >= 2 && (
+          <div className="mt-md">
+            <BackToFleetLink fleetHref={localizedHref('/aircraft', locale)}>{t(locale, 'aircraft.nav.changeSelection')}</BackToFleetLink>
+          </div>
+        )}
         <div className="mt-lg">
           {columns.length >= 2 ? (
             <AircraftCompareTable
@@ -67,5 +82,6 @@ export default async function ComparePage({ searchParams }: Props) {
         </div>
       </div>
     </section>
+    </>
   )
 }

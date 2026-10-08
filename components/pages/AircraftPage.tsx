@@ -8,6 +8,8 @@ import AircraftHeader, { type AircraftHeaderStyle } from '@/components/aircraft/
 import AircraftSpecPanel from '@/components/aircraft/AircraftSpecPanel'
 import AircraftGallery from '@/components/aircraft/AircraftGallery'
 import AircraftRelated from '@/components/aircraft/AircraftRelated'
+import AircraftBreadcrumb from '@/components/aircraft/AircraftBreadcrumb'
+import { breadcrumbLabels } from '@/components/aircraft/aircraftText'
 import LanguageNotice from '@/components/aircraft/LanguageNotice'
 import OptiFormsContainerDataAdapter from '@/cms/components/OptiFormsContainerData'
 
@@ -53,6 +55,13 @@ export default async function AircraftPage({
 
   return (
     <>
+      <AircraftBreadcrumb
+        homeHref={localizedHref('/', locale)}
+        fleetHref={localizedHref('/aircraft', locale)}
+        labels={breadcrumbLabels(locale)}
+        current={aircraft.modelName}
+        className="border-b border-fg/10"
+      />
       {aircraft.isFallback && <LanguageNotice locale={locale} />}
       <AircraftHeader aircraft={aircraft} locale={locale} headerStyle={style} compareHref={compareHref} />
 

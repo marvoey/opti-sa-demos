@@ -124,7 +124,12 @@
       "rangeMax": "Alcance máximo",
       "currentOnly": "Solo modelos actuales",
       "compareLabel": "Comparar",
-      "viewModel": "Ver el {model}"
+      "viewModel": "Ver el {model}",
+      "viewLabel": "Vista",
+      "viewCard": "Tarjetas",
+      "viewList": "Lista",
+      "seeDetails": "Ver detalles",
+      "speed": "Velocidad de crucero"
     },
     "comparison": {
       "aircraft": "Aeronaves",
@@ -139,6 +144,13 @@
       "compareTitle": "Comparar aeronaves",
       "compareIntro": "Las especificaciones provienen de la ficha de cada aeronave."
     },
-    "galleryHint": "Seleccione una imagen para abrir la presentación"
+    "galleryHint": "Seleccione una imagen para abrir la presentación",
+    "nav": {
+      "label": "Ruta de navegación",
+      "home": "Inicio",
+      "fleet": "Flota",
+      "compare": "Comparar",
+      "changeSelection": "Cambiar selección"
+    }
   }
 }

@@ -4,7 +4,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { Gauge, Globe, LayoutGrid, List, Users } from 'lucide-react'
 import { formatSpec } from '@/lib/aircraftFormat'
+import { saveFleetReturn } from '@/lib/aircraftNav'
 
 export interface ListItem {
   key: string
@@ -14,6 +16,7 @@ export interface ListItem {
   lifecycleStatus?: string
   rangeNm?: number
   maxPassengers?: number
+  cruiseSpeedMach?: number
   heroImageUrl?: string
   url?: string
   comparisonEligible: boolean
@@ -45,7 +48,7 @@ type Props = {
     | 'lifecycle' | 'sort' | 'sortDisplayOrder' | 'sortRangeDesc' | 'sortPassengersDesc' | 'sortNameAsc'
     | 'resultCount' | 'resultOne' | 'noResults' | 'activeFilters' | 'clearFilters' | 'selectToCompare'
     | 'compareSelected' | 'compareHint' | 'maxCompare' | 'rangeMin' | 'rangeMax' | 'currentOnly'
-    | 'compareLabel' | 'viewModel',
+    | 'compareLabel' | 'viewModel' | 'viewLabel' | 'viewCard' | 'viewList' | 'seeDetails' | 'speed',
     string
   >
 }
@@ -54,6 +57,7 @@ type Props = {
 // thumbnails use a 7:3 frame: a taller crop slices the nose or tail off the plane.
 const PAX_STEPS = [0, 8, 12, 16, 19]
 const CURRENT = ['inProduction', 'inService']
+type View = 'card' | 'list'
 const SORTS: SortKey[] = ['displayOrder', 'rangeDesc', 'passengersDesc', 'nameAsc']
 
 // "Portée" must match "portee": strip combining marks after NFD, lower-case both sides.
@@ -97,7 +101,10 @@ export default function AircraftListing({ items, locale, options, settings, comp
     if (!m) return [bounds.min, bounds.max]
     return [Math.max(bounds.min, Number(m[1])), Math.min(bounds.max, Number(m[2]))]
   })
-  const [selected, setSelected] = useState<string[]>([])
+  const [view, setView] = useState<View>(() => (sp.get('view') === 'list' ? 'list' : 'card'))
+  // Selection is URL state too, so coming back from a comparison restores the ticks.
+  const [selected, setSelected] = useState<string[]>(() =>
+    csv(sp.get('sel')).filter(k => items.some(i => i.key === k && i.comparisonEligible)).slice(0, 4))
 
   // Debounce the search box (250 ms) before it filters or touches the URL.
   useEffect(() => {
@@ -108,7 +115,11 @@ export default function AircraftListing({ items, locale, options, settings, comp
   // ── Write non-default state back to the URL ────────────────────────────────
   const first = useRef(true)
   useEffect(() => {
-    if (first.current) { first.current = false; return }
+    if (first.current) {
+      first.current = false
+      saveFleetReturn(`${window.location.pathname}${window.location.search}`)
+      return
+    }
     const p = new URLSearchParams(window.location.search)
     const set = (k: string, v: string | null) => (v ? p.set(k, v) : p.delete(k))
     set('q', qApplied.trim() || null)
@@ -117,9 +128,12 @@ export default function AircraftListing({ items, locale, options, settings, comp
     set('pax', pax ? String(pax) : null)
     set('status', sameSet(statuses, defaultStatuses) ? null : statuses.join(','))
     set('sort', sort !== options.defaultSort ? sort : null)
+    set('view', view === 'list' ? 'list' : null)
+    set('sel', selected.length ? selected.join(',') : null)
     const qs = p.toString()
     window.history.replaceState(null, '', `${window.location.pathname}${qs ? `?${qs}` : ''}${window.location.hash}`)
-  }, [qApplied, families, range, pax, statuses, sort, bounds, defaultStatuses, options.defaultSort])
+    saveFleetReturn(`${window.location.pathname}${qs ? `?${qs}` : ''}`)
+  }, [qApplied, families, range, pax, statuses, sort, view, selected, bounds, defaultStatuses, options.defaultSort])
 
   // ── Filtering and sorting ──────────────────────────────────────────────────
   const results = useMemo(() => {
@@ -171,18 +185,18 @@ export default function AircraftListing({ items, locale, options, settings, comp
   return (
     <div>
       {/* ── Controls ──────────────────────────────────────────────────────── */}
-      <form onSubmit={e => e.preventDefault()} role="search" className="grid gap-md border-y border-fg/20 py-md md:grid-cols-2 lg:grid-cols-4">
+      <form onSubmit={e => e.preventDefault()} role="search" className="grid gap-x-lg gap-y-lg border-y border-fg/20 py-lg lg:grid-cols-12">
         {options.showSearch && (
-          <div className="md:col-span-2">
+          <div className="lg:col-span-5">
             <label htmlFor="ac-q" className={label}>{text.search}</label>
             <input id="ac-q" type="search" value={q} onChange={e => setQ(e.target.value)} placeholder={text.searchPlaceholder} className={ctl} autoComplete="off" />
           </div>
         )}
 
         {options.showFamilyFilter && familiesPresent.length > 1 && (
-          <fieldset className="md:col-span-2">
+          <fieldset className="lg:col-span-7">
             <legend className={label}>{text.family}</legend>
-            <div className="flex flex-wrap gap-xs">
+            <div className="flex flex-wrap gap-sm">
               {familiesPresent.map(f => {
                 const on = families.includes(f)
                 return (
@@ -198,12 +212,12 @@ export default function AircraftListing({ items, locale, options, settings, comp
         )}
 
         {options.showRangeFilter && bounds.max > bounds.min && (
-          <div className="md:col-span-2">
+          <div className="lg:col-span-5">
             <p className={label} id="ac-range-label">{text.range}</p>
-            <div role="group" aria-labelledby="ac-range-label">
+            <div role="group" aria-labelledby="ac-range-label" className="flex min-h-11 flex-col justify-center">
               <DualRange min={bounds.min} max={bounds.max} step={100} value={range} onChange={setRange}
                 labelMin={text.rangeMin} labelMax={text.rangeMax} />
-              <p className="mt-xs flex justify-between font-mono text-sm tabular-nums">
+              <p className="mt-sm flex justify-between font-mono text-sm tabular-nums text-fg/80">
                 <span>{nm(range[0], locale)}</span><span>{nm(range[1], locale)}</span>
               </p>
             </div>
@@ -211,7 +225,7 @@ export default function AircraftListing({ items, locale, options, settings, comp
         )}
 
         {options.showPassengerFilter && (
-          <div>
+          <div className="lg:col-span-3">
             <label htmlFor="ac-pax" className={label}>{text.passengers}</label>
             <select id="ac-pax" value={pax} onChange={e => setPax(Number(e.target.value))} className={ctl}>
               {PAX_STEPS.map(n => <option key={n} value={n}>{n === 0 ? text.anyPassengers : text.passengersPlus.replace('{n}', String(n))}</option>)}
@@ -220,9 +234,9 @@ export default function AircraftListing({ items, locale, options, settings, comp
         )}
 
         {!options.lifecycleLocked && statusesPresent.length > 1 && (
-          <fieldset>
+          <fieldset className="lg:col-span-4">
             <legend className={label}>{text.lifecycle}</legend>
-            <div className="flex flex-col gap-xs">
+            <div className="flex min-h-11 flex-wrap items-center gap-x-lg gap-y-xs">
               {statusesPresent.map(s => (
                 <label key={s} className="inline-flex min-h-8 cursor-pointer items-center gap-xs text-sm">
                   <input type="checkbox" className="size-4 accent-[var(--ot-accent)]" checked={statuses.includes(s)}
@@ -237,19 +251,10 @@ export default function AircraftListing({ items, locale, options, settings, comp
       </form>
 
       {/* ── Result count (announced) and active filters ──────────────────── */}
-      <div className="mt-md flex flex-wrap items-center gap-sm">
+      <div className="mt-lg flex flex-wrap items-center gap-x-md gap-y-sm">
         <p role="status" aria-live="polite" className="text-sm font-semibold">{count}</p>
-        <div className="order-last ml-auto flex items-center gap-xs sm:order-none">
-          <label htmlFor="ac-sort" className="text-xs font-semibold uppercase tracking-[0.1em] text-fg/75">{text.sort}</label>
-          <select id="ac-sort" value={sort} onChange={e => setSort(e.target.value as SortKey)} className={`${ctl} !w-auto`}>
-            <option value="displayOrder">{text.sortDisplayOrder}</option>
-            <option value="rangeDesc">{text.sortRangeDesc}</option>
-            <option value="passengersDesc">{text.sortPassengersDesc}</option>
-            <option value="nameAsc">{text.sortNameAsc}</option>
-          </select>
-        </div>
         {active.length > 0 && (
-          <ul aria-label={text.activeFilters} className="flex flex-wrap gap-xs">
+          <ul aria-label={text.activeFilters} className="flex flex-1 flex-wrap gap-xs">
             {active.map(a => (
               <li key={a.id}>
                 <button type="button" onClick={a.clear} className="inline-flex min-h-8 items-center gap-xs border border-fg/40 px-sm text-xs hover:border-fg rounded-ot-control focus-visible:outline-2 focus-visible:outline-brand">
@@ -259,6 +264,25 @@ export default function AircraftListing({ items, locale, options, settings, comp
             ))}
           </ul>
         )}
+        <div className="ml-auto flex flex-wrap items-center gap-md">
+          <div role="group" aria-label={text.viewLabel} className="inline-flex overflow-hidden border border-fg/40 rounded-ot-control">
+            {([['card', text.viewCard, LayoutGrid], ['list', text.viewList, List]] as const).map(([v, name, Icon]) => (
+              <button key={v} type="button" aria-pressed={view === v} onClick={() => setView(v)}
+                className={`inline-flex min-h-11 items-center gap-xs px-md text-sm font-semibold transition-colors duration-150 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand ${view === v ? 'bg-fg text-canvas' : 'hover:bg-fg/10'}`}>
+                <Icon aria-hidden className="size-4" />{name}
+              </button>
+            ))}
+          </div>
+          <div className="flex items-center gap-xs">
+          <label htmlFor="ac-sort" className="text-xs font-semibold uppercase tracking-[0.1em] text-fg/75">{text.sort}</label>
+          <select id="ac-sort" value={sort} onChange={e => setSort(e.target.value as SortKey)} className={`${ctl} !w-auto`}>
+            <option value="displayOrder">{text.sortDisplayOrder}</option>
+            <option value="rangeDesc">{text.sortRangeDesc}</option>
+            <option value="passengersDesc">{text.sortPassengersDesc}</option>
+            <option value="nameAsc">{text.sortNameAsc}</option>
+          </select>
+          </div>
+        </div>
       </div>
 
       {/* ── Results ───────────────────────────────────────────────────────── */}
@@ -272,6 +296,61 @@ export default function AircraftListing({ items, locale, options, settings, comp
             {text.clearFilters}
           </button>
         </div>
+      ) : view === 'list' ? (
+        <ul className="mt-lg flex flex-col gap-sm">
+          {results.map(i => {
+            const rng = formatSpec('rangeNm', i.rangeNm, locale, 'both')
+            const spd = formatSpec('cruiseSpeedMach', i.cruiseSpeedMach, locale, 'both')
+            const isSel = selected.includes(i.key)
+            const full = selected.length >= 4 && !isSel
+            const stat = 'flex items-center gap-sm'
+            const ico = 'size-9 shrink-0 text-accent'
+            return (
+              <li key={i.key} className="group relative grid items-center gap-x-lg gap-y-sm bg-surface p-md transition-colors duration-200 hover:bg-surface/70 md:grid-cols-[11rem_minmax(0,1.2fr)_repeat(3,minmax(0,1fr))_auto] md:px-lg">
+                {settings.showImages && (
+                  <div className="relative aspect-[7/3] w-full max-w-60 md:max-w-none">
+                    {i.heroImageUrl && <Image src={i.heroImageUrl} alt="" fill sizes="176px" className="object-contain" />}
+                  </div>
+                )}
+                <div className={`min-w-0 ${settings.showImages ? '' : 'md:col-span-2'}`}>
+                  <p className="text-[0.7rem] font-semibold uppercase tracking-[0.1em] text-fg/70">
+                    {i.family ? familyLabels[i.family] ?? i.family : ''}{i.lifecycleStatus ? ` / ${lifecycleLabels[i.lifecycleStatus] ?? i.lifecycleStatus}` : ''}
+                  </p>
+                  <h3 className="mt-1 text-xl font-semibold leading-tight">
+                    {i.url
+                      ? <Link href={i.url} aria-label={text.viewModel.replace('{model}', i.modelName)} className="after:absolute after:inset-0 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand">{i.modelName}</Link>
+                      : i.modelName}
+                  </h3>
+                  {i.tagline && <p className="mt-1 text-pretty text-sm text-fg/80">{i.tagline}</p>}
+                </div>
+                <dl className="contents">
+                  <div className={stat}>
+                    <Globe aria-hidden strokeWidth={1.1} className={ico} />
+                    <div><dt className="sr-only">{text.range}</dt><dd className="font-mono tabular-nums"><span className="block font-semibold">{rng?.primary ?? '–'}</span>{rng?.secondary && <span className="block text-xs text-fg/65">{rng.secondary}</span>}</dd></div>
+                  </div>
+                  <div className={stat}>
+                    <Users aria-hidden strokeWidth={1.1} className={ico} />
+                    <div><dt className="sr-only">{text.passengers}</dt><dd className="font-mono font-semibold tabular-nums">{i.maxPassengers ?? '–'}</dd></div>
+                  </div>
+                  <div className={stat}>
+                    <Gauge aria-hidden strokeWidth={1.1} className={ico} />
+                    <div><dt className="sr-only">{text.speed}</dt><dd className="font-mono tabular-nums"><span className="block font-semibold">{spd?.primary ?? '–'}</span>{spd?.secondary && <span className="block text-xs text-fg/65">{spd.secondary}</span>}</dd></div>
+                  </div>
+                </dl>
+                <div className="flex flex-wrap items-center gap-md md:flex-col md:items-end md:gap-xs">
+                  <span aria-hidden className="inline-flex min-h-11 items-center bg-fg px-md text-sm font-semibold uppercase tracking-[0.08em] text-canvas rounded-ot-control group-hover:opacity-90">{text.seeDetails} →</span>
+                  {options.showCompareToggle && i.comparisonEligible && (
+                    <label className={`relative z-10 inline-flex min-h-11 items-center gap-xs text-sm ${full ? 'opacity-50' : 'cursor-pointer'}`}>
+                      <input type="checkbox" className="size-5 accent-[var(--ot-accent)]" checked={isSel} disabled={full} onChange={() => toggleSel(i.key)}
+                        aria-label={text.selectToCompare.replace('{model}', i.modelName)} />
+                      {text.compareLabel}
+                    </label>
+                  )}
+                </div>
+              </li>
+            )
+          })}
+        </ul>
       ) : (
         <ul className={`mt-lg grid gap-lg ${cols}`}>
           {results.map(i => {
