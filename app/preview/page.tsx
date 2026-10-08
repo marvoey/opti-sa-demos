@@ -10,6 +10,9 @@ import { resolveNavbarStyle } from '@/lib/theme-axes'
 import { CompositionRenderer } from '@/lib/CompositionRenderer'
 import { getPractitioner } from '@/lib/practitioners'
 import PractitionerHeader from '@/components/practitioner/PractitionerHeader'
+import { getAircraft } from '@/lib/aircraft'
+import AircraftPage from '@/components/pages/AircraftPage'
+import type { Locale } from '@/lib/i18n/config'
 import BookingPanel from '@/components/practitioner/booking/BookingPanel'
 import Header from '@/components/layout/Header'
 import SplitHeader from '@/components/layout/SplitHeader'
@@ -224,6 +227,16 @@ async function PreviewPage({ searchParams }: Props) {
     }
   }
 
+  // Aircraft experience pages: resolve the referenced record so the locked
+  // header and spec panel preview alongside the composition.
+  let aircraft = null
+  if (isExperience && content?.__typename === 'OT_AircraftPage') {
+    const refKey = content?.aircraftRef?.key as string | undefined
+    if (refKey) {
+      aircraft = await getAircraft(refKey, sp('loc') || 'en')
+    }
+  }
+
   // For standalone blocks synthesize __composition so pa(content.__composition)
   // generates the data-epi-block-id attribute needed for on-page editing.
   const contentKey = typeof params.key === 'string' ? params.key : ''
@@ -288,7 +301,22 @@ async function PreviewPage({ searchParams }: Props) {
                 {practitioner.bookingEnabled && <BookingPanel practitioner={practitioner} />}
               </>
             )}
-            <CompositionRenderer nodes={content.composition.nodes} />
+            {aircraft ? (
+              // Mirrors the live slug route's OT_AircraftPage branch: locked
+              // header + spec panel OUTSIDE the editable composition.
+              <AircraftPage
+                aircraft={aircraft}
+                locale={previewLocale as Locale}
+                headerStyle={content.headerStyle}
+                showSpecPanel={content.showSpecPanel}
+                showComparisonCta={content.showComparisonCta}
+                enquiryFormKey={content.enquiryFormRef?.key}
+                enquiryHeading={content.enquiryHeading}
+                composition={<CompositionRenderer nodes={content.composition.nodes} />}
+              />
+            ) : (
+              <CompositionRenderer nodes={content.composition.nodes} />
+            )}
           </main>
           <Footer />
         </>

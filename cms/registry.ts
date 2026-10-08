@@ -168,6 +168,7 @@ import OT_DividerBlockAdapter          from '@/cms/components/OT_DividerBlock'
 import OT_EventListingBlockAdapter     from '@/cms/components/OT_EventListingBlock'
 import OT_PractitionerListingBlockAdapter from '@/cms/components/OT_PractitionerListingBlock'
 import OT_PractitionerProfileAdapter      from '@/cms/components/OT_PractitionerProfile'
+import OT_AircraftProfileAdapter           from '@/cms/components/OT_AircraftProfile'
 import OT_LocationListingBlockAdapter        from '@/cms/components/OT_LocationListingBlock'
 import OT_LocationProfileAdapter             from '@/cms/components/OT_LocationProfile'
 import OT_ContentRecommendationsBlockAdapter from '@/cms/components/OT_ContentRecommendationsBlock'
@@ -382,6 +383,7 @@ initReactComponentRegistry({
     OT_IndustryNewsFeedBlock:       OT_IndustryNewsFeedBlockAdapter,
     // Preview-only: lets /preview render the shared profile record (not used in compositions)
     OT_PractitionerProfile:      OT_PractitionerProfileAdapter,
+    OT_AircraftProfile:          OT_AircraftProfileAdapter,
     OT_LocationProfile:          OT_LocationProfileAdapter,
     // Composition structure — 'BlankSection' is the SDK's built-in section type key;
     // '_Row' and '_Column' are the fixed registry keys OptimizelyGridSection resolves.
