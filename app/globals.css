@@ -162,6 +162,16 @@ html {
   --ot-btn-ghost-bg-hover:     oklch(12% 0.012 195 / 0.06);
 }
 
+/* Form step navigation sits on the page surface (canvas/surface, light or dark),
+ * not on a brand fill, so the ghost Back button must follow --ot-fg rather than
+ * the always-light --ot-fg-on-brand default (invisible on a light surface). */
+.ot-form-nav {
+  --ot-btn-ghost-fg:           var(--ot-fg);
+  --ot-btn-ghost-border:       oklch(from var(--ot-fg) l c h / 0.40);
+  --ot-btn-ghost-border-hover: oklch(from var(--ot-fg) l c h / 0.70);
+  --ot-btn-ghost-bg-hover:     oklch(from var(--ot-fg) l c h / 0.08);
+}
+
 /* Logo dark-mode invert — converts any dark/black logo to white.
  * Applied by Header/Footer when ThemeManager.logoInvertDark is true.
  * Removed in light mode so the original logo shows on the light canvas.

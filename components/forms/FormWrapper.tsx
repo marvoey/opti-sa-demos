@@ -136,7 +136,7 @@ export default function FormWrapper({ steps, title, description, submitUrl, conf
           )}
 
           {steps.length > 1 && (
-            <div className="mt-lg flex items-center justify-between border-t border-fg/10 pt-lg">
+            <div className="ot-form-nav mt-lg flex items-center justify-between border-t border-fg/10 pt-lg">
               <Button
                 type="button"
                 variant="ghost"
