@@ -123,6 +123,15 @@
       "backToFleet": "Back to the fleet",
       "showColumn": "Show {model}",
       "columns": "Columns shown"
-    }
+    },
+    "exterior": "Exterior",
+    "measure": "Measure",
+    "metric": "Metric",
+    "imperial": "Imperial",
+    "diagramLabel": "Exterior dimensions of the {model}: length {length}, wingspan {wingspan}, height {height}",
+    "diagramNote": "Illustration, not to scale.",
+    "length": "Length",
+    "wingspan": "Wingspan",
+    "height": "Height"
   }
 }

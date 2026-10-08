@@ -51,11 +51,16 @@ export interface AircraftData {
   cabinWidthM?: number
   cabinHeightM?: number
   baggageVolumeM3?: number
+  overallLengthM?: number
+  wingspanM?: number
+  overallHeightM?: number
   engineModel?: string
   thrustLbf?: number
   certificationDate?: string
   heroImageUrl?: string
   galleryUrls: string[]
+  diagramFrontUrl?: string
+  diagramSideUrl?: string
   featureVideoUrl?: string
   specSheetUrl?: string
   keyFeatures: AircraftFeature[]
@@ -91,11 +96,16 @@ const PROFILE_FIELDS = `
   cabinWidthM
   cabinHeightM
   baggageVolumeM3
+  overallLengthM
+  wingspanM
+  overallHeightM
   engineModel
   thrustLbf
   certificationDate
   heroImage { url { default } }
   galleryImages { url { default } }
+  diagramFrontImage { url { default } }
+  diagramSideImage { url { default } }
   featureVideo { url { default } }
   specSheet { url { default } }
   keyFeatures { headline body { html } }
@@ -168,11 +178,16 @@ function toAircraft(item: any, requestedLocale: string, url?: string): AircraftD
     cabinWidthM:       item.cabinWidthM ?? undefined,
     cabinHeightM:      item.cabinHeightM ?? undefined,
     baggageVolumeM3:   item.baggageVolumeM3 ?? undefined,
+    overallLengthM:    item.overallLengthM ?? undefined,
+    wingspanM:         item.wingspanM ?? undefined,
+    overallHeightM:    item.overallHeightM ?? undefined,
     engineModel:       item.engineModel ?? undefined,
     thrustLbf:         item.thrustLbf ?? undefined,
     certificationDate: item.certificationDate ?? undefined,
     heroImageUrl:      item.heroImage?.url?.default ?? undefined,
     galleryUrls:       (item.galleryImages ?? []).map((g: any) => g?.url?.default).filter(Boolean),
+    diagramFrontUrl:   item.diagramFrontImage?.url?.default ?? undefined,
+    diagramSideUrl:    item.diagramSideImage?.url?.default ?? undefined,
     featureVideoUrl:   item.featureVideo?.url?.default ?? undefined,
     specSheetUrl:      item.specSheet?.url?.default ?? undefined,
     keyFeatures:       (item.keyFeatures ?? [])
@@ -189,6 +204,34 @@ function toAircraft(item: any, requestedLocale: string, url?: string): AircraftD
   }
 }
 
+// ─── Locale fallback ──────────────────────────────────────────────────────────
+
+/**
+ * Runs a Graph request for `locale` and falls back to English when that locale
+ * has no records (Graph returns an empty list for a language with no content,
+ * e.g. `es` before any Spanish is published). A failed request also falls back
+ * to English so a transient error degrades to the default language, and the
+ * caller's `isFallback` flag drives the mandatory visible language notice
+ * instead of the page going blank.
+ */
+async function requestWithFallback<T>(
+  locale: string,
+  run: (loc: string) => Promise<T>,
+  hasData: (r: T) => boolean,
+): Promise<T | null> {
+  try {
+    const r = await run(locale)
+    if (hasData(r) || locale === 'en') return r
+  } catch {
+    if (locale === 'en') return null
+  }
+  try {
+    return await run('en')
+  } catch {
+    return null
+  }
+}
+
 // ─── Data access ──────────────────────────────────────────────────────────────
 
 /**
@@ -201,17 +244,13 @@ export const getAircraft = cache(async function getAircraft(
   key: string,
   locale = 'en',
 ): Promise<AircraftData | null> {
-  try {
-    const data = await getClient().request(ONE_QUERY, { key, locale })
-    let item = (data as any)?.OT_AircraftProfile?.items?.[0] ?? null
-    if (!item && locale !== 'en') {
-      const fb = await getClient().request(ONE_QUERY, { key, locale: 'en' })
-      item = (fb as any)?.OT_AircraftProfile?.items?.[0] ?? null
-    }
-    return item ? toAircraft(item, locale) : null
-  } catch {
-    return null
-  }
+  const data = await requestWithFallback(
+    locale,
+    loc => getClient().request(ONE_QUERY, { key, locale: loc }),
+    r => !!(r as any)?.OT_AircraftProfile?.items?.length,
+  )
+  const item = (data as any)?.OT_AircraftProfile?.items?.[0] ?? null
+  return item ? toAircraft(item, locale) : null
 })
 
 /** Records for the fleet listing / comparison, site-scoped, with page URLs. */
@@ -221,30 +260,39 @@ export const getAllAircraft = cache(async function getAllAircraft(
   const locale  = options?.locale ?? 'en'
   const siteKey = options?.siteKey
   const query   = buildListQuery(!!siteKey)
-  const vars    = { locale, ...(siteKey ? { siteKey } : {}) }
-  try {
-    const [recs, pages] = await Promise.all([
-      getClient().request(query, vars),
-      getClient().request(PAGES_QUERY, { locale }),
-    ])
-    const urlByKey = new Map<string, string>()
-    for (const p of (pages as any)?.OT_AircraftPage?.items ?? []) {
-      const k = p?.aircraftRef?.key
-      const u = p?._metadata?.url?.default
-      if (k && u && !urlByKey.has(k)) urlByKey.set(k, u)
-    }
-    const seen = new Set<string>()
-    const out: AircraftData[] = []
-    for (const item of (recs as any)?.OT_AircraftProfile?.items ?? []) {
-      const k = item?._metadata?.key
-      if (!k || seen.has(k)) continue
-      seen.add(k)
-      out.push(toAircraft(item, locale, urlByKey.get(k)))
-    }
-    return out
-  } catch {
-    return []
+
+  // Records fall back to English per the locale rule; page URLs are resolved in
+  // the locale that actually served the records so cards link to a page that exists.
+  const recs = await requestWithFallback(
+    locale,
+    loc => getClient().request(query, { locale: loc, ...(siteKey ? { siteKey } : {}) }),
+    r => !!(r as any)?.OT_AircraftProfile?.items?.length,
+  )
+  const items: any[] = (recs as any)?.OT_AircraftProfile?.items ?? []
+  if (!items.length) return []
+
+  const servedLocale = items[0]?._metadata?.locale ?? locale
+  const pages = await requestWithFallback(
+    servedLocale,
+    loc => getClient().request(PAGES_QUERY, { locale: loc }),
+    r => !!(r as any)?.OT_AircraftPage?.items?.length,
+  )
+  const urlByKey = new Map<string, string>()
+  for (const p of (pages as any)?.OT_AircraftPage?.items ?? []) {
+    const k = p?.aircraftRef?.key
+    const u = p?._metadata?.url?.default
+    if (k && u && !urlByKey.has(k)) urlByKey.set(k, u)
   }
+
+  const seen = new Set<string>()
+  const out: AircraftData[] = []
+  for (const item of items) {
+    const k = item?._metadata?.key
+    if (!k || seen.has(k)) continue
+    seen.add(k)
+    out.push(toAircraft(item, locale, urlByKey.get(k)))
+  }
+  return out
 })
 
 /** Page URL for one record key, resolving through its OT_AircraftPage. */

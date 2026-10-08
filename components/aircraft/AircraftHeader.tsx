@@ -3,7 +3,8 @@ import Link from 'next/link'
 import type { AircraftData } from '@/lib/aircraft'
 import { t } from '@/lib/i18n/t'
 import { FAMILY_LABELS } from '@/lib/aircraftFormat'
-import HeadlineSpecs, { resolveHeadlines } from './HeadlineSpecs'
+import HeadlineSpecs from './HeadlineSpecs'
+import { resolveHeadlines } from './headlineData'
 
 type PreviewAttrs = (field: string) => Record<string, unknown>
 
@@ -84,7 +85,7 @@ export default function AircraftHeader({ aircraft, locale, headerStyle = 'fullBl
             {compareHref && <div className="mt-lg"><CompareCta href={compareHref} locale={locale} /></div>}
           </div>
         </div>
-        <HeadlineSpecs items={headlines} tone="brand" />
+        <HeadlineSpecs items={headlines} locale={locale} />
       </header>
     )
   }
@@ -124,7 +125,7 @@ export default function AircraftHeader({ aircraft, locale, headerStyle = 'fullBl
   // ── Full-bleed: photograph, scrim, name lower-left, anchor-color stat strip ─
   return (
     <header>
-      <div className="relative isolate flex min-h-[min(86svh,52rem)] items-end overflow-hidden bg-canvas text-fg-on-brand">
+      <div className="relative isolate flex min-h-[min(76svh,46rem)] items-end overflow-hidden bg-canvas text-fg-on-brand">
         {a.heroImageUrl && (
           <Image src={a.heroImageUrl} alt={a.modelName} fill priority sizes="100vw" className="-z-20 object-cover" />
         )}
@@ -136,7 +137,7 @@ export default function AircraftHeader({ aircraft, locale, headerStyle = 'fullBl
           {compareHref && <div className="mt-lg"><CompareCta href={compareHref} locale={locale} /></div>}
         </div>
       </div>
-      <HeadlineSpecs items={headlines} tone="brand" />
+      <HeadlineSpecs items={headlines} locale={locale} />
     </header>
   )
 }

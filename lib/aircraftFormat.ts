@@ -16,6 +16,7 @@ const num = (locale: string, value: number, digits = 0, maxDigits = digits) =>
   new Intl.NumberFormat(intlLocale(locale), {
     minimumFractionDigits: digits,
     maximumFractionDigits: maxDigits,
+    useGrouping: 'always',
   }).format(value)
 
 /** 54.43 ft → `54 ft 5 in` */
@@ -47,6 +48,9 @@ const SPEC_LABELS: Record<string, Partial<Record<AircraftSpecField, string>>> = 
     cabinHeightM: 'Cabin height',
     baggageVolumeM3: 'Baggage volume',
     thrustLbf: 'Thrust per engine',
+    overallLengthM: 'Length',
+    wingspanM: 'Wingspan',
+    overallHeightM: 'Height',
   },
   fr: {
     rangeNm: 'Portée',
@@ -64,6 +68,29 @@ const SPEC_LABELS: Record<string, Partial<Record<AircraftSpecField, string>>> = 
     cabinHeightM: 'Hauteur de la cabine',
     baggageVolumeM3: 'Volume des bagages',
     thrustLbf: 'Poussée par moteur',
+    overallLengthM: 'Longueur',
+    wingspanM: 'Envergure',
+    overallHeightM: 'Hauteur',
+  },
+  es: {
+    rangeNm: 'Alcance',
+    cruiseSpeedMach: 'Crucero de alta velocidad',
+    maxOperatingMach: 'Velocidad máxima de operación (Mmo)',
+    maxAltitudeFt: 'Altitud máxima',
+    takeoffDistanceFt: 'Distancia de despegue',
+    landingDistanceFt: 'Distancia de aterrizaje',
+    maxPassengers: 'Pasajeros (máx.)',
+    typicalPassengers: 'Configuración típica',
+    crewCount: 'Tripulación',
+    livingSpaces: 'Espacios habitables',
+    cabinLengthM: 'Longitud de la cabina',
+    cabinWidthM: 'Ancho de la cabina',
+    cabinHeightM: 'Altura de la cabina',
+    baggageVolumeM3: 'Volumen de equipaje',
+    thrustLbf: 'Empuje por motor',
+    overallLengthM: 'Longitud',
+    wingspanM: 'Envergadura',
+    overallHeightM: 'Altura',
   },
 }
 
@@ -73,88 +100,154 @@ export function specLabel(field: AircraftSpecField, locale: string): string {
   return AIRCRAFT_SPEC_FIELDS.find(f => f.value === field)?.displayName ?? field
 }
 
-export const SPEC_GROUPS: { id: 'performance' | 'cabin' | 'powerplant'; fields: AircraftSpecField[] }[] = [
+export const SPEC_GROUPS: { id: 'performance' | 'cabin' | 'exterior' | 'powerplant'; fields: AircraftSpecField[] }[] = [
   { id: 'performance', fields: ['rangeNm', 'cruiseSpeedMach', 'maxOperatingMach', 'maxAltitudeFt', 'takeoffDistanceFt', 'landingDistanceFt'] },
   { id: 'cabin',       fields: ['maxPassengers', 'typicalPassengers', 'crewCount', 'livingSpaces', 'cabinLengthM', 'cabinWidthM', 'cabinHeightM', 'baggageVolumeM3'] },
+  { id: 'exterior',    fields: ['overallLengthM', 'wingspanM', 'overallHeightM'] },
   { id: 'powerplant',  fields: ['thrustLbf'] },
 ]
 
-export const SPEC_GROUP_LABELS: Record<string, Record<'performance' | 'cabin' | 'powerplant', string>> = {
-  en: { performance: 'Performance', cabin: 'Cabin', powerplant: 'Powerplant' },
-  fr: { performance: 'Performance', cabin: 'Cabine', powerplant: 'Groupe motopropulseur' },
+/** Icon (lucide name) per spec, resolved to a component in the client. */
+export const SPEC_ICON: Record<AircraftSpecField, string> = {
+  rangeNm: 'Globe',
+  cruiseSpeedMach: 'Gauge',
+  maxOperatingMach: 'Gauge',
+  maxAltitudeFt: 'Mountain',
+  takeoffDistanceFt: 'PlaneTakeoff',
+  landingDistanceFt: 'PlaneLanding',
+  maxPassengers: 'Users',
+  typicalPassengers: 'Armchair',
+  crewCount: 'UserRound',
+  livingSpaces: 'Sofa',
+  cabinLengthM: 'Ruler',
+  cabinWidthM: 'MoveHorizontal',
+  cabinHeightM: 'MoveVertical',
+  baggageVolumeM3: 'Luggage',
+  overallLengthM: 'Ruler',
+  wingspanM: 'MoveHorizontal',
+  overallHeightM: 'MoveVertical',
+  thrustLbf: 'Flame',
+}
+
+export type SpecUnit = 'metric' | 'imperial'
+
+/** English reads imperial first; every other locale defaults to metric. */
+export function defaultUnitSystem(locale: string): SpecUnit {
+  return locale === 'en' ? 'imperial' : 'metric'
+}
+
+/**
+ * The numeric part of a rendered value, kept separate so the stat strip can
+ * count it up from zero. `text` is always the final, fully formatted string.
+ */
+export interface NumParts {
+  value: number
+  minFrac: number
+  maxFrac: number
+  prefix: string
+  suffix: string
+}
+
+export function renderParts(parts: NumParts, locale: string, progress = 1): string {
+  const v = parts.value * progress
+  return `${parts.prefix}${new Intl.NumberFormat(intlLocale(locale), {
+    minimumFractionDigits: parts.minFrac,
+    maximumFractionDigits: parts.maxFrac,
+    useGrouping: 'always',
+  }).format(v)}${parts.suffix}`
+}
+
+export interface FormattedValue {
+  text: string
+  /** Absent for composites like `54 ft 5 in`, which render static. */
+  parts?: NumParts
 }
 
 export interface FormattedSpec {
   /** Primary rendering, e.g. `7,700 nm` */
   primary: string
-  /** Converted rendering, e.g. `14,260 km`. Present when unitSystem needs it. */
+  primaryParts?: NumParts
+  /** Converted rendering, e.g. `14,260 km`. */
   secondary?: string
+  secondaryParts?: NumParts
   /** Single line for contexts with one text slot: `7,700 nm (14,260 km)` */
   text: string
 }
 
+const MACH_KMH = 1062.2   // 1 Mach at the ISA tropopause, in km/h
+const MACH_MPH = 660.0    // same, in mph
+
+function val(locale: string, value: number, minFrac: number, maxFrac: number, prefix: string, suffix: string): FormattedValue {
+  const parts: NumParts = { value, minFrac, maxFrac, prefix, suffix }
+  return { text: renderParts(parts, locale), parts }
+}
+
+const METRE_FIELDS: AircraftSpecField[] = ['cabinLengthM', 'cabinWidthM', 'cabinHeightM', 'overallLengthM', 'wingspanM', 'overallHeightM']
+
 /**
- * Formats one stored spec value. `unitSystem` decides which unit leads:
- * metric → km / m, imperial → nm / ft, both → imperial lead with metric in
- * parentheses (the format the brief shows for range and altitude).
+ * Formats one stored spec value. Specs are stored in ONE unit; this converts at
+ * render time and never persists a converted value.
+ *
+ * `unitSystem`:
+ *  - 'metric' / 'imperial': one unit (the visitor's toggle).
+ *  - 'both': the lead unit with the other as `secondary` (the stat strip).
+ * Mach rows always lead with Mach and carry the equivalent speed as secondary
+ * (km/h for metric and both, mph for imperial).
  */
 export function formatSpec(
   field: AircraftSpecField,
   value: number | null | undefined,
   locale: string,
-  unitSystem: SpecUnitSystem = 'both',
+  unitSystem: SpecUnit | 'both' = 'both',
 ): FormattedSpec | null {
   if (value == null || Number.isNaN(value)) return null
 
-  let imperial: string
-  let metric: string | undefined
+  const single = (v: FormattedValue): FormattedSpec => ({ primary: v.text, primaryParts: v.parts, text: v.text })
 
-  switch (field) {
-    case 'rangeNm':
-      imperial = `${num(locale, value)} nm`
-      metric   = `${num(locale, Math.round(value * 1.852))} km`
-      break
-    case 'maxAltitudeFt':
-      imperial = `${num(locale, value)} ft`
-      metric   = `${num(locale, Math.round(value * 0.3048))} m`
-      break
-    case 'takeoffDistanceFt':
-    case 'landingDistanceFt':
-      imperial = `${num(locale, value)} ft`
-      metric   = `${num(locale, Math.round(value * 0.3048))} m`
-      break
-    case 'cabinLengthM':
-    case 'cabinWidthM':
-    case 'cabinHeightM':
-      metric   = `${num(locale, value, 2)} m`
-      imperial = feetInches(value, locale)
-      break
-    case 'baggageVolumeM3':
-      metric   = `${num(locale, value, 2)} m³`
-      imperial = `${num(locale, value * 35.3147, 0)} ft³`
-      break
-    case 'cruiseSpeedMach':
-    case 'maxOperatingMach':
-      imperial = `Mach ${num(locale, value, 2, 3)}`
-      break
-    case 'thrustLbf':
-      imperial = `${num(locale, value)} lbf`
-      metric   = `${num(locale, Math.round(value * 4.44822 / 1000 * 10) / 10, 1)} kN`
-      break
-    default:
-      imperial = num(locale, value)
+  if (field === 'cruiseSpeedMach' || field === 'maxOperatingMach') {
+    const mach = val(locale, value, 2, 3, 'Mach ', '')
+    const speed = unitSystem === 'imperial'
+      ? val(locale, Math.round(value * MACH_MPH), 0, 0, '', ' mph')
+      : val(locale, Math.round(value * MACH_KMH), 0, 0, '', ' km/h')
+    return { primary: mach.text, primaryParts: mach.parts, secondary: speed.text, secondaryParts: speed.parts, text: `${mach.text} (${speed.text})` }
   }
 
-  // Metric-native fields (cabin) lead with metric; imperial-native (range, ft)
-  // lead with imperial under `both`. `metric` / `imperial` flip for explicit picks.
-  const metricNative = field === 'cabinLengthM' || field === 'cabinWidthM' || field === 'cabinHeightM' || field === 'baggageVolumeM3'
-  if (!metric) return { primary: imperial, text: imperial }
+  let imperial: FormattedValue
+  let metric: FormattedValue | undefined
+  let metricLeads = false
 
-  if (unitSystem === 'metric')   return { primary: metric,   text: metric }
-  if (unitSystem === 'imperial') return { primary: imperial, text: imperial }
+  if (field === 'rangeNm') {
+    imperial = val(locale, value, 0, 0, '', ' nm')
+    metric   = val(locale, Math.round(value * 1.852), 0, 0, '', ' km')
+  } else if (field === 'maxAltitudeFt' || field === 'takeoffDistanceFt' || field === 'landingDistanceFt') {
+    imperial = val(locale, value, 0, 0, '', ' ft')
+    metric   = val(locale, Math.round(value * 0.3048), 0, 0, '', ' m')
+  } else if (METRE_FIELDS.includes(field)) {
+    metricLeads = true
+    metric   = val(locale, value, 2, 2, '', ' m')
+    imperial = { text: feetInches(value, locale) }
+  } else if (field === 'baggageVolumeM3') {
+    metricLeads = true
+    metric   = val(locale, value, 2, 2, '', ' m³')
+    imperial = val(locale, Math.round(value * 35.3147), 0, 0, '', ' ft³')
+  } else if (field === 'thrustLbf') {
+    imperial = val(locale, value, 0, 0, '', ' lbf')
+    metric   = val(locale, Math.round(value * 4.44822 / 100) / 10, 1, 1, '', ' kN')
+  } else {
+    // Counts (passengers, crew, living spaces): no unit, no conversion.
+    return single(val(locale, value, 0, 0, '', ''))
+  }
 
-  const [lead, trail] = metricNative ? [metric, imperial] : [imperial, metric]
-  return { primary: lead, secondary: trail, text: `${lead} (${trail})` }
+  if (!metric) return single(imperial)
+  if (unitSystem === 'metric')   return single(metric)
+  if (unitSystem === 'imperial') return single(imperial)
+
+  const [lead, trail] = metricLeads ? [metric, imperial] : [imperial, metric]
+  return {
+    primary: lead.text, primaryParts: lead.parts,
+    secondary: trail.text, secondaryParts: trail.parts,
+    text: `${lead.text} (${trail.text})`,
+  }
 }
 
 /** Raw numeric value of a spec key on a record, or null. */
@@ -176,4 +269,5 @@ export const FAMILY_LABELS: Record<string, string> = { learjet: 'Learjet', chall
 export const LIFECYCLE_LABELS: Record<string, Record<string, string>> = {
   en: { announced: 'Announced', inProduction: 'In production', inService: 'In service', legacy: 'Legacy' },
   fr: { announced: 'Annoncé', inProduction: 'En production', inService: 'En service', legacy: 'Héritage' },
+  es: { announced: 'Anunciado', inProduction: 'En producción', inService: 'En servicio', legacy: 'Heredado' },
 }

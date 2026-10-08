@@ -222,6 +222,37 @@ export const OT_AircraftProfile = contentType({
       sortOrder:   190,
     },
 
+    // ── Exterior dimensions (language-neutral) ──────────────────────────────
+    // Drive the dimensioned aircraft diagram on the page. Stored once in metres;
+    // the front end renders ft/in or m per the visitor's unit toggle.
+    overallLengthM: {
+      type:        'float',
+      minimum:     5,
+      maximum:     40,
+      displayName: 'Overall Length (m)',
+      description: 'Nose to tail overall length.',
+      group:       'OT_Content',
+      sortOrder:   192,
+    },
+    wingspanM: {
+      type:        'float',
+      minimum:     5,
+      maximum:     40,
+      displayName: 'Wingspan (m)',
+      description: 'Tip-to-tip wingspan.',
+      group:       'OT_Content',
+      sortOrder:   194,
+    },
+    overallHeightM: {
+      type:        'float',
+      minimum:     2,
+      maximum:     15,
+      displayName: 'Overall Height (m)',
+      description: 'Ground to top of the tail.',
+      group:       'OT_Content',
+      sortOrder:   196,
+    },
+
     // ── Powerplant and certification (language-neutral) ─────────────────────
     engineModel: {
       type:        'string',
@@ -267,6 +298,22 @@ export const OT_AircraftProfile = contentType({
       items:       { type: 'contentReference', allowedTypes: ['_image'] },
       group:       'OT_Content',
       sortOrder:   240,
+    },
+    diagramFrontImage: {
+      type:         'contentReference',
+      allowedTypes: ['_image'],
+      displayName:  'Diagram: Front View',
+      description:  'Front-view aircraft silhouette for the dimensioned specification diagram. Transparent PNG, about 1200×325, cropped to the wingtips and gear. Optional: a generic drawing is used when empty.',
+      group:        'OT_Content',
+      sortOrder:    242,
+    },
+    diagramSideImage: {
+      type:         'contentReference',
+      allowedTypes: ['_image'],
+      displayName:  'Diagram: Side View',
+      description:  'Side-view aircraft silhouette for the dimensioned specification diagram. Transparent PNG, about 1200×325, cropped to the nose, tail and gear. Optional: a generic drawing is used when empty.',
+      group:        'OT_Content',
+      sortOrder:    244,
     },
     featureVideo: {
       type:         'contentReference',

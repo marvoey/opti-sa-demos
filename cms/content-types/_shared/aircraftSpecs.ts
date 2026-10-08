@@ -22,6 +22,9 @@ export const AIRCRAFT_SPEC_FIELDS = [
   { value: 'cabinWidthM',       displayName: 'Cabin Width (m)' },
   { value: 'cabinHeightM',      displayName: 'Cabin Height (m)' },
   { value: 'baggageVolumeM3',   displayName: 'Baggage Volume (m³)' },
+  { value: 'overallLengthM',    displayName: 'Overall Length (m)' },
+  { value: 'wingspanM',         displayName: 'Wingspan (m)' },
+  { value: 'overallHeightM',    displayName: 'Overall Height (m)' },
   { value: 'thrustLbf',         displayName: 'Thrust per Engine (lbf)' },
 ] as const
 
