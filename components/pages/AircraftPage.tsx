@@ -65,6 +65,7 @@ export default async function AircraftPage({
         modelName={aircraft.modelName}
         labels={{
           heading: t(locale, 'aircraft.gallery'),
+          hint:    t(locale, 'aircraft.galleryHint'),
           open:    t(locale, 'aircraft.openImage', { n: '{n}', total: '{total}' }),
           close:   t(locale, 'aircraft.closeGallery'),
           prev:    t(locale, 'aircraft.prevImage'),

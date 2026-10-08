@@ -132,6 +132,7 @@
     "diagramNote": "Illustration, not to scale.",
     "length": "Length",
     "wingspan": "Wingspan",
-    "height": "Height"
+    "height": "Height",
+    "galleryHint": "Select any image to open the slideshow"
   }
 }

@@ -132,6 +132,7 @@
     "diagramNote": "Illustration, pas à l’échelle.",
     "length": "Longueur",
     "wingspan": "Envergure",
-    "height": "Hauteur"
+    "height": "Hauteur",
+    "galleryHint": "Sélectionnez une image pour ouvrir le diaporama"
   }
 }

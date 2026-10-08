@@ -132,6 +132,7 @@
       "backToFleet": "Volver a la flota",
       "showColumn": "Mostrar el {model}",
       "columns": "Columnas mostradas"
-    }
+    },
+    "galleryHint": "Seleccione una imagen para abrir la presentación"
   }
 }
