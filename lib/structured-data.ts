@@ -100,9 +100,22 @@ export function buildJsonLd(
       case 'Product':
         pageNode = {
           '@type': 'Product',
-          name:    page.seoTitle ?? undefined,
-          description: page.pageAnswer ?? page.seoDescription ?? undefined,
+          name:    page.product?.name ?? page.seoTitle ?? undefined,
+          description: page.pageAnswer ?? page.seoDescription ?? page.product?.description ?? undefined,
           url: pageUrl,
+          ...(page.product?.images?.length ? { image: page.product.images } : {}),
+          ...(page.product?.category ? { category: page.product.category } : {}),
+          ...(page.product?.brand ? { brand: { '@type': 'Brand', name: page.product.brand } } : {}),
+          ...(page.product?.additionalProperty?.length
+            ? {
+                additionalProperty: page.product.additionalProperty.map(p => ({
+                  '@type': 'PropertyValue',
+                  name:  p.name,
+                  value: p.value,
+                  ...(p.unitCode ? { unitCode: p.unitCode } : {}),
+                })),
+              }
+            : {}),
         }
         break
 

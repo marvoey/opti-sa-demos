@@ -36,6 +36,16 @@ export type PageSeoFields = {
     description?: string
     worksFor?:    string
   } | null
+  /** Populated for OT_AircraftPage (schemaType 'Product') — drives the Product
+   *  JSON-LD node's image, brand, category and additionalProperty specs. */
+  product?: {
+    name?:        string
+    description?: string
+    images?:      string[]
+    category?:    string
+    brand?:       string
+    additionalProperty?: { name: string; value: number; unitCode?: string }[]
+  } | null
 }
 
 /**

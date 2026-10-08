@@ -56,5 +56,73 @@
   },
   "a11y": {
     "externalLink": "S'ouvre dans un nouvel onglet"
+  },
+  "aircraft": {
+    "specifications": "Caractéristiques",
+    "performance": "Performance",
+    "cabin": "Cabine",
+    "powerplant": "Groupe motopropulseur",
+    "engine": "Moteur",
+    "certified": "Certifié",
+    "compare": "Comparer les appareils",
+    "compareThis": "Comparer avec d’autres modèles",
+    "gallery": "Galerie",
+    "openImage": "Ouvrir l’image {n} sur {total}",
+    "closeGallery": "Fermer la galerie",
+    "prevImage": "Image précédente",
+    "nextImage": "Image suivante",
+    "specSheet": "Fiche technique",
+    "downloadSpecSheet": "Télécharger la fiche technique (PDF)",
+    "related": "Vous pourriez aussi considérer",
+    "viewModel": "Voir le {model}",
+    "enquiry": "Demander des renseignements",
+    "languageNotice": "Cette page n’est pas encore offerte dans votre langue. Vous consultez la version anglaise.",
+    "lifecycle": {
+      "announced": "Annoncé",
+      "inProduction": "En production",
+      "inService": "En service",
+      "legacy": "Hérité"
+    },
+    "families": {
+      "learjet": "Learjet",
+      "challenger": "Challenger",
+      "global": "Global"
+    },
+    "listing": {
+      "search": "Rechercher un appareil",
+      "searchPlaceholder": "Nom du modèle ou slogan",
+      "family": "Famille",
+      "range": "Portée",
+      "passengers": "Passagers",
+      "anyPassengers": "Tous",
+      "passengersPlus": "{n} et plus",
+      "lifecycle": "Statut",
+      "sort": "Trier par",
+      "sortDisplayOrder": "En vedette",
+      "sortRangeDesc": "Portée, de la plus grande à la plus petite",
+      "sortPassengersDesc": "Capacité, de la plus grande à la plus petite",
+      "sortNameAsc": "Nom du modèle, de A à Z",
+      "resultCount": "{count} appareils",
+      "resultOne": "1 appareil",
+      "noResults": "Aucun appareil ne correspond à ces filtres.",
+      "activeFilters": "Filtres actifs",
+      "clearFilters": "Effacer tous les filtres",
+      "selectToCompare": "Sélectionner le {model} pour comparer",
+      "compareSelected": "Comparer les {count} appareils sélectionnés",
+      "compareHint": "Sélectionnez de 2 à 4 appareils à comparer",
+      "maxCompare": "Vous pouvez comparer jusqu’à 4 appareils",
+      "rangeMin": "Portée minimale",
+      "rangeMax": "Portée maximale",
+      "currentOnly": "Modèles actuels seulement"
+    },
+    "comparison": {
+      "aircraft": "Appareils",
+      "best": "Meilleure valeur",
+      "featured": "Recommandé",
+      "emptyTitle": "Choisissez au moins deux appareils à comparer.",
+      "backToFleet": "Retour à la flotte",
+      "showColumn": "Afficher le {model}",
+      "columns": "Colonnes affichées"
+    }
   }
 }

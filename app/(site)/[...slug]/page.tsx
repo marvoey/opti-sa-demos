@@ -18,6 +18,9 @@ import { getTopicHubPage } from '@/lib/topicHub'
 import { getPractitioner } from '@/lib/practitioners'
 import { practitionerName, primaryArea, bioPreview } from '@/lib/practitionerFormat'
 import PractitionerHeader from '@/components/practitioner/PractitionerHeader'
+import { getAircraft } from '@/lib/aircraft'
+import { buildProductSeo } from '@/lib/aircraftSeo'
+import AircraftPage from '@/components/pages/AircraftPage'
 import BookingPanel from '@/components/practitioner/booking/BookingPanel'
 import { withAppContext }       from '@optimizely/cms-sdk/react/server'
 import { NextPreviewComponent } from '@optimizely/cms-sdk/react/nextjs'
@@ -143,6 +146,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       settings ?? {},
       path,
     )
+  }
+
+  // Aircraft page — _experience; SEO falls back to the referenced aircraft
+  // record's model name + tagline, and the social image to its hero image.
+  if (exp?.__typename === 'OT_AircraftPage') {
+    const refKey = (exp as any)?.aircraftRef?.key as string | undefined
+    const aircraft = refKey ? await getAircraft(refKey, locale) : null
+    const heroOg = aircraft?.heroImageUrl ? { url: { default: aircraft.heroImageUrl } } : undefined
+    const seoFields: PageSeoFields = {
+      ...((exp ?? {}) as PageSeoFields),
+      seoTitle:       (exp as any)?.seoTitle ?? aircraft?.modelName,
+      seoDescription: (exp as any)?.seoDescription ?? aircraft?.tagline,
+      ogImage:        (exp as any)?.ogImage ?? heroOg,
+      schemaType:     (exp as any)?.schemaType || 'Product',
+    }
+    return buildPageMetadata(seoFields, settings ?? {}, path)
   }
 
   // Practitioner page — _experience; build SEO from page fields with a smart
@@ -509,6 +528,50 @@ async function CmsPage({ params, searchParams }: Props) {
       redirect(`/preview?${qs}`)
     }
     notFound()
+  }
+
+  // Aircraft page — _experience type. The referenced aircraft record populates
+  // a locked header and the specification panel OUTSIDE the composition tree;
+  // the editor's Visual Builder composition sits between them. Numeric specs
+  // are language-neutral, so the EN and FR pages share identical spec values.
+  if (exp?.__typename === 'OT_AircraftPage') {
+    const refKey = (exp as any).aircraftRef?.key as string | undefined
+    const aircraft = refKey ? await getAircraft(refKey, locale) : null
+
+    const aircraftSeo: PageSeoFields = {
+      ...(exp as PageSeoFields),
+      seoTitle:   (exp as PageSeoFields).seoTitle ?? aircraft?.modelName,
+      schemaType: (exp as PageSeoFields).schemaType && (exp as PageSeoFields).schemaType !== 'none'
+        ? (exp as PageSeoFields).schemaType
+        : 'Product',
+      product: aircraft ? buildProductSeo(aircraft, locale, settings?.siteName ?? undefined) : null,
+    }
+    const aircraftJsonLd = buildJsonLd(aircraftSeo, settings ?? {}, fullPageUrl)
+
+    return (
+      <>
+        <JsonLd data={aircraftJsonLd} />
+        {dm.isEnabled && cmsUrl && (
+          <Script src={`${cmsUrl}/util/javascript/communicationinjector.js`} />
+        )}
+        {dm.isEnabled && <NextPreviewComponent />}
+        {renderPreviewChrome(exp, { headline: exp.seoTitle ?? aircraft?.modelName ?? null })}
+        {aircraft ? (
+          <AircraftPage
+            aircraft={aircraft}
+            locale={locale}
+            headerStyle={(exp as any).headerStyle}
+            showSpecPanel={(exp as any).showSpecPanel}
+            showComparisonCta={(exp as any).showComparisonCta}
+            enquiryFormKey={(exp as any).enquiryFormRef?.key}
+            enquiryHeading={(exp as any).enquiryHeading}
+            composition={<CompositionRenderer nodes={exp.composition.nodes} />}
+          />
+        ) : (
+          <CompositionRenderer nodes={exp.composition.nodes} />
+        )}
+      </>
+    )
   }
 
   // Practitioner page — _experience type. The referenced practitioner record

@@ -56,5 +56,73 @@
   },
   "a11y": {
     "externalLink": "Opens in a new tab"
+  },
+  "aircraft": {
+    "specifications": "Specifications",
+    "performance": "Performance",
+    "cabin": "Cabin",
+    "powerplant": "Powerplant",
+    "engine": "Engine",
+    "certified": "Certified",
+    "compare": "Compare aircraft",
+    "compareThis": "Compare with other models",
+    "gallery": "Gallery",
+    "openImage": "Open image {n} of {total}",
+    "closeGallery": "Close gallery",
+    "prevImage": "Previous image",
+    "nextImage": "Next image",
+    "specSheet": "Specification sheet",
+    "downloadSpecSheet": "Download the specification sheet (PDF)",
+    "related": "You may also consider",
+    "viewModel": "View {model}",
+    "enquiry": "Request information",
+    "languageNotice": "This page is not yet available in your language. You are viewing the English version.",
+    "lifecycle": {
+      "announced": "Announced",
+      "inProduction": "In production",
+      "inService": "In service",
+      "legacy": "Legacy"
+    },
+    "families": {
+      "learjet": "Learjet",
+      "challenger": "Challenger",
+      "global": "Global"
+    },
+    "listing": {
+      "search": "Search aircraft",
+      "searchPlaceholder": "Model name or tagline",
+      "family": "Family",
+      "range": "Range",
+      "passengers": "Passengers",
+      "anyPassengers": "Any",
+      "passengersPlus": "{n}+",
+      "lifecycle": "Status",
+      "sort": "Sort by",
+      "sortDisplayOrder": "Featured",
+      "sortRangeDesc": "Range, high to low",
+      "sortPassengersDesc": "Capacity, high to low",
+      "sortNameAsc": "Model name A to Z",
+      "resultCount": "{count} aircraft",
+      "resultOne": "1 aircraft",
+      "noResults": "No aircraft match these filters.",
+      "activeFilters": "Active filters",
+      "clearFilters": "Clear all filters",
+      "selectToCompare": "Select {model} to compare",
+      "compareSelected": "Compare {count} selected",
+      "compareHint": "Select 2 to 4 aircraft to compare",
+      "maxCompare": "Up to 4 aircraft can be compared",
+      "rangeMin": "Minimum range",
+      "rangeMax": "Maximum range",
+      "currentOnly": "Current models only"
+    },
+    "comparison": {
+      "aircraft": "Aircraft",
+      "best": "Leading value",
+      "featured": "Recommended",
+      "emptyTitle": "Choose at least two aircraft to compare.",
+      "backToFleet": "Back to the fleet",
+      "showColumn": "Show {model}",
+      "columns": "Columns shown"
+    }
   }
 }

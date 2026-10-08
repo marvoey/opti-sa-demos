@@ -33,6 +33,9 @@ import { OT_CalloutDefault }         from '@/cms/display-templates/OT_CalloutDef
 import { OT_DividerBlockDefault }    from '@/cms/display-templates/OT_DividerBlockDefault'
 import { OT_EventListingDefault }    from '@/cms/display-templates/OT_EventListingDefault'
 import { OT_PractitionerListingDefault } from '@/cms/display-templates/OT_PractitionerListingDefault'
+import { OT_AircraftProfileDefault }     from '@/cms/display-templates/OT_AircraftProfileDefault'
+import { OT_AircraftListingDefault }     from '@/cms/display-templates/OT_AircraftListingDefault'
+import { OT_AircraftSpecTableDefault }   from '@/cms/display-templates/OT_AircraftSpecTableDefault'
 import { OT_LocationListingDefault } from '@/cms/display-templates/OT_LocationListingDefault'
 import { OT_ContentRecommendationsDefault } from '@/cms/display-templates/OT_ContentRecommendationsDefault'
 import { OT_ProductRecommendationsDefault } from '@/cms/display-templates/OT_ProductRecommendationsDefault'
@@ -91,6 +94,11 @@ import { OT_PracticeArea }            from '@/cms/content-types/OT_PracticeArea'
 import { OT_PractitionerProfile }     from '@/cms/content-types/OT_PractitionerProfile'
 import { OT_PractitionerPage }        from '@/cms/content-types/OT_PractitionerPage'
 import { OT_PractitionerListingBlock } from '@/cms/content-types/OT_PractitionerListingBlock'
+import { OT_AircraftSpecRow }          from '@/cms/content-types/OT_AircraftSpecRow'
+import { OT_AircraftProfile }          from '@/cms/content-types/OT_AircraftProfile'
+import { OT_AircraftPage }             from '@/cms/content-types/OT_AircraftPage'
+import { OT_AircraftListingBlock }     from '@/cms/content-types/OT_AircraftListingBlock'
+import { OT_AircraftSpecTable }        from '@/cms/content-types/OT_AircraftSpecTable'
 import { OT_LocationProfile }            from '@/cms/content-types/OT_LocationProfile'
 import { OT_LocationListingBlock }       from '@/cms/content-types/OT_LocationListingBlock'
 import { OT_ContentRecommendationsBlock } from '@/cms/content-types/OT_ContentRecommendationsBlock'
@@ -222,6 +230,9 @@ initDisplayTemplateRegistry([
   OT_DividerBlockDefault,
   OT_EventListingDefault,
   OT_PractitionerListingDefault,
+  OT_AircraftProfileDefault,
+  OT_AircraftListingDefault,
+  OT_AircraftSpecTableDefault,
   OT_LocationListingDefault,
   OT_ContentRecommendationsDefault,
   OT_ProductRecommendationsDefault,
@@ -280,6 +291,11 @@ initContentTypeRegistry([
   OT_PractitionerProfile,
   OT_PractitionerPage,
   OT_PractitionerListingBlock,
+  OT_AircraftSpecRow,
+  OT_AircraftProfile,
+  OT_AircraftPage,
+  OT_AircraftListingBlock,
+  OT_AircraftSpecTable,
   OT_LocationProfile,
   OT_LocationListingBlock,
   OT_ContentRecommendationsBlock,
