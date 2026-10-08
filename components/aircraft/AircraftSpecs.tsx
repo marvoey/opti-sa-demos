@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useId, useState } from 'react'
+import { useId, useSyncExternalStore } from 'react'
 import type { AircraftSpecField } from '@/cms/content-types/_shared/aircraftSpecs'
 import { defaultUnitSystem, formatSpec, SPEC_GROUPS, type SpecUnit } from '@/lib/aircraftFormat'
 import AircraftDiagram from './AircraftDiagram'
@@ -25,6 +25,20 @@ type Props = {
 }
 
 const STORAGE_KEY = 'aircraft-unit'
+const UNIT_EVENT = 'aircraft-unit-change'
+
+function readUnit(): SpecUnit | null {
+  try {
+    const v = window.localStorage.getItem(STORAGE_KEY)
+    return v === 'metric' || v === 'imperial' ? v : null
+  } catch { return null }
+}
+
+function subscribeUnit(onChange: () => void) {
+  window.addEventListener(UNIT_EVENT, onChange)
+  window.addEventListener('storage', onChange)
+  return () => { window.removeEventListener(UNIT_EVENT, onChange); window.removeEventListener('storage', onChange) }
+}
 
 /**
  * The full specification section: a metric/imperial toggle (the locale picks the
@@ -34,21 +48,17 @@ const STORAGE_KEY = 'aircraft-unit'
  * Sits on the brand color with a faint blueprint grid.
  */
 export default function AircraftSpecs({ locale, modelName, values, engineModel, certDate, fieldLabels, diagramFrontUrl, diagramSideUrl, text }: Props) {
-  const [unit, setUnit] = useState<SpecUnit>(defaultUnitSystem(locale))
+  // The visitor's explicit choice persists across aircraft pages. It is read with
+  // useSyncExternalStore so the server render and first client render both use the
+  // locale default (no hydration mismatch), then the saved choice takes over.
+  // Per-viewer convenience only: unavailable storage (private mode) is ignored.
+  const saved = useSyncExternalStore(subscribeUnit, readUnit, () => null)
+  const unit: SpecUnit = saved ?? defaultUnitSystem(locale)
   const radioName = useId()
 
-  // A visitor's explicit choice persists across aircraft pages. Per-viewer
-  // convenience only: failures (private mode, blocked storage) are ignored.
-  useEffect(() => {
-    try {
-      const saved = window.localStorage.getItem(STORAGE_KEY)
-      if (saved === 'metric' || saved === 'imperial') setUnit(saved)
-    } catch { /* storage unavailable */ }
-  }, [])
-
   const choose = (next: SpecUnit) => {
-    setUnit(next)
     try { window.localStorage.setItem(STORAGE_KEY, next) } catch { /* storage unavailable */ }
+    window.dispatchEvent(new Event(UNIT_EVENT))
   }
 
   const fmt = (f: AircraftSpecField) => formatSpec(f, values[f], locale, unit)

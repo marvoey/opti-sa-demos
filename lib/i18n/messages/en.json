@@ -113,7 +113,9 @@
       "maxCompare": "Up to 4 aircraft can be compared",
       "rangeMin": "Minimum range",
       "rangeMax": "Maximum range",
-      "currentOnly": "Current models only"
+      "currentOnly": "Current models only",
+      "compareLabel": "Compare",
+      "viewModel": "View {model}"
     },
     "comparison": {
       "aircraft": "Aircraft",
@@ -122,7 +124,11 @@
       "emptyTitle": "Choose at least two aircraft to compare.",
       "backToFleet": "Back to the fleet",
       "showColumn": "Show {model}",
-      "columns": "Columns shown"
+      "columns": "Columns shown",
+      "specification": "Specification",
+      "tableLabel": "Aircraft comparison table",
+      "compareTitle": "Compare aircraft",
+      "compareIntro": "Specifications resolve from each aircraft record."
     },
     "exterior": "Exterior",
     "measure": "Measure",

@@ -113,7 +113,9 @@
       "maxCompare": "Vous pouvez comparer jusqu’à 4 appareils",
       "rangeMin": "Portée minimale",
       "rangeMax": "Portée maximale",
-      "currentOnly": "Modèles actuels seulement"
+      "currentOnly": "Modèles actuels seulement",
+      "compareLabel": "Comparer",
+      "viewModel": "Voir le {model}"
     },
     "comparison": {
       "aircraft": "Appareils",
@@ -122,7 +124,11 @@
       "emptyTitle": "Choisissez au moins deux appareils à comparer.",
       "backToFleet": "Retour à la flotte",
       "showColumn": "Afficher le {model}",
-      "columns": "Colonnes affichées"
+      "columns": "Colonnes affichées",
+      "specification": "Caractéristique",
+      "tableLabel": "Tableau comparatif des appareils",
+      "compareTitle": "Comparer les appareils",
+      "compareIntro": "Les caractéristiques proviennent de la fiche de chaque appareil."
     },
     "exterior": "Extérieur",
     "measure": "Mesures",

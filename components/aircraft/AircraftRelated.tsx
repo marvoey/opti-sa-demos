@@ -24,7 +24,7 @@ export default function AircraftRelated({ items, locale }: { items: AircraftData
                   aria-label={t(locale, 'aircraft.viewModel', { model: a.modelName })}
                   className="group block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
                 >
-                  <div className="relative aspect-[3/2] overflow-hidden bg-surface">
+                  <div className="relative aspect-[7/3] overflow-hidden bg-surface">
                     {a.heroImageUrl && (
                       <Image src={a.heroImageUrl} alt="" fill sizes="(min-width: 768px) 33vw, 100vw"
                         className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100" />

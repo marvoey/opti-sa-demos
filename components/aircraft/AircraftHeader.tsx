@@ -94,10 +94,15 @@ export default function AircraftHeader({ aircraft, locale, headerStyle = 'fullBl
   if (headerStyle === 'splitSpec') {
     return (
       <header className="bg-canvas text-fg">
-        <div className="grid lg:grid-cols-2">
-          <div className="relative min-h-[18rem] lg:min-h-[34rem]">
+        <div className="grid lg:grid-cols-[1.4fr_1fr]">
+          <div className="relative min-h-[16rem] overflow-hidden bg-canvas lg:min-h-[30rem]">
             {a.heroImageUrl && (
-              <Image src={a.heroImageUrl} alt={a.modelName} fill priority sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+              <>
+                {/* Ambient fill: a dimmed, blurred copy of the photo behind the
+                    uncropped one, so the letterbox bands pick up its colors. */}
+                <Image src={a.heroImageUrl} alt="" aria-hidden fill sizes="(min-width: 1024px) 58vw, 100vw" className="scale-125 object-cover opacity-45 blur-2xl" />
+                <Image src={a.heroImageUrl} alt={a.modelName} fill priority sizes="(min-width: 1024px) 58vw, 100vw" className="object-contain" />
+              </>
             )}
           </div>
           <div className="flex flex-col justify-center bg-surface px-md py-xl lg:px-xl">

@@ -122,7 +122,9 @@
       "maxCompare": "Se pueden comparar hasta 4 aeronaves",
       "rangeMin": "Alcance mínimo",
       "rangeMax": "Alcance máximo",
-      "currentOnly": "Solo modelos actuales"
+      "currentOnly": "Solo modelos actuales",
+      "compareLabel": "Comparar",
+      "viewModel": "Ver el {model}"
     },
     "comparison": {
       "aircraft": "Aeronaves",
@@ -131,7 +133,11 @@
       "emptyTitle": "Elija al menos dos aeronaves para comparar.",
       "backToFleet": "Volver a la flota",
       "showColumn": "Mostrar el {model}",
-      "columns": "Columnas mostradas"
+      "columns": "Columnas mostradas",
+      "specification": "Especificación",
+      "tableLabel": "Tabla comparativa de aeronaves",
+      "compareTitle": "Comparar aeronaves",
+      "compareIntro": "Las especificaciones provienen de la ficha de cada aeronave."
     },
     "galleryHint": "Seleccione una imagen para abrir la presentación"
   }

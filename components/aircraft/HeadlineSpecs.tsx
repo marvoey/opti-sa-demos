@@ -24,6 +24,20 @@ const easeOutQuart = (t: number) => 1 - Math.pow(1 - t, 4)
  * never see an animation. Reads matchMedia directly (not a hook) so there is no
  * first-render window where the animation could start for them.
  */
+/** Runs the 0 -> 1 ease-out and reports each frame. Returns a cancel function. */
+function runCountUp(onFrame: (p: number) => void): () => void {
+  let raf = 0
+  const t0 = performance.now()
+  const tick = (now: number) => {
+    const t = Math.min(1, (now - t0) / DURATION_MS)
+    onFrame(easeOutQuart(t))
+    if (t < 1) raf = requestAnimationFrame(tick)
+  }
+  onFrame(0)
+  raf = requestAnimationFrame(tick)
+  return () => cancelAnimationFrame(raf)
+}
+
 function useCountUp(ref: React.RefObject<HTMLElement | null>): number {
   const [progress, setProgress] = useState(1)
 
@@ -32,27 +46,17 @@ function useCountUp(ref: React.RefObject<HTMLElement | null>): number {
     if (!el) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
-    let raf = 0
-    let started = false
-    const run = () => {
-      if (started) return
-      started = true
-      const t0 = performance.now()
-      const tick = (now: number) => {
-        const t = Math.min(1, (now - t0) / DURATION_MS)
-        setProgress(easeOutQuart(t))
-        if (t < 1) raf = requestAnimationFrame(tick)
-      }
-      raf = requestAnimationFrame(tick)
-    }
-
-    setProgress(0)
+    let cancel: (() => void) | undefined
     const io = new IntersectionObserver(
-      entries => { if (entries.some(e => e.isIntersecting)) { run(); io.disconnect() } },
+      entries => {
+        if (!entries.some(e => e.isIntersecting)) return
+        io.disconnect()
+        cancel = runCountUp(setProgress)
+      },
       { threshold: 0.1 },
     )
     io.observe(el)
-    return () => { io.disconnect(); cancelAnimationFrame(raf) }
+    return () => { io.disconnect(); cancel?.() }
   }, [ref])
 
   return progress
