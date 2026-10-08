@@ -95,7 +95,7 @@ const headlineCva = cva(
 // Spotlight-only type voice: thin-but-large headline, medium-bold body — the
 // opposite weight pairing from Overlap/Diagonal's extrabold headline + regular
 // body, so the direction reads differently even set in the same family/scale.
-const spotlightHeadlineCva = cva("text-hero font-light leading-display tracking-display", {
+const spotlightHeadlineCva = cva("text-hero font-light leading-display tracking-display text-balance", {
   variants: {
     color: {
       brand:   "text-fg-on-brand",
@@ -164,8 +164,12 @@ const secondaryCtaCva = cva(
   }
 );
 
+// Editorial Split is a flush two-panel layout — the visual panel sits directly
+// against the square text panel with no gap, so it always stays sharp-cornered
+// (rounded-none) even when the theme's Corner Style axis is Soft/Rounded;
+// rounding just this one edge would misalign it against the text panel.
 const visualPanelCva = cva(
-  "relative overflow-hidden rounded-ot-surface aspect-video lg:aspect-auto lg:flex-1",
+  "relative overflow-hidden rounded-none aspect-video lg:aspect-auto lg:flex-1",
   {
     variants: {
       color: {
@@ -421,7 +425,7 @@ function SpotlightHero({
           from Overlap/Diagonal's extrabold headline + regular body. */}
       <h1 className={spotlightHeadlineCva({ color })} {...pa("headline")}>{headline}</h1>
       {body && <p className={`${spotlightBodyCva({ color })} mt-sm`} {...pa("body")}>{body}</p>}
-      <HeroCtas color={color} primaryCta={primaryCta} secondaryCta={secondaryCta} pa={pa} className="mt-lg" />
+      <HeroCtas color={color} primaryCta={primaryCta} secondaryCta={secondaryCta} pa={pa} className="mt-md" />
     </div>
   );
 
@@ -436,9 +440,12 @@ function SpotlightHero({
         // the card's real height (robust at any width), and only the visible
         // photo frame gets a small FIXED pixel overhang top/bottom — "slightly
         // taller" by a constant amount, not a ratio that compounds with width.
-        <div className="relative z-10 flex flex-col gap-lg lg:flex-row lg:items-center lg:gap-xl">
+        // The row is width-capped and centered so the pair stays close on
+        // ultrawide screens, and the photo slides a FIXED 56px under the card's
+        // edge (no gap) so the two read as one composition.
+        <div className="relative z-10 mx-auto flex w-full max-w-360 flex-col gap-lg lg:flex-row lg:items-center lg:gap-0">
           <div
-            className={`relative w-full aspect-[4/3] lg:aspect-auto lg:flex-1 lg:self-stretch ${imageLeft ? "lg:order-1" : "lg:order-2"}`}
+            className={`relative w-full aspect-[4/3] lg:aspect-auto lg:flex-1 lg:self-stretch ${imageLeft ? "lg:order-1 lg:-mr-14" : "lg:order-2 lg:-ml-14"}`}
             {...pa("visual")}
           >
             {/* Offset frame: a second bordered plate set behind the photo, its own
@@ -446,7 +453,7 @@ function SpotlightHero({
                 out on two sides — no rotation, no drop-shadow blur doing the work. */}
             <div
               className={`hero-spotlight-frame-offset absolute inset-0 lg:-top-3 lg:-bottom-3 rounded-ot-surface ${
-                imageLeft ? "translate-x-3 translate-y-3" : "-translate-x-3 translate-y-3"
+                imageLeft ? "-translate-x-3 translate-y-3" : "translate-x-3 translate-y-3"
               }`}
               aria-hidden
             />

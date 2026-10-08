@@ -3,6 +3,7 @@ import { getClient } from '@/lib/optimizely'
 import { DEFAULT_LOCALE, isSupportedLocale } from '@/lib/i18n/config'
 import { searchProducts, withCatalogLocale } from '@/lib/catalog'
 import { getCommerceSettings } from '@/lib/commerce/settings'
+import type { AutocompleteType, AutocompleteSuggestion } from '@/lib/search'
 
 const SCOPE_QUERY = `
   query GetSearchScope {
@@ -23,6 +24,15 @@ const EXCLUDED_TYPES = new Set([
   'OT_SiteSettings', 'OT_ThemeManager', 'OT_NavigationItem',
   'OT_NavigationSubItem', 'OT_FooterColumn', 'OT_FooterLink',
 ])
+
+// Same three-bucket classification the main /api/search route uses (Blog,
+// Event, and everything else falls to Page) so the typeahead groups match the
+// vocabulary the results list and filter drawer already use.
+function classifyType(types: string[]): AutocompleteType {
+  if (types.includes('OT_BlogPage'))  return 'Blog'
+  if (types.includes('OT_EventPage')) return 'Event'
+  return 'Page'
+}
 
 function buildSuggestQuery(withDomain: boolean): string {
   const domainVar   = withDomain ? ', $domain: String' : ''
@@ -80,15 +90,13 @@ export async function GET(req: NextRequest) {
 
   try {
     const data = await getClient().request(buildSuggestQuery(withDomain), vars)
-
+    const suggestions: AutocompleteSuggestion[] = []
     const seen        = new Set<string>()
-    const suggestions: string[] = []
-
     // Storefront sites: up to three product names lead the suggestions.
     const commerce = await getCommerceSettings(req.headers.get('host') ?? host).catch(() => null)
     if (commerce) {
       for (const p of (await withCatalogLocale(locale, () => searchProducts(commerce.catalogId, q, { limit: 3 })).catch(() => []))) {
-        if (!seen.has(p.name)) { seen.add(p.name); suggestions.push(p.name) }
+        if (!seen.has(p.name)) { seen.add(p.name); suggestions.push({ label: p.name, type: 'Product', url: p.url }) }
       }
     }
     const items: any[] = (data as any)?._Content?.items ?? []
@@ -96,12 +104,12 @@ export async function GET(req: NextRequest) {
     for (const item of items) {
       const types: string[]  = item._metadata?.types ?? []
       const name: string     = item._metadata?.displayName ?? ''
-      if (!name) continue
-      if (!item._metadata?.url?.default) continue
+      const url: string      = item._metadata?.url?.default ?? ''
+      if (!name || !url) continue
       if (types.some((t: string) => EXCLUDED_TYPES.has(t))) continue
       if (!seen.has(name)) {
         seen.add(name)
-        suggestions.push(name)
+        suggestions.push({ label: name, type: classifyType(types), url })
         if (suggestions.length >= 8) break
       }
     }
