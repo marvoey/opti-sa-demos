@@ -34,7 +34,7 @@ export default function ConfirmationView({ heading, continueLabel, continueUrl, 
           <h1 className="text-headline font-semibold leading-headline tracking-headline text-fg text-balance">
             {heading || t('commerce.confirmationTitle', { name: order.address.firstName })}
           </h1>
-          <p className="max-w-xl text-body leading-body text-fg-muted text-pretty">
+          <p className="text-body leading-body text-fg-muted text-pretty">
             {t('commerce.confirmationBody', { id: order.id, email: order.address.email })}
           </p>
         </div>
