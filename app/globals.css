@@ -174,41 +174,6 @@ html {
   --ot-btn-ghost-bg-hover:     oklch(from var(--ot-fg) l c h / 0.08);
 }
 
-/* Campaign landing frame: the committed color for this surface is the accent.
- * Many themes (Bombardier: #202020) have a brand fill that is near the dark
- * canvas, so brand-filled buttons and brand-colored eyebrows vanish on it. Inside
- * the frame the brand role resolves to the accent so every block (hero buttons,
- * eyebrows, stat rules) stays visible and on-theme without touching the blocks. */
-.ot-campaign-frame[data-theme] {
-  --ot-brand:       var(--ot-accent);
-  --ot-brand-hover: var(--ot-accent-hover);
-  --ot-fg-on-brand: var(--ot-fg-on-accent);
-}
-
-/* Campaign hero headline: one champagne sheen sweeps across the text on load,
- * then it settles to the plain solid headline. The fill is solid --ot-fg at both
- * ends of the animation, so the resting state is identical to no effect. Only
- * background-position animates (paint, not layout); skipped entirely under
- * prefers-reduced-motion, where the headline just stays solid. */
-@keyframes ot-campaign-sheen {
-  from { background-position: 100% 0; }
-  to   { background-position: 0% 0; }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .ot-campaign-frame h1 {
-    background-image: linear-gradient(100deg,
-      var(--ot-fg) 0%, var(--ot-fg) 38%,
-      var(--ot-accent) 50%,
-      var(--ot-fg) 62%, var(--ot-fg) 100%);
-    background-size: 300% 100%;
-    background-position: 100% 0;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: ot-campaign-sheen 4.5s cubic-bezier(0.4, 0, 0.3, 1) 0.8s 1 both;
-  }
-}
-
 /* Logo dark-mode invert — converts any dark/black logo to white.
  * Applied by Header/Footer when ThemeManager.logoInvertDark is true.
  * Removed in light mode so the original logo shows on the light canvas.
