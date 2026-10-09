@@ -20,7 +20,7 @@ import { t } from '@/lib/i18n/t'
  *    buttons and brand-colored eyebrows, so inside the frame the brand role resolves
  *    to the accent and every block stays visible and on-theme without edits.
  * 2. Hero sheen: a champagne band sweeps across the headline (4.5s), rests on the
- *    plain solid headline for the remainder of a 10s cycle, then repeats (solid --ot-fg
+ *    plain solid headline for the remainder of a 7s cycle, then repeats (solid --ot-fg
  *    at both ends, so the loop point is seamless and the resting state equals no effect). Only background-position animates (paint, not layout).
  *    The hero already runs a fade-in on the h1 with an inline animation-delay, so both
  *    animations are listed and the delay list is !important to beat that inline value.
@@ -28,13 +28,13 @@ import { t } from '@/lib/i18n/t'
  */
 const CAMPAIGN_CSS = `
 .ot-campaign-frame[data-theme]{--ot-brand:var(--ot-accent);--ot-brand-hover:var(--ot-accent-hover);--ot-fg-on-brand:var(--ot-fg-on-accent)}
-@keyframes ot-campaign-sheen{0%{background-position:100% 0}45%{background-position:0% 0}100%{background-position:0% 0}}
+@keyframes ot-campaign-sheen{0%{background-position:100% 0}64%{background-position:0% 0}100%{background-position:0% 0}}
 @media (prefers-reduced-motion:no-preference){
 .ot-campaign-frame h1{
 background-image:linear-gradient(100deg,var(--ot-fg) 0%,var(--ot-fg) 38%,var(--ot-accent) 50%,var(--ot-fg) 62%,var(--ot-fg) 100%);
 background-size:300% 100%;background-position:100% 0;
 -webkit-background-clip:text;background-clip:text;color:transparent;
-animation:fadeIn var(--ot-dur-slow) cubic-bezier(.16,1,.3,1) both,ot-campaign-sheen 10s cubic-bezier(.4,0,.3,1) infinite both;
+animation:fadeIn var(--ot-dur-slow) cubic-bezier(.16,1,.3,1) both,ot-campaign-sheen 7s cubic-bezier(.4,0,.3,1) infinite both;
 animation-delay:100ms,800ms!important}
 }
 `
