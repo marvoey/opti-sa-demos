@@ -1,10 +1,12 @@
 import type { ReactNode } from 'react'
-import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import Footer from '@/components/layout/Footer'
 import { LogoImage } from '@/components/layout/LogoImage'
+import { LocaleSelector } from '@/components/layout/LocaleSelector'
+import { getEnabledLanguages } from '@/lib/i18n/getEnabledLanguages'
 import OptiFormsContainerDataAdapter from '@/cms/components/OptiFormsContainerData'
+import CampaignStars from '@/components/campaign/CampaignStars'
 import { getCampaignFooter } from '@/lib/campaignLanding'
 import { getRequestDomain, getSiteSettings } from '@/lib/optimizely'
 import { localizedHref, type Locale } from '@/lib/i18n/config'
@@ -27,6 +29,17 @@ import { t } from '@/lib/i18n/t'
  *    Skipped entirely under prefers-reduced-motion: the headline stays solid.
  */
 const CAMPAIGN_CSS = `
+.ot-campaign-body .bg-canvas{background-color:transparent}
+.ot-campaign-atmos{position:absolute;left:0;right:0;height:40rem;pointer-events:none;overflow:hidden;z-index:0}
+.ot-campaign-atmos--top{top:0}
+.ot-campaign-atmos--bottom{bottom:0}
+.ot-campaign-atmos>*{position:absolute;inset:0;width:100%;height:100%}
+.ot-campaign-glow{background:radial-gradient(ellipse 60% 85% at 50% 0%,oklch(from var(--ot-accent) l c h/.14),transparent 72%)}
+.ot-campaign-atmos--bottom .ot-campaign-glow{background:radial-gradient(ellipse 60% 85% at 50% 100%,oklch(from var(--ot-accent) l c h/.12),transparent 72%)}
+.ot-campaign-grid{background-image:linear-gradient(oklch(from var(--ot-accent) l c h/.09) 1px,transparent 1px),linear-gradient(90deg,oklch(from var(--ot-accent) l c h/.09) 1px,transparent 1px);background-size:56px 56px;background-position:center top;-webkit-mask-image:linear-gradient(to bottom,#000,transparent 92%);mask-image:linear-gradient(to bottom,#000,transparent 92%)}
+.ot-campaign-atmos--bottom .ot-campaign-grid{background-position:center bottom;-webkit-mask-image:linear-gradient(to top,#000,transparent 92%);mask-image:linear-gradient(to top,#000,transparent 92%)}
+.ot-campaign-stars{-webkit-mask-image:linear-gradient(to bottom,#000 10%,transparent);mask-image:linear-gradient(to bottom,#000 10%,transparent)}
+.ot-campaign-atmos--bottom .ot-campaign-stars{-webkit-mask-image:linear-gradient(to top,#000 10%,transparent);mask-image:linear-gradient(to top,#000 10%,transparent)}
 .ot-campaign-frame[data-theme]{--ot-brand:var(--ot-accent);--ot-brand-hover:var(--ot-accent-hover);--ot-fg-on-brand:var(--ot-fg-on-accent)}
 @keyframes ot-campaign-sheen{0%{background-position:100% 0}64%{background-position:0% 0}100%{background-position:0% 0}}
 @media (prefers-reduced-motion:no-preference){
@@ -65,9 +78,10 @@ type Props = {
 export default async function CampaignLandingFrame({
   locale, ctaLabel, ctaUrl, returnLabel, footerKey, formKey, formHeading, children,
 }: Props) {
-  const [settings, footerBlock] = await Promise.all([
+  const [settings, footerBlock, enabledLocales] = await Promise.all([
     getRequestDomain().then(d => getSiteSettings(d, locale)),
     footerKey ? getCampaignFooter(footerKey, locale) : Promise.resolve(null),
+    getEnabledLanguages(),
   ])
 
   const siteName    = (settings?.siteName as string | undefined) ?? ''
@@ -78,31 +92,37 @@ export default async function CampaignLandingFrame({
   const returnText  = returnLabel || t(locale, 'campaignLanding.returnToSite')
   const showCta     = !!(ctaLabel && ctaUrl)
 
-  const returnLink = (
-    <Link
+  // A plain anchor (full page load), not <Link>: leaving the standalone shell must
+  // re-render the site layout so the header and footer come back.
+  const renderReturnLink = (collapseOnPhones: boolean) => (
+    <a
       href={homeHref}
       className="group inline-flex min-h-11 shrink-0 items-center gap-xs whitespace-nowrap rounded-ot-control text-[0.7rem] sm:text-label font-semibold uppercase tracking-label text-fg-muted transition-colors duration-200 ease-quick hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
     >
       <ArrowLeft aria-hidden className="size-4 transition-transform duration-200 ease-quick group-hover:-translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" />
-      {returnLabel ? returnText : (
-        <>
-          <span className="sm:hidden">{t(locale, 'campaignLanding.returnShort')}</span>
-          <span className="hidden sm:inline">{returnText}</span>
-        </>
-      )}
-    </Link>
+      {/* Below ~430px the strip also holds the language picker and the CTA, so the label
+          collapses to the arrow (the footer shows the full label). Name stays accessible. */}
+      <span className={collapseOnPhones ? 'sr-only min-[430px]:not-sr-only' : undefined}>
+        {returnLabel ? returnText : (
+          <>
+            <span className="sm:hidden">{t(locale, 'campaignLanding.returnShort')}</span>
+            <span className="hidden sm:inline">{returnText}</span>
+          </>
+        )}
+      </span>
+    </a>
   )
 
   return (
-    <div data-theme="dark" className="ot-campaign-frame flex min-h-dvh flex-col bg-canvas text-fg">
+    <div data-theme="dark" data-ot-standalone className="ot-campaign-frame flex min-h-dvh flex-col overflow-x-clip bg-canvas text-fg">
       <style>{CAMPAIGN_CSS}</style>
       <header
         aria-label={t(locale, 'campaignLanding.strip')}
         className="sticky top-0 z-40 border-b border-fg/10 bg-canvas"
       >
-        <div className="mx-auto flex h-[var(--ot-site-header-h)] max-w-[88rem] items-center justify-between gap-md px-md lg:px-xl">
+        <div className="mx-auto flex h-[var(--ot-site-header-h)] max-w-[80rem] items-center justify-between gap-md px-md lg:px-xl">
           <div className="flex min-w-0 items-center gap-md">
-            {returnLink}
+            {renderReturnLink(true)}
             {logoSrc && (
               <>
                 <span aria-hidden className="hidden h-5 w-px bg-fg/20 sm:block" />
@@ -116,47 +136,65 @@ export default async function CampaignLandingFrame({
               </>
             )}
           </div>
-          {showCta && (
-            <Button variant="accent" size="sm" href={ctaUrl!} className="shrink-0 whitespace-nowrap !px-md !text-[0.7rem] sm:!px-7 sm:!text-label">
-              {ctaLabel}
-            </Button>
-          )}
+          <div className="flex shrink-0 items-center gap-md">
+            {/* Same picker as the site header; renders nothing when only one language is enabled. */}
+            <LocaleSelector enabledLocales={enabledLocales} />
+            {showCta && (
+              <Button variant="accent" size="sm" href={ctaUrl!} className="shrink-0 whitespace-nowrap !px-md !text-[0.7rem] sm:!px-7 sm:!text-label">
+                {ctaLabel}
+              </Button>
+            )}
+          </div>
         </div>
       </header>
 
-      <div className="flex-1">{children}</div>
+      {/* Atmosphere: chart grid, champagne glow and drifting stars at the top and bottom of
+          the page, behind a contained 80rem column. Canvas-colored blocks turn transparent
+          inside the column (see CAMPAIGN_CSS) so the atmosphere shows through them. */}
+      <div className="relative isolate flex-1">
+        {(['top', 'bottom'] as const).map(edge => (
+          <div key={edge} aria-hidden className={`ot-campaign-atmos ot-campaign-atmos--${edge}`}>
+            <div className="ot-campaign-glow" />
+            <div className="ot-campaign-grid" />
+            <CampaignStars className="ot-campaign-stars" />
+          </div>
+        ))}
+        <div className="ot-campaign-body relative z-10 mx-auto w-full max-w-[80rem] border-x border-fg/[0.06]">
+          {children}
 
       {formKey && (
-        // Anchor target for the strip button (#request-information); scroll-mt clears the sticky strip.
-        <section id="request-information" aria-label={formHeading || t(locale, 'campaignLanding.formHeading')} className="scroll-mt-[var(--ot-site-header-h)] bg-surface text-fg">
-          <div className="mx-auto max-w-3xl px-md py-xl lg:py-2xl">
-            {/* The form block carries its own title; a heading here is optional and author-supplied. */}
-            {formHeading && (
-              <h2 id="campaign-form-heading" className="mb-lg text-balance text-[clamp(1.75rem,4vw,2.75rem)] font-light leading-[1.05] tracking-[-0.02em]">
-                {formHeading}
-              </h2>
-            )}
-            <div>
-              <OptiFormsContainerDataAdapter
-                content={{ _metadata: { key: formKey } }}
-                displaySettings={{ contentWidth: 'default', verticalSpacing: 'none', backgroundColor: 'none' }}
-              />
-            </div>
-          </div>
-        </section>
-      )}
+            // Anchor target for the strip button (#request-information); scroll-mt clears the sticky strip.
+            <section id="request-information" aria-label={formHeading || t(locale, 'campaignLanding.formHeading')} className="scroll-mt-[var(--ot-site-header-h)] bg-surface text-fg">
+              <div className="mx-auto max-w-3xl px-md py-xl lg:py-2xl">
+                {/* The form block carries its own title; a heading here is optional and author-supplied. */}
+                {formHeading && (
+                  <h2 id="campaign-form-heading" className="mb-lg text-balance text-[clamp(1.75rem,4vw,2.75rem)] font-light leading-[1.05] tracking-[-0.02em]">
+                    {formHeading}
+                  </h2>
+                )}
+                <div>
+                  <OptiFormsContainerDataAdapter
+                    content={{ _metadata: { key: formKey } }}
+                    displaySettings={{ contentWidth: 'default', verticalSpacing: 'none', backgroundColor: 'none' }}
+                  />
+                </div>
+              </div>
+            </section>
+          )}
+        </div>
+      </div>
 
       {footerBlock ? (
         <>
           <div className="border-t border-fg/10">
-            <div className="mx-auto max-w-[88rem] px-md py-sm lg:px-xl">{returnLink}</div>
+            <div className="mx-auto max-w-[80rem] px-md py-sm lg:px-xl">{renderReturnLink(false)}</div>
           </div>
           <Footer footerBlock={footerBlock} />
         </>
       ) : (
         <footer className="border-t border-fg/10">
-          <div className="mx-auto flex max-w-[88rem] flex-wrap items-center justify-between gap-md px-md py-lg text-label tracking-label text-fg-muted lg:px-xl">
-            {returnLink}
+          <div className="mx-auto flex max-w-[80rem] flex-wrap items-center justify-between gap-md px-md py-lg text-label tracking-label text-fg-muted lg:px-xl">
+            {renderReturnLink(false)}
             <p>© {new Date().getFullYear()} {siteName}. {t(locale, 'campaignLanding.minimalFooter')}</p>
           </div>
         </footer>
