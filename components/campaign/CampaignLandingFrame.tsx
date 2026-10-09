@@ -30,6 +30,7 @@ import { t } from '@/lib/i18n/t'
  */
 const CAMPAIGN_CSS = `
 .ot-campaign-body .bg-canvas{background-color:transparent}
+.ot-campaign-body .hero-atmos{display:none}
 .ot-campaign-atmos{position:absolute;left:0;right:0;height:40rem;pointer-events:none;overflow:hidden;z-index:0}
 .ot-campaign-atmos--top{top:0}
 .ot-campaign-atmos--bottom{bottom:0}
@@ -120,7 +121,7 @@ export default async function CampaignLandingFrame({
         aria-label={t(locale, 'campaignLanding.strip')}
         className="sticky top-0 z-40 border-b border-fg/10 bg-canvas"
       >
-        <div className="mx-auto flex h-[var(--ot-site-header-h)] max-w-[80rem] items-center justify-between gap-md px-md lg:px-xl">
+        <div className="mx-auto flex h-[var(--ot-site-header-h)] max-w-[90rem] items-center justify-between gap-md px-md lg:px-xl">
           <div className="flex min-w-0 items-center gap-md">
             {renderReturnLink(true)}
             {logoSrc && (
@@ -149,7 +150,7 @@ export default async function CampaignLandingFrame({
       </header>
 
       {/* Atmosphere: chart grid, champagne glow and drifting stars at the top and bottom of
-          the page, behind a contained 80rem column. Canvas-colored blocks turn transparent
+          the page, behind a contained 90rem column. Canvas-colored blocks turn transparent
           inside the column (see CAMPAIGN_CSS) so the atmosphere shows through them. */}
       <div className="relative isolate flex-1">
         {(['top', 'bottom'] as const).map(edge => (
@@ -159,7 +160,7 @@ export default async function CampaignLandingFrame({
             <CampaignStars className="ot-campaign-stars" />
           </div>
         ))}
-        <div className="ot-campaign-body relative z-10 mx-auto w-full max-w-[80rem] border-x border-fg/[0.06]">
+        <div className="ot-campaign-body relative z-10 mx-auto w-full max-w-[90rem] border-x border-fg/[0.06]">
           {children}
 
       {formKey && (
@@ -187,13 +188,13 @@ export default async function CampaignLandingFrame({
       {footerBlock ? (
         <>
           <div className="border-t border-fg/10">
-            <div className="mx-auto max-w-[80rem] px-md py-sm lg:px-xl">{renderReturnLink(false)}</div>
+            <div className="mx-auto max-w-[90rem] px-md py-sm lg:px-xl">{renderReturnLink(false)}</div>
           </div>
           <Footer footerBlock={footerBlock} />
         </>
       ) : (
         <footer className="border-t border-fg/10">
-          <div className="mx-auto flex max-w-[80rem] flex-wrap items-center justify-between gap-md px-md py-lg text-label tracking-label text-fg-muted lg:px-xl">
+          <div className="mx-auto flex max-w-[90rem] flex-wrap items-center justify-between gap-md px-md py-lg text-label tracking-label text-fg-muted lg:px-xl">
             {renderReturnLink(false)}
             <p>© {new Date().getFullYear()} {siteName}. {t(locale, 'campaignLanding.minimalFooter')}</p>
           </div>
