@@ -119,7 +119,7 @@ export default function OT_VideoBlock({ content, displaySettings = {} }: Props) 
                 href={content.ctaUrl.default}
                 className={`btn-signal inline-flex items-center gap-sm px-lg py-sm text-label font-semibold uppercase tracking-wide motion-safe:transition-colors motion-safe:duration-200 ease-quick ${onBrand ? 'bg-fg-on-brand text-brand' : 'bg-brand text-fg-on-brand'}`}
               >
-                {content.ctaLabel || 'Learn more'}
+                <span className="relative z-10">{content.ctaLabel || 'Learn more'}</span>
               </a>
             </div>
           )}
