@@ -299,7 +299,7 @@ function MinimalFooter({ view }: { view: FooterView }) {
   )
 }
 
-export default async function Footer() {
+export default async function Footer({ footerBlock }: { footerBlock?: any } = {}) {
   const settings = await getSiteSettings(await getRequestDomain(), await getRequestLocale())
 
   const siteName        = (settings?.siteName as string | undefined) ?? 'Site Accelerator'
@@ -307,8 +307,8 @@ export default async function Footer() {
   const logoAlt         = settings?.logoAlt ?? siteName
   const themeLogoInvert = settings?.logoInvertDark === true
 
-  const footerRef          = (settings?.footerRef?.item ?? settings?.footerRef) as any | undefined
-  const footerLogoOverride = footerRef?.footerLogo?.url?.default as string | undefined
+  const footerRef          = (footerBlock ?? settings?.footerRef?.item ?? settings?.footerRef) as any | undefined
+  const footerLogoOverride = (footerRef?.footerLogo?.url?.default as string | null | undefined) ?? undefined
   const footerLogoSrc      = footerLogoOverride ?? themeLogoSrc
   const footerLogoInvert   = footerLogoOverride !== undefined
                                ? footerRef?.footerLogoInvertDark === true

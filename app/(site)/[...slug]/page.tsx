@@ -1,4 +1,3 @@
-import { cache }                from 'react'
 import { notFound, redirect }  from 'next/navigation'
 import { draftMode }           from 'next/headers'
 import type { Metadata }       from 'next'
@@ -11,6 +10,7 @@ import {
   getSiteSettings,
   setRequestContext,
 } from '@/lib/optimizely'
+import { fetchPageContent } from '@/lib/pageContent'
 import { getBlogPage, getLatestBlogPosts, getAuthorName, fetchAuthorByKey } from '@/lib/blog'
 import { getCampaignPage, getCampaignPageMeta, mapCampaignPageRaw } from '@/lib/campaign'
 import { getEventPage } from '@/lib/events'
@@ -21,6 +21,7 @@ import PractitionerHeader from '@/components/practitioner/PractitionerHeader'
 import { getAircraft } from '@/lib/aircraft'
 import { buildProductSeo } from '@/lib/aircraftSeo'
 import AircraftPage from '@/components/pages/AircraftPage'
+import CampaignLandingFrame from '@/components/campaign/CampaignLandingFrame'
 import BookingPanel from '@/components/practitioner/booking/BookingPanel'
 import { withAppContext }       from '@optimizely/cms-sdk/react/server'
 import { NextPreviewComponent } from '@optimizely/cms-sdk/react/nextjs'
@@ -49,15 +50,6 @@ type Props = {
   params:       Promise<{ slug: string[] }>
   searchParams: Promise<Record<string, string | string[] | undefined>>
 }
-
-// ── Per-request content cache ─────────────────────────────────────────────────
-//
-// React cache() deduplicates calls with the same arguments within one React
-// render tree. generateMetadata and CmsPage both call this for the same path,
-// locale, and baseUrl — the second call is a no-op (same cached result).
-const fetchPageContent = cache(async (path: string, locale: Locale, baseUrl: string) =>
-  getLocalizedContentByPath(path, locale, baseUrl),
-)
 
 // Recursively walks a Visual Builder composition tree and collects all
 // OT_AccordionBlock question/answer pairs. Used to populate FAQPage
@@ -570,6 +562,38 @@ async function CmsPage({ params, searchParams }: Props) {
         ) : (
           <CompositionRenderer nodes={exp.composition.nodes} />
         )}
+      </>
+    )
+  }
+
+  // Campaign landing page — _experience type rendered WITHOUT the site shell
+  // (app/(site)/layout.tsx drops it via lib/shellMode.ts). The locked frame supplies
+  // a slim campaign strip and footer around the editor's free composition.
+  if (exp?.__typename === 'OT_CampaignLandingPage') {
+    const landingJsonLd = buildJsonLd(
+      { ...(exp as PageSeoFields), schemaType: (exp as PageSeoFields).schemaType && (exp as PageSeoFields).schemaType !== 'none' ? (exp as PageSeoFields).schemaType : 'WebPage' },
+      settings ?? {},
+      fullPageUrl,
+    )
+    return (
+      <>
+        <JsonLd data={landingJsonLd} />
+        {dm.isEnabled && cmsUrl && (
+          <Script src={`${cmsUrl}/util/javascript/communicationinjector.js`} />
+        )}
+        {dm.isEnabled && <NextPreviewComponent />}
+        {renderPreviewChrome(exp, { headline: exp.seoTitle ?? null })}
+        <CampaignLandingFrame
+          locale={locale}
+          ctaLabel={(exp as any).ctaLabel}
+          ctaUrl={(exp as any).ctaUrl?.default ?? (exp as any).ctaUrl}
+          returnLabel={(exp as any).returnLabel}
+          footerKey={(exp as any).footerRef?.key}
+          formKey={(exp as any).formRef?.key}
+          formHeading={(exp as any).formHeading}
+        >
+          <CompositionRenderer nodes={exp.composition.nodes} />
+        </CampaignLandingFrame>
       </>
     )
   }

@@ -97,6 +97,7 @@ import { OT_PractitionerListingBlock } from '@/cms/content-types/OT_Practitioner
 import { OT_AircraftSpecRow }          from '@/cms/content-types/OT_AircraftSpecRow'
 import { OT_AircraftProfile }          from '@/cms/content-types/OT_AircraftProfile'
 import { OT_AircraftPage }             from '@/cms/content-types/OT_AircraftPage'
+import { OT_CampaignLandingPage }      from '@/cms/content-types/OT_CampaignLandingPage'
 import { OT_AircraftListingBlock }     from '@/cms/content-types/OT_AircraftListingBlock'
 import { OT_AircraftSpecTable }        from '@/cms/content-types/OT_AircraftSpecTable'
 import { OT_LocationProfile }            from '@/cms/content-types/OT_LocationProfile'
@@ -297,6 +298,7 @@ initContentTypeRegistry([
   OT_AircraftSpecRow,
   OT_AircraftProfile,
   OT_AircraftPage,
+  OT_CampaignLandingPage,
   OT_AircraftListingBlock,
   OT_AircraftSpecTable,
   OT_LocationProfile,

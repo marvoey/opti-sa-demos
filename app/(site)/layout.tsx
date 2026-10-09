@@ -8,6 +8,7 @@ import SiteSearch from "@/components/search/SiteSearch"
 import { LocaleProvider } from "@/lib/i18n/LocaleProvider"
 import { getRequestLocale, getRequestDomain, getSiteSettings } from "@/lib/optimizely"
 import { resolveNavbarStyle } from "@/lib/theme-axes"
+import { getShellMode } from "@/lib/shellMode"
 import { getTokenMap } from "@/lib/tokens"
 import { TokenProvider } from "@/components/providers/TokenProvider"
 
@@ -19,6 +20,23 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
     getTokenMap(locale),
   ])
   const navbarStyle  = resolveNavbarStyle(settings?.navbarStyle)
+
+  // Standalone pages (campaign landing pages) supply their own frame: no header,
+  // site search, sidebar rail or site footer. Providers stay so blocks that read
+  // the locale, tokens or search context keep working.
+  if (await getShellMode() === 'standalone') {
+    return (
+      <TokenProvider tokens={tokens}>
+        <LocaleProvider locale={locale}>
+          <SearchProvider>
+            <div data-nav="standalone" className="contents">
+              <main id="main-content" className="flex-1">{children}</main>
+            </div>
+          </SearchProvider>
+        </LocaleProvider>
+      </TokenProvider>
+    )
+  }
 
   if (navbarStyle === 'sidebar') {
     return (

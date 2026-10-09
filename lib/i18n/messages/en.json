@@ -152,5 +152,12 @@
       "compare": "Compare",
       "changeSelection": "Change selection"
     }
+  },
+  "campaignLanding": {
+    "returnToSite": "Return to main site",
+    "strip": "Campaign navigation",
+    "minimalFooter": "All rights reserved.",
+    "returnShort": "Main site",
+    "formHeading": "Request information"
   }
 }

@@ -11,6 +11,7 @@ import { CompositionRenderer } from '@/lib/CompositionRenderer'
 import { getPractitioner } from '@/lib/practitioners'
 import PractitionerHeader from '@/components/practitioner/PractitionerHeader'
 import { getAircraft } from '@/lib/aircraft'
+import CampaignLandingFrame from '@/components/campaign/CampaignLandingFrame'
 import AircraftPage from '@/components/pages/AircraftPage'
 import type { Locale } from '@/lib/i18n/config'
 import BookingPanel from '@/components/practitioner/booking/BookingPanel'
@@ -267,6 +268,8 @@ async function PreviewPage({ searchParams }: Props) {
   const previewSettings    = await getSiteSettings(previewDomain, previewLocale)
   const navbarStyle        = resolveNavbarStyle(previewSettings?.navbarStyle)
   const PreviewHeader      = navbarStyle === 'split-bar' ? SplitHeader : Header
+  // Campaign landing pages are standalone: no site header or footer, the frame supplies its own.
+  const isLanding          = isExperience && content?.__typename === 'OT_CampaignLandingPage'
 
   return (
     <>
@@ -290,7 +293,7 @@ async function PreviewPage({ searchParams }: Props) {
 
       {isExperience ? (
         <>
-          <PreviewHeader />
+          {!isLanding && <PreviewHeader />}
           <main className="flex-1">
             {practitioner && (
               <>
@@ -301,7 +304,19 @@ async function PreviewPage({ searchParams }: Props) {
                 {practitioner.bookingEnabled && <BookingPanel practitioner={practitioner} />}
               </>
             )}
-            {aircraft ? (
+            {isLanding ? (
+              <CampaignLandingFrame
+                locale={previewLocale as Locale}
+                ctaLabel={content.ctaLabel}
+                ctaUrl={content.ctaUrl?.default ?? content.ctaUrl}
+                returnLabel={content.returnLabel}
+                footerKey={content.footerRef?.key}
+                formKey={content.formRef?.key}
+                formHeading={content.formHeading}
+              >
+                <CompositionRenderer nodes={content.composition.nodes} />
+              </CampaignLandingFrame>
+            ) : aircraft ? (
               // Mirrors the live slug route's OT_AircraftPage branch: locked
               // header + spec panel OUTSIDE the editable composition.
               <AircraftPage
@@ -318,7 +333,7 @@ async function PreviewPage({ searchParams }: Props) {
               <CompositionRenderer nodes={content.composition.nodes} />
             )}
           </main>
-          <Footer />
+          {!isLanding && <Footer />}
         </>
       ) : (
         <OptimizelyComponent content={standaloneContent} />
