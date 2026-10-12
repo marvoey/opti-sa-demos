@@ -1,7 +1,10 @@
 import type { MetadataRoute } from 'next'
+import { getRequestBaseUrl } from '@/lib/optimizely'
 
-export default function robots(): MetadataRoute.Robots {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? ''
+export default async function robots(): Promise<MetadataRoute.Robots> {
+  // Per request host: one deployment serves several demo domains, and each
+  // must point crawlers at its own sitemap.
+  const siteUrl = await getRequestBaseUrl()
 
   return {
     rules: [

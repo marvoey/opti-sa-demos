@@ -8,6 +8,8 @@ import { LocaleSelector } from '@/components/layout/LocaleSelector'
 import type { NavItem } from '@/components/layout/DesktopNav'
 import SearchTrigger from '@/components/search/SearchTrigger'
 import { getSiteSettings, getRequestDomain, getRequestLocale } from '@/lib/optimizely'
+import CommerceHeaderActions from '@/components/commerce/CommerceHeaderActions'
+import { getHeaderCommerce } from '@/lib/commerce/settings'
 import { getEnabledLanguages } from '@/lib/i18n/getEnabledLanguages'
 import { t } from '@/lib/i18n/t'
 import { localizedHref, stripLocalePrefix } from '@/lib/i18n/config'
@@ -69,6 +71,7 @@ export default async function Header() {
   const domain   = await getRequestDomain()
   const locale   = await getRequestLocale()
   const settings = await getSiteSettings(domain, locale)
+  const commerce = await getHeaderCommerce(domain)
 
   const siteName       = (settings?.siteName as string | undefined) ?? 'Site Accelerator'
   const logoSrc        = settings?.logo?.url?.default
@@ -76,6 +79,8 @@ export default async function Header() {
   const logoFit        = (settings?.logoFit as string | undefined) ?? 'full'
   const logoInvertDark = settings?.logoInvertDark === true
   const ctaLabel       = settings?.ctaLabel ?? 'Get Started'
+  // Storefronts lead with the bag, not a CTA: hide it unless one is authored.
+  const showCta        = !(commerce.enabled && !settings?.ctaLabel)
   const ctaHref        = normalizeNavHref(settings?.ctaUrl?.default, locale, domain)
 
   // Container owns the sizing — image uses h-full w-auto so any asset format
@@ -144,13 +149,15 @@ export default async function Header() {
             <SearchTrigger />
             <LocaleSelector enabledLocales={enabledLocales} />
             <ThemeToggle />
-            <Button href={ctaHref} size="sm">{ctaLabel}</Button>
+            {commerce.enabled && <CommerceHeaderActions initialBagCount={commerce.bagCount} />}
+            {showCta && <Button href={ctaHref} size="sm">{ctaLabel}</Button>}
           </div>
 
           <div className="lg:hidden flex items-center gap-sm">
             <SearchTrigger />
             <ThemeToggle />
-            <MobileMenu navItems={navItems} ctaLabel={ctaLabel} ctaHref={ctaHref} enabledLocales={enabledLocales} />
+            {commerce.enabled && <CommerceHeaderActions initialBagCount={commerce.bagCount} showWishlist={false} showAccount />}
+            <MobileMenu navItems={navItems} ctaLabel={showCta ? ctaLabel : ''} ctaHref={ctaHref} enabledLocales={enabledLocales} />
           </div>
 
         </div>

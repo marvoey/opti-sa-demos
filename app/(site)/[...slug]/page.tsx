@@ -39,6 +39,9 @@ import { buildPageMetadata, type PageSeoFields } from '@/lib/metadata'
 import { buildJsonLd }         from '@/lib/structured-data'
 import JsonLd                  from '@/components/seo/JsonLd'
 import type { Locale }         from '@/lib/i18n/config'
+import { getCommerceSettings, currencyForLocale, getMarketCookie } from '@/lib/commerce/settings'
+import { matchPdpPath, resolvePdp, previewProductFor } from '@/lib/commerce/pdp'
+import ProductDetailPage from '@/components/pages/ProductDetailPage'
 
 export const revalidate = 60
 
@@ -171,6 +174,40 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       schemaType: (exp as any)?.schemaType || 'Person',
     }
     return buildPageMetadata(seoFields, settings ?? {}, path)
+  }
+
+  // Product detail template (visited directly or in Visual Builder) — never
+  // indexable; titled after its preview product.
+  if (exp?.__typename === 'OT_ProductDetailTemplate') {
+    const commerce = await getCommerceSettings(domain)
+    const product = commerce ? await previewProductFor(commerce.catalogId, (exp as any).previewHandle) : null
+    return buildPageMetadata(
+      { ...(exp as PageSeoFields), seoTitle: (exp as any).seoTitle ?? product?.name, noIndex: true },
+      settings ?? {},
+      path,
+    )
+  }
+
+  // Catalog product page — no CMS page at this path, commerce on, /products/<handle>.
+  const pdpHandle = !exp ? matchPdpPath(path) : null
+  if (pdpHandle) {
+    const commerce = await getCommerceSettings(domain)
+    const pdp = commerce ? await resolvePdp(pdpHandle, commerce.catalogId, locale, baseUrl, settings?.featureExperimentationSdkKey) : null
+    if (pdp) {
+      const t = pdp.template ?? {}
+      const hero = pdp.product.colours[0]?.images?.[0]
+      return buildPageMetadata(
+        {
+          seoTitle:       t.seoTitle ?? pdp.product.name,
+          seoDescription: t.seoDescription ?? pdp.product.description,
+          ogImage:        hero ? { url: { default: hero } } : undefined,
+          noIndex:        t.noIndex ?? false,
+          schemaType:     'Product',
+        },
+        settings ?? {},
+        path,
+      )
+    }
   }
 
   return buildPageMetadata((exp ?? {}) as PageSeoFields, settings ?? {}, path)
@@ -496,6 +533,29 @@ async function CmsPage({ params, searchParams }: Props) {
       }
     }
 
+    // Catalog product page — no CMS page exists at this path, the host has mock
+    // commerce enabled, and the path is /products/<handle>. The product comes
+    // from the Graph catalog; the below-the-fold layout is the matching
+    // OT_ProductDetailTemplate. A CMS page at the same path always wins (it was
+    // resolved above), so other sites' /products/* pages are unaffected.
+    const pdpHandle = !exp && !dm.isEnabled ? matchPdpPath(path) : null
+    if (pdpHandle) {
+      const commerce = await getCommerceSettings(domain)
+      const pdp = commerce ? await resolvePdp(pdpHandle, commerce.catalogId, locale, baseUrl, settings?.featureExperimentationSdkKey) : null
+      if (commerce && pdp) {
+        return (
+          <ProductDetailPage
+            product={pdp.product}
+            template={pdp.template}
+            currency={currencyForLocale(commerce, locale, await getMarketCookie())}
+            locale={locale}
+            site={settings ?? {}}
+            pageUrl={fullPageUrl}
+          />
+        )
+      }
+    }
+
     // Standalone block content (not an experience) — send to the isolated preview route
     // so it renders without site chrome and with proper communicationinjector.js setup.
     if (dm.isEnabled && exp?.__typename) {
@@ -555,6 +615,34 @@ async function CmsPage({ params, searchParams }: Props) {
           </>
         )}
         <CompositionRenderer nodes={exp.composition.nodes} />
+      </>
+    )
+  }
+
+  // Product detail template — rendered with its preview product in the locked
+  // header so editors compose the below-the-fold content in context.
+  if (exp?.__typename === 'OT_ProductDetailTemplate') {
+    const commerce = await getCommerceSettings(domain)
+    const product = commerce ? await previewProductFor(commerce.catalogId, (exp as any).previewHandle) : null
+    return (
+      <>
+        {dm.isEnabled && cmsUrl && (
+          <Script src={`${cmsUrl}/util/javascript/communicationinjector.js`} />
+        )}
+        {dm.isEnabled && <NextPreviewComponent />}
+        {renderPreviewChrome(exp, { headline: exp.seoTitle ?? product?.name ?? exp._metadata?.displayName })}
+        {product && commerce ? (
+          <ProductDetailPage
+            product={product}
+            template={exp}
+            currency={currencyForLocale(commerce, locale, await getMarketCookie())}
+            locale={locale}
+            site={settings ?? {}}
+            pageUrl={fullPageUrl}
+          />
+        ) : (
+          <CompositionRenderer nodes={exp.composition.nodes} />
+        )}
       </>
     )
   }

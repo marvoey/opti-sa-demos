@@ -10,18 +10,35 @@ import { getRequestLocale, getRequestDomain, getSiteSettings } from "@/lib/optim
 import { resolveNavbarStyle } from "@/lib/theme-axes"
 import { getTokenMap } from "@/lib/tokens"
 import { TokenProvider } from "@/components/providers/TokenProvider"
+import { getCommerceSettings, currencyForLocale, getMarketCookie } from "@/lib/commerce/settings"
+import { marketFor } from "@/lib/commerce/market"
+import CommerceProvider from "@/components/commerce/CommerceProvider"
+import MiniBag from "@/components/commerce/MiniBag"
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const locale       = await getRequestLocale()
   const domain       = await getRequestDomain()
-  const [settings, tokens] = await Promise.all([
+  const [settings, tokens, commerce] = await Promise.all([
     getSiteSettings(domain, locale),
-    getTokenMap(locale),
+    // Scoped to this host so each site gets its own TokenManager (falls back to
+    // the most recently published one when no manager lists the domain).
+    getTokenMap(locale, domain),
+    getCommerceSettings(domain),
   ])
   const navbarStyle  = resolveNavbarStyle(settings?.navbarStyle)
 
+  // Mock storefront — mounted ONLY on sites with ThemeManager enableCommerce.
+  // Every other site renders the tree unwrapped and ships no commerce JS.
+  const marketCookie = commerce ? await getMarketCookie() : null
+  const withCommerce = (node: React.ReactNode) =>
+    commerce ? (
+      <CommerceProvider catalogId={commerce.catalogId} currency={currencyForLocale(commerce, locale, marketCookie)} locale={locale} market={marketFor(locale, marketCookie)}>
+        {node}
+      </CommerceProvider>
+    ) : node
+
   if (navbarStyle === 'sidebar') {
-    return (
+    return withCommerce(
       <TokenProvider tokens={tokens}>
         <LocaleProvider locale={locale}>
           <SearchProvider>
@@ -32,6 +49,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
             <div data-nav={navbarStyle} className="contents">
               <SidebarNav />
               <SiteSearch />
+              {commerce && <MiniBag />}
               {/* Content shifts right of the fixed rail. The margin is driven by
                   --ot-sidebar-width (emitted by buildThemeCSS, 0px when not sidebar).
                   On mobile the rail is hidden, so no margin applies below lg. */}
@@ -47,7 +65,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
     )
   }
 
-  return (
+  return withCommerce(
     <TokenProvider tokens={tokens}>
       <LocaleProvider locale={locale}>
         <SearchProvider>
@@ -57,6 +75,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
           <div data-nav={navbarStyle} className="contents">
             {navbarStyle === 'split-bar' ? <SplitHeader /> : <Header />}
             <SiteSearch />
+              {commerce && <MiniBag />}
             <main id="main-content" className="flex-1">{children}</main>
             <Footer />
             <ScrollToTop />
