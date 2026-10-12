@@ -7,6 +7,7 @@ import { getAllAircraft, type AircraftData } from '@/lib/aircraft'
 import { localizedHref } from '@/lib/i18n/config'
 import { sanitizeCmsHtml } from '@/lib/sanitizeHtml'
 import AircraftListing, { type ListItem, type SortKey } from '@/components/aircraft/AircraftListing'
+import DevLens from '@/components/lens/DevLens'
 import { familyLabels, lifecycleLabels, listingText } from '@/components/aircraft/aircraftText'
 
 type Props = {
@@ -53,6 +54,7 @@ export default async function OT_AircraftListingBlockAdapter({ content, displayS
 
   return (
     <section {...pa(content.__composition)} className={`${bg} w-full text-fg`}>
+      <DevLens context={{ kind: 'listing', locale }} />
       <div className="mx-auto max-w-[88rem] px-md py-xl lg:px-xl lg:py-2xl">
         {content.heading && (
           <h2 {...pa('heading')} className="text-balance text-[clamp(2rem,4.5vw,3rem)] font-light leading-[1.05] tracking-[-0.02em]">

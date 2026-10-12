@@ -8,6 +8,7 @@ import { localizedHref } from '@/lib/i18n/config'
 import { t } from '@/lib/i18n/t'
 import AircraftCompareTable from '@/components/aircraft/AircraftCompareTable'
 import BackToFleetLink from '@/components/aircraft/BackToFleetLink'
+import DevLens from '@/components/lens/DevLens'
 import AircraftBreadcrumb from '@/components/aircraft/AircraftBreadcrumb'
 import { breadcrumbLabels, compareText, familyLabels } from '@/components/aircraft/aircraftText'
 
@@ -41,6 +42,7 @@ export default async function ComparePage({ searchParams }: Props) {
 
   return (
     <>
+    <DevLens context={{ kind: 'compare', locale, ids }} />
     <AircraftBreadcrumb
       homeHref={localizedHref('/', locale)}
       fleetHref={localizedHref('/aircraft', locale)}

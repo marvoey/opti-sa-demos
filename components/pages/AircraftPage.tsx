@@ -12,6 +12,7 @@ import AircraftBreadcrumb from '@/components/aircraft/AircraftBreadcrumb'
 import { breadcrumbLabels } from '@/components/aircraft/aircraftText'
 import LanguageNotice from '@/components/aircraft/LanguageNotice'
 import AircraftEnquiry from '@/components/aircraft/AircraftEnquiry'
+import DevLens from '@/components/lens/DevLens'
 
 type Props = {
   aircraft:       AircraftData
@@ -55,6 +56,7 @@ export default async function AircraftPage({
 
   return (
     <>
+      <DevLens context={{ kind: 'aircraft', locale, aircraftKey: aircraft.key }} />
       <AircraftBreadcrumb
         homeHref={localizedHref('/', locale)}
         fleetHref={localizedHref('/aircraft', locale)}

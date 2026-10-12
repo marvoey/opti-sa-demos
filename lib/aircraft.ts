@@ -116,7 +116,7 @@ const PROFILE_FIELDS = `
   displayOrder
 `
 
-const ONE_QUERY = `
+export const ONE_QUERY = `
   query GetAircraft($key: String!, $locale: String) {
     OT_AircraftProfile(
       where: { _metadata: { key: { eq: $key }, locale: { eq: $locale } } }
@@ -125,7 +125,7 @@ const ONE_QUERY = `
   }
 `
 
-function buildListQuery(withSiteKey: boolean): string {
+export function buildListQuery(withSiteKey: boolean): string {
   const skVar    = withSiteKey ? ', $siteKey: String' : ''
   const skFilter = withSiteKey ? '\n      siteKey: { eq: $siteKey }' : ''
   return `
@@ -142,7 +142,7 @@ function buildListQuery(withSiteKey: boolean): string {
 // Maps record key → URL of the OT_AircraftPage that references it, so cards and
 // related-aircraft links point at the real model page (the shared record has no
 // URL of its own).
-const PAGES_QUERY = `
+export const PAGES_QUERY = `
   query GetAircraftPages($locale: String!) {
     OT_AircraftPage(
       limit: 100,
@@ -153,7 +153,7 @@ const PAGES_QUERY = `
 
 // ─── Shaping ──────────────────────────────────────────────────────────────────
 
-function toAircraft(item: any, requestedLocale: string, url?: string): AircraftData {
+export function toAircraft(item: any, requestedLocale: string, url?: string): AircraftData {
   const rec = item._metadata?.locale ?? requestedLocale
   return {
     key:        item._metadata?.key ?? '',
