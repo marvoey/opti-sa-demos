@@ -286,7 +286,6 @@ export default function TabsBlockClient({
                 : 'border-t-0'
             ),
           )}
-          style={panelMinHeight > 0 ? { minHeight: `${panelMinHeight}px` } : undefined}
           role="tabpanel"
           id={`panel-${instanceId}-${activeTab}`}
           aria-labelledby={`tab-${instanceId}-${activeTab}`}
@@ -296,6 +295,10 @@ export default function TabsBlockClient({
             ref={panelContentRef}
             className={reducedMotion ? undefined : 'tab-panel-enter'}
             data-dir={dir ?? undefined}
+            // The lock is measured on THIS element, so it must be applied to it: put on the outer
+            // panel (which adds its own padding) it never reached the tallest tab's real height
+            // and the page below the tabs jumped on every autoplay change.
+            style={panelMinHeight > 0 ? { minHeight: `${panelMinHeight}px` } : undefined}
             {...panelEditAttrs?.[activeTab]}
           >
             <PanelContent
