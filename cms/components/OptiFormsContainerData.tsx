@@ -14,6 +14,8 @@ import { getClient, getRequestLocale } from '@/lib/optimizely'
 // entirely — re-test that placement if a form ever goes missing outright.
 
 type Props = {
+  /** Language to load the form in. Defaults to the request locale (not set on /preview). */
+  locale?: string
   content: any
   displaySettings?: Record<string, string | boolean>
 }
@@ -145,7 +147,7 @@ async function fetchFormData(contentKey: string, locale: string): Promise<{
   return null
 }
 
-export default async function OptiFormsContainerDataAdapter({ content, displaySettings = {} }: Props) {
+export default async function OptiFormsContainerDataAdapter({ content, displaySettings = {}, locale }: Props) {
   const { pa } = getPreviewUtils(content)
 
   // Confirmed live: a Forms container placed on a page has no author-facing
@@ -181,7 +183,7 @@ export default async function OptiFormsContainerDataAdapter({ content, displaySe
   let topLevelNodes: any[] = []
 
   if (content._metadata?.key) {
-    const fetched = await fetchFormData(content._metadata.key, await getRequestLocale())
+    const fetched = await fetchFormData(content._metadata.key, locale ?? await getRequestLocale())
     if (fetched) {
       title               = title               ?? fetched.title
       description         = description         ?? fetched.description

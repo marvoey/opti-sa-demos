@@ -13,6 +13,7 @@ import PractitionerHeader from '@/components/practitioner/PractitionerHeader'
 import { getAircraft } from '@/lib/aircraft'
 import CampaignLandingFrame from '@/components/campaign/CampaignLandingFrame'
 import AircraftPage from '@/components/pages/AircraftPage'
+import { isSupportedLocale } from '@/lib/i18n/config'
 import type { Locale } from '@/lib/i18n/config'
 import BookingPanel from '@/components/practitioner/booking/BookingPanel'
 import Header from '@/components/layout/Header'
@@ -264,7 +265,10 @@ async function PreviewPage({ searchParams }: Props) {
   // Resolve which header variant the site is configured to use. Sidebar is
   // deliberately excluded — it would overlay the Visual Builder canvas.
   const previewDomain      = await getRequestDomain()
-  const previewLocale      = await getRequestLocale()
+  // The proxy skips /preview, so there is no locale header here: the CMS passes the
+  // language being edited as ?loc=. Without this the preview always rendered in English.
+  const locParam           = sp('loc').split('-')[0]
+  const previewLocale      = isSupportedLocale(locParam) ? locParam : await getRequestLocale()
   const previewSettings    = await getSiteSettings(previewDomain, previewLocale)
   const navbarStyle        = resolveNavbarStyle(previewSettings?.navbarStyle)
   const PreviewHeader      = navbarStyle === 'split-bar' ? SplitHeader : Header

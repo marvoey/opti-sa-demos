@@ -36,6 +36,7 @@ export default function AircraftEnquiry({ formKey, heading, locale }: Props) {
           className="[&_[data-form-card]]:!my-0"
         >
           <OptiFormsContainerDataAdapter
+            locale={locale}
             content={{ _metadata: { key: formKey } }}
             displaySettings={{ contentWidth: 'default', verticalSpacing: 'none', backgroundColor: 'none' }}
           />

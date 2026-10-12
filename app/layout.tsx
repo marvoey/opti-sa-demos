@@ -199,8 +199,11 @@ export default async function RootLayout({
       // Server-resolved from the site-theme cookie (set by ThemeProvider on every
       // toggle). No client-side init script needed — the correct theme is baked into
       // the SSR HTML so there is no FOUC even on first paint.
+      // overflow-x-clip on the ROOT (not body): decorative glows/blooms that bleed past a block's edge
+      // (Quote bloom, tab indicator) must never produce a page-level horizontal scrollbar, which
+      // toggles on and off as tabs rotate and makes the page, and the CMS preview, shudder.
       data-theme={resolvedTheme}
-      className={`${poppins.variable} ${geistMono.variable} ${syne.variable} ${sourceSerif.variable} ${sora.variable} ${plusJakarta.variable} ${manrope.variable} ${caveat.variable} ${tiltNeon.variable} h-full antialiased`}
+      className={`${poppins.variable} ${geistMono.variable} ${syne.variable} ${sourceSerif.variable} ${sora.variable} ${plusJakarta.variable} ${manrope.variable} ${caveat.variable} ${tiltNeon.variable} h-full antialiased overflow-x-clip`}
       suppressHydrationWarning
     >
       <head>
