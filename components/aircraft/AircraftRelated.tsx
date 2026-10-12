@@ -10,7 +10,7 @@ export default function AircraftRelated({ items, locale }: { items: AircraftData
   if (!linked.length) return null
   return (
     <section aria-labelledby="aircraft-related-heading" className="bg-canvas text-fg">
-      <div className="mx-auto max-w-6xl px-md py-xl lg:px-xl lg:py-2xl">
+      <div className="mx-auto max-w-6xl px-md pb-lg pt-xl lg:px-xl lg:pb-xl lg:pt-2xl">
         <h2 id="aircraft-related-heading" className="text-balance text-[clamp(1.75rem,4vw,2.75rem)] font-bold leading-[1.05] tracking-[-0.02em]">
           {t(locale, 'aircraft.related')}
         </h2>

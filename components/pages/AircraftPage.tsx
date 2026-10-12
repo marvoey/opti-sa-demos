@@ -11,7 +11,7 @@ import AircraftRelated from '@/components/aircraft/AircraftRelated'
 import AircraftBreadcrumb from '@/components/aircraft/AircraftBreadcrumb'
 import { breadcrumbLabels } from '@/components/aircraft/aircraftText'
 import LanguageNotice from '@/components/aircraft/LanguageNotice'
-import OptiFormsContainerDataAdapter from '@/cms/components/OptiFormsContainerData'
+import AircraftEnquiry from '@/components/aircraft/AircraftEnquiry'
 
 type Props = {
   aircraft:       AircraftData
@@ -101,19 +101,7 @@ export default async function AircraftPage({
       <AircraftRelated items={related} locale={locale} />
 
       {enquiryFormKey && (
-        <section aria-labelledby="aircraft-enquiry-heading" className="bg-surface text-fg">
-          <div className="mx-auto max-w-3xl px-md py-xl lg:py-2xl">
-            <h2 id="aircraft-enquiry-heading" className="text-balance text-[clamp(1.75rem,4vw,2.75rem)] font-bold leading-[1.05] tracking-[-0.02em]">
-              {enquiryHeading || t(locale, 'aircraft.enquiry')}
-            </h2>
-            <div className="mt-lg">
-              <OptiFormsContainerDataAdapter
-                content={{ _metadata: { key: enquiryFormKey } }}
-                displaySettings={{ contentWidth: 'default', verticalSpacing: 'none', backgroundColor: 'none' }}
-              />
-            </div>
-          </div>
-        </section>
+        <AircraftEnquiry formKey={enquiryFormKey} heading={enquiryHeading} locale={locale} />
       )}
     </>
   )

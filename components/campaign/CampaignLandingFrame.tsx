@@ -173,7 +173,8 @@ export default async function CampaignLandingFrame({
                     {formHeading}
                   </h2>
                 )}
-                <div>
+                {/* Lift the form card off the surface section, as on aircraft pages. */}
+                <div style={{ '--ot-form-card-bg': 'var(--ot-canvas)' } as React.CSSProperties} className="[&_[data-form-card]]:!my-0">
                   <OptiFormsContainerDataAdapter
                     content={{ _metadata: { key: formKey } }}
                     displaySettings={{ contentWidth: 'default', verticalSpacing: 'none', backgroundColor: 'none' }}
