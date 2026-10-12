@@ -2744,7 +2744,7 @@ function ProductListingShowcase() {
           currency="USD"
           pageSize={8}
           tile={{ eyebrow: 'The knit guide', heading: 'Lambswool, merino or cashmere?', body: 'How each yarn wears, warms and ages — and which one to reach for first.', ctaLabel: 'Read the guide', ctaUrl: '/showcase/blocks/rich-text' }}
-          styleOptions={{ color: 'canvas', columns: 4, cardAspect: 'portrait', showFacets: true, tilePosition: 5 }}
+          styleOptions={{ color: 'canvas', columns: 4, cardAspect: 'portrait', showFacets: true, tilePosition: 3 }}
         />
       </div>
 
@@ -2756,7 +2756,7 @@ function ProductListingShowcase() {
           products={fixtureCards((p) => p.collections.includes('archive'))}
           subCategories={[]}
           currency="USD"
-          styleOptions={{ color: 'surface', columns: 3, cardAspect: 'square', showFacets: false, tilePosition: 5 }}
+          styleOptions={{ color: 'surface', columns: 3, cardAspect: 'square', showFacets: false, tilePosition: 3 }}
         />
       </div>
       <div className="pb-xl" />

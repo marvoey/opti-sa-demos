@@ -47,8 +47,8 @@ export const OT_ProductListingDefault = displayTemplate({
       editor:      'select',
       sortOrder:   50,
       choices: {
-        pos3: { displayName: 'After 3 products',           sortOrder: 10 },
-        pos5: { displayName: 'After 5 products (Default)', sortOrder: 20 },
+        pos3: { displayName: 'After 3 products (Default)',           sortOrder: 10 },
+        pos5: { displayName: 'After 5 products', sortOrder: 20 },
         pos7: { displayName: 'After 7 products',           sortOrder: 30 },
       },
     },

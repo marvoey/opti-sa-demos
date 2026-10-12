@@ -21,6 +21,6 @@ export function getProductListingStyles(s: Record<string, string | boolean>): Pr
     columns:      s.columns === 'col3' ? 3 : 4,
     cardAspect:   s.cardAspect === 'square' ? 'square' : 'portrait',
     showFacets:   bool(s.showFacets, true),
-    tilePosition: ({ pos3: 3, pos5: 5, pos7: 7 } as Record<string, number>)[String(s.tilePosition)] ?? 5,
+    tilePosition: ({ pos3: 3, pos5: 5, pos7: 7 } as Record<string, number>)[String(s.tilePosition)] ?? 3,
   }
 }
