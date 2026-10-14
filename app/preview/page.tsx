@@ -45,12 +45,20 @@ async function PreviewPage({ searchParams }: Props) {
   // Graph may not have indexed the newly-saved version yet — retry briefly.
   let content: any
   let lastErr: unknown
+  // CMS media (ImageMedia, video, generic files) is locale-neutral: Graph indexes
+  // it with locale "" and the editor sends `loc=` (empty) for it. Stored queries
+  // treat an empty-string variable as unset and drop the locale filter, so those
+  // must go through the unstored query from the first attempt.
+  const localeNeutral = !sp('loc')
   for (let attempt = 0; attempt <= 3; attempt++) {
     try {
       lastErr = undefined
-      content = await getClient().getPreviewContent(
-        params as unknown as PreviewParams,
-      )
+      content = localeNeutral
+        ? await getClient().getPreviewContent(
+            { ...params, loc: '', key: sp('key').replace(/-/g, '') } as unknown as PreviewParams,
+            { stored: false },
+          )
+        : await getClient().getPreviewContent(params as unknown as PreviewParams)
       break
     } catch (err) {
       lastErr = err
