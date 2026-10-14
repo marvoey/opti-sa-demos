@@ -58,6 +58,25 @@ async function PreviewPage({ searchParams }: Props) {
           err.message.includes('No content found for key') ||
           err.message.includes('could not be found')
         )
+      // Locale-neutral content (CMS media: ImageMedia, video, generic files) is
+      // indexed in Graph with locale "" — never "en". The SDK's preview filter
+      // requires `locale eq <loc>`, and the editor always sends loc=en, so these
+      // items "could not be found" however long we wait. Retry once with the
+      // locale-neutral filter before treating it as an indexing lag. Stored
+      // queries are turned off for this call: Graph's stored-query templates
+      // treat an empty-string variable as unset, which would drop the filter.
+      if (notIndexed && attempt === 0 && sp('loc')) {
+        try {
+          content = await getClient().getPreviewContent(
+            { ...params, loc: '', key: sp('key').replace(/-/g, '') } as unknown as PreviewParams,
+            { stored: false },
+          )
+          lastErr = undefined
+          break
+        } catch {
+          // Not locale-neutral content — fall through to the normal retry.
+        }
+      }
       if (notIndexed && attempt < 4) {
         await new Promise(r => setTimeout(r, 350))
         continue
