@@ -10,7 +10,7 @@ import { enableExternalPreviewProperty } from './_shared/externalPreview'
 // Visual Builder composition, and a footer chosen on the page.
 //
 // The identity is a PRESET, not a pile of knobs: the editor picks one named look
-// (Cinematic, Poster, Daylight, Stage) and each look fixes its own mode, so there is
+// (Blueprint, Neon, Comic, Stage) and each look fixes its own mode, so there is
 // no separate light/dark field. Looks draw their palette from the site's ThemeManager
 // colors, so every vertical keeps its own identity; an optional accent override
 // replaces the seed color for this one campaign. See lib/campaign-looks.ts and
@@ -35,11 +35,11 @@ export const OT_CampaignLandingPage = contentType({
       type:        'string',
       format:      'selectOne',
       displayName: 'Campaign Look',
-      description: 'The visual identity of this page. Cinematic: dark, atmospheric, glow and stars. Poster: the whole page drenched in the accent color, giant type, marquee. Daylight: light and playful with a full palette and collage shapes. Stage: near-black with a single hot accent and a spotlight. Defaults to Cinematic.',
+      description: 'The visual identity of this page. Blueprint: light drafting-sheet style, with fine grid paper, linework frames and figure labels. Neon: 80s neon signage, with a night brick wall, glowing tube lettering and a neon frame. Comic: light, bold comic-book style with ink outlines and hard shadows. Stage: near-black with a single hot accent and a spotlight. Defaults to Blueprint.',
       enum: [
-        { value: 'cinematic', displayName: 'Cinematic (dark, atmospheric)' },
-        { value: 'poster',    displayName: 'Poster (drenched, loud)' },
-        { value: 'daylight',  displayName: 'Daylight (light, playful)' },
+        { value: 'blueprint', displayName: 'Blueprint (light, drafting sheet)' },
+        { value: 'neon',      displayName: 'Neon (dark, glowing signage)' },
+        { value: 'comic',     displayName: 'Comic (light, bold ink)' },
         { value: 'stage',     displayName: 'Stage (near-black, spotlight)' },
       ],
       group:       'OT_Style',

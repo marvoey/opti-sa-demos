@@ -1,26 +1,29 @@
-import CampaignStars from '@/components/campaign/CampaignStars'
 import CampaignSpotlight from '@/components/campaign/CampaignSpotlight'
 import type { CampaignLook } from '@/lib/campaign-looks'
 
 /**
  * The look's background layers. Purely decorative (aria-hidden), CSS-first: gradients,
- * masks and inline SVG, with a canvas only for the Cinematic stars and a tiny client
+ * masks and inline SVG, with a tiny client
  * island only for the Stage pointer light. Everything sits behind the content column
  * (z-0 under z-1) and animates transform / opacity only. All colour comes from the
  * look's tokens, never hard-coded, so the same layers re-colour for every vertical.
  */
 export default function CampaignAtmosphere({ look }: { look: CampaignLook }) {
   switch (look) {
-    case 'poster':
+    case 'neon':
+      // Brick wall (mask recolored from tokens), ambient tube glow, and a fixed neon frame.
       return (
-        <div aria-hidden className="ot-cl-layer">
-          <div className="ot-cl-halftone" />
-          <div className="ot-cl-disc" />
-          <div className="ot-cl-disc ot-cl-disc--small" />
-        </div>
+        <>
+          <div aria-hidden className="ot-cl-layer">
+            <div className="ot-cl-neonwall" />
+            <div className="ot-cl-brick" />
+            <div className="ot-cl-neonglow" />
+          </div>
+          <div aria-hidden className="ot-cl-neonframe" />
+        </>
       )
 
-    case 'daylight':
+    case 'comic':
       // Paper grain only.
       return (
         <div aria-hidden className="ot-cl-layer">
@@ -42,18 +45,13 @@ export default function CampaignAtmosphere({ look }: { look: CampaignLook }) {
         </>
       )
 
-    case 'cinematic':
+    case 'blueprint':
     default:
+      // Drafting grid: 16px minor and 96px major lines, tinted from the look's ink.
       return (
-        <>
-          {(['top', 'bottom'] as const).map(edge => (
-            <div key={edge} aria-hidden className={`ot-cl-layer ot-cl-band ot-cl-band--${edge}`}>
-              <div className="ot-cl-glow" />
-              <div className="ot-cl-grid" />
-              <CampaignStars className="ot-cl-stars" />
-            </div>
-          ))}
-        </>
+        <div aria-hidden className="ot-cl-layer">
+          <div className="ot-cl-bpgrid" />
+        </div>
       )
   }
 }

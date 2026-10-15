@@ -11,15 +11,12 @@
  *
  * Contrast strategy: every look pins its fills to fixed OKLCH lightness steps and
  * only takes HUE and a clamped CHROMA from the seed. Text on a fill therefore has a
- * known contrast no matter what color the editor or the site supplies. The single
- * seed-dependent decision, Poster's deep vs bright drench, is made here, on the
- * server, from the seed's lightness.
+ * known contrast no matter what color the editor or the site supplies. 
  */
-import { colorLightness } from '@/lib/theme-axes'
 
-export const CAMPAIGN_LOOKS = ['cinematic', 'poster', 'daylight', 'stage'] as const
+export const CAMPAIGN_LOOKS = ['blueprint', 'neon', 'comic', 'stage'] as const
 export type CampaignLook = (typeof CAMPAIGN_LOOKS)[number]
-export const DEFAULT_CAMPAIGN_LOOK: CampaignLook = 'cinematic'
+export const DEFAULT_CAMPAIGN_LOOK: CampaignLook = 'blueprint'
 
 export const CAMPAIGN_MOTION_LEVELS = ['full', 'calm', 'still'] as const
 export type CampaignMotion = (typeof CAMPAIGN_MOTION_LEVELS)[number]
@@ -27,9 +24,9 @@ export const DEFAULT_CAMPAIGN_MOTION: CampaignMotion = 'full'
 
 /** Color mode each look renders in (becomes the frame's data-theme). */
 export const LOOK_MODE: Record<CampaignLook, 'dark' | 'light'> = {
-  cinematic: 'dark',
-  poster:    'dark',   // overridden per fill, see resolveCampaignAppearance
-  daylight:  'light',
+  blueprint: 'light',
+  neon:      'dark',
+  comic:     'light',
   stage:     'dark',
 }
 
@@ -82,19 +79,14 @@ export function usableOverride(value: string | null | undefined): string | null 
   return hex && hexChroma(hex) >= 0.04 ? hex : null
 }
 
-/** Lightness at or above which a seed is "bright" and Poster drenches bright. */
-const POSTER_BRIGHT_AT = 0.6
-
 export type CampaignAppearance = {
   look:   CampaignLook
   motion: CampaignMotion
   /** data-theme for the frame: re-scopes every theme token to the right mode. */
   theme:  'dark' | 'light'
-  /** Poster only: bright fill (dark ink) or deep fill (light ink). */
-  fill:   'bright' | 'deep' | null
   /** The color every look derives its palette from. Valid CSS color. */
   seed:   string
-  /** Second palette color (Poster chip/pop, Daylight pairing). The site accent when the
+  /** Second palette color (Comic and Neon pairing). The site accent when the
       editor has not overridden the seed, else the seed's hue rotated 140 degrees. */
   seed2:  string
 }
@@ -123,19 +115,12 @@ export function resolveCampaignAppearance(input: {
     // pointing at var(--ot-brand) directly would be circular, since each look redefines it.
     'var(--cl-site-brand)'
 
-  let fill: CampaignAppearance['fill'] = null
-  let theme = LOOK_MODE[look]
-  if (look === 'poster') {
-    // A var() seed is the token default brand (mid-dark), which drenches deep.
-    const l = colorLightness(seed) ?? 0.45
-    fill  = l >= POSTER_BRIGHT_AT ? 'bright' : 'deep'
-    theme = fill === 'bright' ? 'light' : 'dark'
-  }
+  const theme = LOOK_MODE[look]
   const override = usableOverride(input.accentOverride)
   // Without an override the pairing is the site's own accent (or the token default captured
   // by the frame); with an override the editor chose a one-off hue, so rotate it instead.
   const seed2    = override
     ? 'oklch(from var(--cl-seed) l c calc(h + 140))'
     : (input.siteAccent?.trim() || 'var(--cl-site-accent)')
-  return { look, motion, theme, fill, seed, seed2 }
+  return { look, motion, theme, seed, seed2 }
 }

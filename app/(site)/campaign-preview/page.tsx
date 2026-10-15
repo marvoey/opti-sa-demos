@@ -17,7 +17,7 @@ import { CAMPAIGN_LOOKS, resolveLook } from '@/lib/campaign-looks'
  * from the URL. This is what the Showcase "Campaign Landing" page links to, and it is
  * the quickest way to show a prospect how one page type can wear four identities.
  *
- *   /campaign-preview?look=poster&accent=%23e4572e&motion=calm
+ *   /campaign-preview?look=neon&accent=%23e4572e&motion=calm
  *
  * Not a CMS page: it renders from static copy, so it never needs content in Graph.
  */
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 type Props = { searchParams: Promise<Record<string, string | string[] | undefined>> }
 
 const LABELS: Record<(typeof CAMPAIGN_LOOKS)[number], string> = {
-  cinematic: 'Cinematic', poster: 'Poster', daylight: 'Daylight', stage: 'Stage',
+  blueprint: 'Blueprint', neon: 'Neon', comic: 'Comic', stage: 'Stage',
 }
 
 function one(v: string | string[] | undefined) { return typeof v === 'string' ? v : undefined }

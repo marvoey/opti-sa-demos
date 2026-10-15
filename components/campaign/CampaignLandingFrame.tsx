@@ -17,7 +17,7 @@ import './campaign-looks.css'
 
 type Props = {
   locale:          Locale
-  /** campaignLook select: cinematic | poster | daylight | stage. Unknown values fall back to Cinematic. */
+  /** campaignLook select: blueprint | neon | comic | stage. Unknown values fall back to Blueprint. */
   look?:           string | null
   /** Optional hex that replaces the site brand colour as the look's seed. */
   accentOverride?: string | null
@@ -82,7 +82,7 @@ export default async function CampaignLandingFrame({
   const renderReturnLink = (collapseOnPhones: boolean) => (
     <a
       href={homeHref}
-      className="group inline-flex min-h-11 shrink-0 items-center gap-xs whitespace-nowrap rounded-ot-control text-[0.7rem] sm:text-label font-semibold uppercase tracking-label text-fg-muted transition-colors duration-200 ease-quick hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+      className="group inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-xs whitespace-nowrap rounded-ot-control text-[0.8125rem] sm:justify-start sm:text-label font-semibold uppercase tracking-label text-fg-muted transition-colors duration-200 ease-quick hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
     >
       <ArrowLeft aria-hidden className="size-4 transition-transform duration-200 ease-quick group-hover:-translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" />
       {/* Below ~430px the strip also holds the language picker and the CTA, so the label
@@ -106,7 +106,6 @@ export default async function CampaignLandingFrame({
       data-theme={appearance.theme}
       data-look={appearance.look}
       data-motion={appearance.motion}
-      data-fill={appearance.fill ?? undefined}
       data-ot-standalone
       style={{ '--cl-seed': appearance.seed, '--cl-seed-2': appearance.seed2 } as CSSProperties}
       className="ot-campaign ot-campaign-frame flex min-h-dvh flex-col overflow-x-clip bg-canvas text-fg"

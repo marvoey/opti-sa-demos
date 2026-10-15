@@ -196,12 +196,12 @@ function FolderPageShowcase() {
 // ─── Campaign landing page showcase ─────────────────────────────────────────
 
 const CAMPAIGN_LOOKS_INFO = [
-  { key: 'cinematic', name: 'Cinematic', mode: 'Dark · Committed', use: 'Hospitality invites, premium launches',
-    note: 'Night atmosphere: chart grid, accent glow, drifting stars and a headline sheen. Deep brand slabs, bright accent actions.' },
-  { key: 'poster',    name: 'Poster',    mode: 'Drenched', use: 'Events, drops, seasonal pushes',
-    note: 'The whole page takes the accent colour and ink flips to stay readable. Giant type, a marquee tape, halftone, tilted sticker stats.' },
-  { key: 'daylight',  name: 'Daylight',  mode: 'Light · Full palette', use: 'Offers, sign-ups, consumer campaigns',
-    note: 'Paper canvas with three derived colour roles, hard offset shadows and collage shapes. Playful without blur or glass.' },
+  { key: 'blueprint', name: 'Blueprint', mode: 'Light · Drafting sheet', use: 'Technical products, B2B launches, engineering and industrial',
+    note: 'Fine grid paper, linework frames with crop marks, numbered figure labels, mono annotations and square controls. Calm, precise, built from the site brand.' },
+  { key: 'neon',      name: 'Neon',      mode: 'Dark · Glowing', use: 'Launch parties, events, nightlife, entertainment',
+    note: 'A night brick wall, tube-outlined display type with a flicker, a rounded neon frame around the viewport and every card a lit sign.' },
+  { key: 'comic',     name: 'Comic',     mode: 'Light · Full palette', use: 'Offers, sign-ups, consumer campaigns',
+    note: 'Comic-book style across every block: ink outlines, hard offset shadows, sticker headline, two-color palette from the site brand and accent.' },
   { key: 'stage',     name: 'Stage',     mode: 'Dark · Restrained', use: 'Product reveals, executive briefings',
     note: 'Near-black with one hot accent, a pointer-following spotlight on desktop and type that wipes in as you scroll.' },
 ] as const
