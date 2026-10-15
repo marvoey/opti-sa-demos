@@ -197,5 +197,12 @@
     "tier_new": "New",
     "tier_circle": "Circle",
     "tier_reserve": "Reserve"
+  },
+  "campaignLanding": {
+    "returnToSite": "Return to main site",
+    "strip": "Campaign navigation",
+    "minimalFooter": "All rights reserved.",
+    "returnShort": "Main site",
+    "formHeading": "Request information"
   }
 }

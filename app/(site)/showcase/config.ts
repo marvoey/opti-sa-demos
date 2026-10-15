@@ -84,6 +84,7 @@ export const CATEGORIES: ShowcaseCategory[] = [
       { label: 'Event',     slug: 'event'     },
       { label: 'Topic Hub', slug: 'topic-hub' },
       { label: 'Folder',    slug: 'folder'    },
+      { label: 'Campaign Landing', slug: 'campaign-landing' },
     ],
   },
   {

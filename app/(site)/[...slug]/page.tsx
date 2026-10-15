@@ -1,4 +1,3 @@
-import { cache }                from 'react'
 import { notFound, redirect }  from 'next/navigation'
 import { draftMode }           from 'next/headers'
 import type { Metadata }       from 'next'
@@ -28,6 +27,8 @@ import BlogPage                from '@/components/pages/BlogPage'
 import CampaignPage            from '@/components/pages/CampaignPage'
 import EventPage               from '@/components/pages/EventPage'
 import TopicHubPage            from '@/components/pages/TopicHubPage'
+import CampaignLandingFrame    from '@/components/campaign/CampaignLandingFrame'
+import { fetchPageContent }    from '@/lib/pageContent'
 import Script                  from 'next/script'
 import { DraftStateBanner }    from '@/components/preview/DraftStateBanner'
 import { ExternalPreviewLinkPanel } from '@/components/preview/ExternalPreviewLinkPanel'
@@ -45,19 +46,24 @@ import ProductDetailPage from '@/components/pages/ProductDetailPage'
 
 export const revalidate = 60
 
+/** Fields the slug route reads from an OT_CampaignLandingPage (see cms/content-types). */
+type CampaignLandingFields = PageSeoFields & {
+  campaignLook?:   string | null
+  accentOverride?: string | null
+  motionLevel?:    string | null
+  ctaLabel?:       string | null
+  ctaUrl?:         { default?: string | null } | string | null
+  returnLabel?:    string | null
+  footerRef?:      { key?: string | null } | null
+  formRef?:        { key?: string | null } | null
+  formHeading?:    string | null
+  _metadata?:      { displayName?: string | null } | null
+}
+
 type Props = {
   params:       Promise<{ slug: string[] }>
   searchParams: Promise<Record<string, string | string[] | undefined>>
 }
-
-// ── Per-request content cache ─────────────────────────────────────────────────
-//
-// React cache() deduplicates calls with the same arguments within one React
-// render tree. generateMetadata and CmsPage both call this for the same path,
-// locale, and baseUrl — the second call is a no-op (same cached result).
-const fetchPageContent = cache(async (path: string, locale: Locale, baseUrl: string) =>
-  getLocalizedContentByPath(path, locale, baseUrl),
-)
 
 // Recursively walks a Visual Builder composition tree and collects all
 // OT_AccordionBlock question/answer pairs. Used to populate FAQPage
@@ -143,6 +149,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const hubContent = await getTopicHubPage(exp._metadata.key as string, locale)
     return buildPageMetadata(
       (hubContent ?? {}) as PageSeoFields,
+      settings ?? {},
+      path,
+    )
+  }
+
+  // Campaign landing page — _experience; fall back to the page name when the
+  // editor leaves the SEO title blank, so the tab/title is never just the site name.
+  if (exp?.__typename === 'OT_CampaignLandingPage') {
+    const landing = exp as CampaignLandingFields
+    return buildPageMetadata(
+      { ...landing, seoTitle: landing.seoTitle ?? landing._metadata?.displayName },
       settings ?? {},
       path,
     )
@@ -569,6 +586,52 @@ async function CmsPage({ params, searchParams }: Props) {
       redirect(`/preview?${qs}`)
     }
     notFound()
+  }
+
+  // Campaign landing page — _experience type rendered WITHOUT the site shell
+  // (app/(site)/layout.tsx drops it via lib/shellMode.ts). The locked frame supplies
+  // a slim campaign strip, the chosen look, the conversion form and a footer around
+  // the editor's free composition.
+  if (exp?.__typename === 'OT_CampaignLandingPage') {
+    const landing = exp as CampaignLandingFields
+    // Accordion FAQs on the page are emitted as FAQPage JSON-LD (answers in the
+    // static HTML for crawlers), same as the generic experience path below.
+    const landingFaqItems = exp?.composition?.nodes
+      ? extractAccordionFaqs(exp.composition.nodes)
+      : undefined
+    const landingJsonLd = buildJsonLd(
+      {
+        ...landing,
+        faqItems: landingFaqItems,
+        schemaType: landing.schemaType && landing.schemaType !== 'none' ? landing.schemaType : 'WebPage',
+      },
+      settings ?? {},
+      fullPageUrl,
+    )
+    return (
+      <>
+        <JsonLd data={landingJsonLd} />
+        {dm.isEnabled && cmsUrl && (
+          <Script src={`${cmsUrl}/util/javascript/communicationinjector.js`} />
+        )}
+        {dm.isEnabled && <NextPreviewComponent />}
+        {renderPreviewChrome(exp, { headline: exp.seoTitle ?? null })}
+        <CampaignLandingFrame
+          locale={locale}
+          look={landing.campaignLook}
+          accentOverride={landing.accentOverride}
+          motionLevel={landing.motionLevel}
+          ctaLabel={landing.ctaLabel}
+          ctaUrl={typeof landing.ctaUrl === 'string' ? landing.ctaUrl : landing.ctaUrl?.default}
+          returnLabel={landing.returnLabel}
+          footerKey={landing.footerRef?.key}
+          formKey={landing.formRef?.key}
+          formHeading={landing.formHeading}
+        >
+          <CompositionRenderer nodes={exp.composition.nodes} />
+        </CampaignLandingFrame>
+      </>
+    )
   }
 
   // Practitioner page — _experience type. The referenced practitioner record

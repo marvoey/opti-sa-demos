@@ -390,7 +390,7 @@ async function getFooterColumns(key: string | undefined, locale: string): Promis
   }
 }
 
-export default async function Footer() {
+export default async function Footer({ footerBlock }: { footerBlock?: unknown } = {}) {
   const locale   = await getRequestLocale()
   const settings = await getSiteSettings(await getRequestDomain(), locale)
 
@@ -399,7 +399,8 @@ export default async function Footer() {
   const logoAlt         = settings?.logoAlt ?? siteName
   const themeLogoInvert = settings?.logoInvertDark === true
 
-  const footerRef          = (settings?.footerRef?.item ?? settings?.footerRef) as any | undefined
+  // `footerBlock` lets a standalone page (campaign landing) supply its own footer record.
+  const footerRef          = (footerBlock ?? settings?.footerRef?.item ?? settings?.footerRef) as any | undefined
   const footerLogoOverride = footerRef?.footerLogo?.url?.default as string | undefined
   const footerLogoSrc      = footerLogoOverride ?? themeLogoSrc
   const footerLogoInvert   = footerLogoOverride !== undefined

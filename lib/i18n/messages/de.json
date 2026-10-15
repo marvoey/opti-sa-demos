@@ -197,5 +197,12 @@
     "tier_new": "Neu",
     "tier_circle": "Circle",
     "tier_reserve": "Reserve"
+  },
+  "campaignLanding": {
+    "returnToSite": "Zurück zur Hauptseite",
+    "strip": "Kampagnennavigation",
+    "minimalFooter": "Alle Rechte vorbehalten.",
+    "returnShort": "Hauptseite",
+    "formHeading": "Informationen anfordern"
   }
 }
