@@ -21,11 +21,12 @@ export default function CampaignAtmosphere({ look }: { look: CampaignLook }) {
       )
 
     case 'daylight':
-      // The collage shapes are pseudo-elements on the blocks (campaign-looks.css), so the
-      // layer itself is just the paper grain.
+      // Paper grain under a Memphis doodle pattern (two mask layers, recoloured from tokens).
       return (
         <div aria-hidden className="ot-cl-layer">
           <div className="ot-cl-paper" />
+          <div className="ot-cl-memphis" />
+          <div className="ot-cl-memphis--fill" />
         </div>
       )
 
