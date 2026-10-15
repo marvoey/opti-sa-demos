@@ -272,7 +272,7 @@
 .hero-marquee__item::after { content: "\2726"; margin-inline-start: 2.8rem; opacity: 0.9; }
 @keyframes cl-marquee { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
 .ot-campaign[data-look="poster"] .hero-marquee { transform: rotate(-1.4deg); background: var(--cl-ink); color: var(--cl-fill); }
-.ot-campaign[data-look="stage"]  .hero-marquee { background: transparent; color: oklch(from var(--ot-fg) l c h / 0.5); border-block: 1px solid oklch(from var(--ot-fg) l c h / 0.16); bottom: 0; left: 0; right: 0; }
+.ot-campaign[data-look="stage"]  .hero-marquee { background: var(--ot-accent); color: var(--ot-fg-on-accent); bottom: 0; left: 0; right: 0; }
 
 /* Display type is sized from the hero's own width (container query), not the viewport:
    the headline is editor-authored, and a viewport-sized word can outgrow the text panel
