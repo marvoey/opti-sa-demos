@@ -223,7 +223,7 @@ export default function CalloutBlockClient({
 
     // Outer block wrapper handles max-width centering (separate from sticky flex container)
     const barContent = (
-      <div className={cn('w-full', maxWidthWrapper)}>{barInner}</div>
+      <div className={cn('w-full', maxWidthWrapper)} data-block="callout-bar">{barInner}</div>
     )
 
     if (!dismissible) return barContent
