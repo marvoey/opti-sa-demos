@@ -211,7 +211,11 @@ export default function HeroBlock({
   styleOptions = {},
   pa = () => ({}),
 }: HeroBlockProps) {
-  const { direction = "editorialSplit", layout = "imageRight", color = "brand", animation = "none" } = styleOptions;
+  const { direction = "editorialSplit", layout: rawLayout = "imageRight", color = "brand", animation = "none" } = styleOptions;
+  // Display-template settings are free strings in the CMS (AI-authored or hand-edited pages can
+  // carry values like "split"). An unknown layout would drop the row direction and collapse the
+  // visual panel to a sliver, so anything other than imageLeft falls back to the default.
+  const layout: "imageRight" | "imageLeft" = rawLayout === "imageLeft" ? "imageLeft" : "imageRight";
 
   // Non-default art directions are self-contained compositions; delegate to them.
   // They reuse the same content + the color/animation modifiers.
