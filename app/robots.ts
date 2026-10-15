@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next'
 import { AI_CRAWLERS, INDEXING_ALLOWED } from '@/lib/indexing'
 
 export default function robots(): MetadataRoute.Robots {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? ''
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? '').replace(/\/$/, '')
 
   return {
     rules: [

@@ -156,6 +156,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return buildPageMetadata(seoFields, settings ?? {}, path)
   }
 
+  // Campaign landing page — _experience; fall back to the page name when the
+  // editor leaves the SEO title blank, so the tab/title is never just the site name.
+  if (exp?.__typename === 'OT_CampaignLandingPage') {
+    return buildPageMetadata(
+      {
+        ...((exp ?? {}) as PageSeoFields),
+        seoTitle: (exp as any)?.seoTitle ?? (exp as any)?._metadata?.displayName,
+      },
+      settings ?? {},
+      path,
+    )
+  }
+
   // Practitioner page — _experience; build SEO from page fields with a smart
   // fallback to the referenced practitioner's name + credentials + primary area.
   if (exp?.__typename === 'OT_PractitionerPage') {
@@ -263,7 +276,7 @@ async function CmsPage({ params, searchParams }: Props) {
 
   // Full page URL for JSON-LD — prefer the configured site URL so canonical
   // references in structured data always point to the production domain.
-  const siteOrigin  = process.env.NEXT_PUBLIC_SITE_URL ?? baseUrl
+  const siteOrigin  = (process.env.NEXT_PUBLIC_SITE_URL ?? baseUrl).replace(/\/$/, '')
   const fullPageUrl = `${siteOrigin}${path}`
 
   let exp: any
@@ -570,8 +583,13 @@ async function CmsPage({ params, searchParams }: Props) {
   // (app/(site)/layout.tsx drops it via lib/shellMode.ts). The locked frame supplies
   // a slim campaign strip and footer around the editor's free composition.
   if (exp?.__typename === 'OT_CampaignLandingPage') {
+    // Accordion FAQs on the page are emitted as FAQPage JSON-LD (answers in the
+    // static HTML for crawlers), same as the generic experience path below.
+    const landingFaqItems = exp?.composition?.nodes
+      ? extractAccordionFaqs(exp.composition.nodes)
+      : undefined
     const landingJsonLd = buildJsonLd(
-      { ...(exp as PageSeoFields), schemaType: (exp as PageSeoFields).schemaType && (exp as PageSeoFields).schemaType !== 'none' ? (exp as PageSeoFields).schemaType : 'WebPage' },
+      { ...(exp as PageSeoFields), faqItems: landingFaqItems, schemaType: (exp as PageSeoFields).schemaType && (exp as PageSeoFields).schemaType !== 'none' ? (exp as PageSeoFields).schemaType : 'WebPage' },
       settings ?? {},
       fullPageUrl,
     )

@@ -104,7 +104,7 @@ export function buildPageMetadata(
 
   const description = page.seoDescription ?? site.defaultSeoDescription ?? undefined
 
-  const siteUrl   = process.env.NEXT_PUBLIC_SITE_URL ?? ''
+  const siteUrl   = (process.env.NEXT_PUBLIC_SITE_URL ?? '').replace(/\/$/, '')
   const canonical = page.canonicalUrl?.default ?? `${siteUrl}${pagePath}`
 
   const imageUrl =
