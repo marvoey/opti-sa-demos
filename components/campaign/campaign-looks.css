@@ -7,7 +7,7 @@
  *
  * How it works
  *   1. The frame sets data-look / data-motion / data-fill / data-theme and ONE inline
- *      variable, --cl-seed (the editor's accent override, else the site accent).
+ *      variable, --cl-seed (the editor's accent override, else the site brand).
  *   2. Each look re-points the theme tokens (--ot-canvas, --ot-fg, --ot-brand ...) at
  *      colours derived from the seed with OKLCH relative colour. Blocks inherit.
  *   3. Fills sit on FIXED lightness steps and only take hue + clamped chroma from the
@@ -489,5 +489,15 @@
     .ot-campaign[data-look="stage"][data-motion="full"] [data-block="stat"] ul > li {
       animation: cl-rise linear both; animation-timeline: view(); animation-range: entry 0% entry 55%;
     }
+  }
+}
+
+/* Stage hero: full bleed, transparent over the page atmosphere (top grid + glow band). The
+   text column keeps its inset aligned to the 90rem content measure on wide screens. */
+.ot-campaign[data-look="stage"] [data-block="hero"] { width: 100vw; margin-inline: calc(50% - 50vw); }
+.ot-campaign[data-look="stage"] [data-block="hero"] > div:first-child { background: transparent; }
+@media (min-width: 1024px) {
+  .ot-campaign[data-look="stage"] [data-block="hero"] > div:first-child {
+    padding-inline-start: max(var(--ot-space-lg), calc((100vw - 90rem) / 2 + var(--ot-space-lg)));
   }
 }

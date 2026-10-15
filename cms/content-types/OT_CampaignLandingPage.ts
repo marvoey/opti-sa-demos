@@ -12,8 +12,8 @@ import { enableExternalPreviewProperty } from './_shared/externalPreview'
 // The identity is a PRESET, not a pile of knobs: the editor picks one named look
 // (Cinematic, Poster, Daylight, Stage) and each look fixes its own mode, so there is
 // no separate light/dark field. Looks draw their palette from the site's ThemeManager
-// colours, so every vertical keeps its own identity; an optional accent override
-// replaces the seed colour for this one campaign. See lib/campaign-looks.ts and
+// colors, so every vertical keeps its own identity; an optional accent override
+// replaces the seed color for this one campaign. See lib/campaign-looks.ts and
 // components/campaign/campaign-looks.css.
 //
 // MUST stay `_experience` (Visual Builder composition and content variations).
@@ -35,7 +35,7 @@ export const OT_CampaignLandingPage = contentType({
       type:        'string',
       format:      'selectOne',
       displayName: 'Campaign Look',
-      description: 'The visual identity of this page. Cinematic: dark, atmospheric, glow and stars. Poster: the whole page drenched in the accent colour, giant type, marquee. Daylight: light and playful with a full palette and collage shapes. Stage: near-black with a single hot accent and a spotlight. Defaults to Cinematic.',
+      description: 'The visual identity of this page. Cinematic: dark, atmospheric, glow and stars. Poster: the whole page drenched in the accent color, giant type, marquee. Daylight: light and playful with a full palette and collage shapes. Stage: near-black with a single hot accent and a spotlight. Defaults to Cinematic.',
       enum: [
         { value: 'cinematic', displayName: 'Cinematic (dark, atmospheric)' },
         { value: 'poster',    displayName: 'Poster (drenched, loud)' },
@@ -48,8 +48,8 @@ export const OT_CampaignLandingPage = contentType({
     accentOverride: {
       type:        'string',
       maxLength:   7,
-      displayName: 'Accent Colour Override',
-      description: 'Optional hex colour (e.g. #e4572e) that replaces the site accent as the seed for this look. The look keeps text readable whatever you enter. Leave blank to use the site accent.',
+      displayName: 'Accent Color Override',
+      description: 'Optional hex color (e.g. #e4572e) that replaces the site brand color as the seed for this look. The look keeps text readable whatever you enter. Leave blank to use the site brand color.',
       group:       'OT_Style',
       sortOrder:   20,
     },

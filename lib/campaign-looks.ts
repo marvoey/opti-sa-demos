@@ -11,7 +11,7 @@
  *
  * Contrast strategy: every look pins its fills to fixed OKLCH lightness steps and
  * only takes HUE and a clamped CHROMA from the seed. Text on a fill therefore has a
- * known contrast no matter what colour the editor or the site supplies. The single
+ * known contrast no matter what color the editor or the site supplies. The single
  * seed-dependent decision, Poster's deep vs bright drench, is made here, on the
  * server, from the seed's lightness.
  */
@@ -25,7 +25,7 @@ export const CAMPAIGN_MOTION_LEVELS = ['full', 'calm', 'still'] as const
 export type CampaignMotion = (typeof CAMPAIGN_MOTION_LEVELS)[number]
 export const DEFAULT_CAMPAIGN_MOTION: CampaignMotion = 'full'
 
-/** Colour mode each look renders in (becomes the frame's data-theme). */
+/** Color mode each look renders in (becomes the frame's data-theme). */
 export const LOOK_MODE: Record<CampaignLook, 'dark' | 'light'> = {
   cinematic: 'dark',
   poster:    'dark',   // overridden per fill, see resolveCampaignAppearance
@@ -47,7 +47,7 @@ export function resolveMotion(value: string | null | undefined): CampaignMotion 
 
 /**
  * Validates an editor-typed hex ("#c7b289", "c7b289", "#fb0") and normalises it to
- * "#rrggbb". Anything else returns null, so a typo falls back to the site colour
+ * "#rrggbb". Anything else returns null, so a typo falls back to the site color
  * instead of injecting arbitrary text into a style attribute.
  */
 export function sanitizeHex(value: string | null | undefined): string | null {
@@ -67,14 +67,14 @@ export type CampaignAppearance = {
   theme:  'dark' | 'light'
   /** Poster only: bright fill (dark ink) or deep fill (light ink). */
   fill:   'bright' | 'deep' | null
-  /** The colour every look derives its palette from. Valid CSS colour. */
+  /** The color every look derives its palette from. Valid CSS color. */
   seed:   string
 }
 
 /**
- * Resolves the page's appearance from the editor's fields and the site's colours.
- * Seed priority: valid accent override, then the site accent, then the site brand, then
- * the accent token the site renders by default.
+ * Resolves the page's appearance from the editor's fields and the site's colors.
+ * Seed priority: valid accent override, then the site brand, then the site accent, then
+ * the brand token the site renders by default.
  */
 export function resolveCampaignAppearance(input: {
   look?:           string | null
@@ -87,19 +87,19 @@ export function resolveCampaignAppearance(input: {
   const motion = resolveMotion(input.motion)
   const seed =
     sanitizeHex(input.accentOverride) ??
-    (input.siteAccent?.trim() || null) ??
     (input.siteBrand?.trim() || null) ??
-    // No ThemeManager colours (e.g. a fresh localhost): defer to whatever accent the site
-    // renders by default, so the look always matches the rest of its own site. This reads
-    // --cl-site-accent, captured by the frame on a wrapper ABOVE the look scope: pointing
-    // at var(--ot-accent) directly would be circular, since each look redefines it.
-    'var(--cl-site-accent)'
+    (input.siteAccent?.trim() || null) ??
+    // No ThemeManager colors (e.g. a fresh localhost): defer to whatever brand color the
+    // site renders by default, so the look always matches the rest of its own site. This
+    // reads --cl-site-brand, captured by the frame on a wrapper ABOVE the look scope:
+    // pointing at var(--ot-brand) directly would be circular, since each look redefines it.
+    'var(--cl-site-brand)'
 
   let fill: CampaignAppearance['fill'] = null
   let theme = LOOK_MODE[look]
   if (look === 'poster') {
-    // A var() seed is the token default accent (L 0.82), which drenches bright.
-    const l = colorLightness(seed) ?? 0.82
+    // A var() seed is the token default brand (mid-dark), which drenches deep.
+    const l = colorLightness(seed) ?? 0.45
     fill  = l >= POSTER_BRIGHT_AT ? 'bright' : 'deep'
     theme = fill === 'bright' ? 'light' : 'dark'
   }

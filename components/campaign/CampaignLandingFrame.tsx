@@ -19,7 +19,7 @@ type Props = {
   locale:          Locale
   /** campaignLook select: cinematic | poster | daylight | stage. Unknown values fall back to Cinematic. */
   look?:           string | null
-  /** Optional hex that replaces the site accent as the look's seed colour. */
+  /** Optional hex that replaces the site brand colour as the look's seed. */
   accentOverride?: string | null
   /** motionLevel select: full | calm | still. */
   motionLevel?:    string | null
@@ -99,9 +99,9 @@ export default async function CampaignLandingFrame({
   )
 
   return (
-    // `contents` wrapper above the look scope: freezes the SITE's accent before any look
+    // `contents` wrapper above the look scope: freezes the SITE's accent and brand before any look
     // re-points --ot-accent (see lib/campaign-looks.ts).
-    <div className="contents" style={{ '--cl-site-accent': 'var(--ot-accent)' } as CSSProperties}>
+    <div className="contents" style={{ '--cl-site-accent': 'var(--ot-accent)', '--cl-site-brand': 'var(--ot-brand)' } as CSSProperties}>
     <div
       data-theme={appearance.theme}
       data-look={appearance.look}
@@ -151,7 +151,7 @@ export default async function CampaignLandingFrame({
           {hasForm && (
             // Anchor target for the strip button (#request-information); scroll-mt clears the sticky strip.
             <section id={FORM_ID} aria-label={formHeading || t(locale, 'campaignLanding.formHeading')} className="ot-cl-form scroll-mt-[var(--ot-site-header-h)] bg-surface text-fg">
-              <div className="mx-auto max-w-3xl px-md py-xl lg:py-2xl">
+              <div className="mx-auto max-w-7xl px-md py-xl lg:px-lg lg:py-2xl">
                 {/* The form block carries its own title; a heading here is optional and author-supplied. */}
                 {formHeading && (
                   <h2 id="campaign-form-heading" className="mb-lg text-balance text-[clamp(1.75rem,4vw,2.75rem)] font-light leading-[1.05] tracking-[-0.02em]">
@@ -164,7 +164,7 @@ export default async function CampaignLandingFrame({
                     <OptiFormsContainerDataAdapter
                       locale={locale}
                       content={{ _metadata: { key: formKey! } }}
-                      displaySettings={{ contentWidth: 'default', verticalSpacing: 'none', backgroundColor: 'none' }}
+                      displaySettings={{ contentWidth: 'full', verticalSpacing: 'none', backgroundColor: 'none' }}
                     />
                   )}
                 </div>

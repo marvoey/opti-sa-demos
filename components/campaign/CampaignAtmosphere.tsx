@@ -33,6 +33,10 @@ export default function CampaignAtmosphere({ look }: { look: CampaignLook }) {
       return (
         <>
           <CampaignSpotlight />
+          <div aria-hidden className="ot-cl-layer ot-cl-band ot-cl-band--top">
+            <div className="ot-cl-glow" />
+            <div className="ot-cl-grid" />
+          </div>
           <div aria-hidden className="ot-cl-layer">
             <div className="ot-cl-vignette" />
           </div>
