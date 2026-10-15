@@ -289,7 +289,7 @@ async function CmsPage({ params, searchParams }: Props) {
 
   // Full page URL for JSON-LD — prefer the configured site URL so canonical
   // references in structured data always point to the production domain.
-  const siteOrigin  = process.env.NEXT_PUBLIC_SITE_URL ?? baseUrl
+  const siteOrigin  = (process.env.NEXT_PUBLIC_SITE_URL ?? baseUrl).replace(/\/$/, '')
   const fullPageUrl = `${siteOrigin}${path}`
 
   let exp: any
