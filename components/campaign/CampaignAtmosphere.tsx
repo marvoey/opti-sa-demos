@@ -21,12 +21,10 @@ export default function CampaignAtmosphere({ look }: { look: CampaignLook }) {
       )
 
     case 'daylight':
-      // Paper grain under a Memphis doodle pattern (two mask layers, recoloured from tokens).
+      // Paper grain only.
       return (
         <div aria-hidden className="ot-cl-layer">
           <div className="ot-cl-paper" />
-          <div className="ot-cl-memphis" />
-          <div className="ot-cl-memphis--fill" />
         </div>
       )
 

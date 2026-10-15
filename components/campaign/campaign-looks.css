@@ -355,21 +355,8 @@
   inset: 0; opacity: 0.55; mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
-/* Cartoon / sticker direction: ink outlines, hard offset shadows, flat colour. The page
-   carries a Memphis doodle pattern (two mask layers recoloured from the look's tokens);
-   the hero is headline-as-sticker beside a framed picture, with no floating props. */
-.ot-cl-memphis, .ot-cl-memphis--fill { inset: 0; }
-.ot-cl-memphis {
-  background: var(--cl-ink); opacity: 0.09;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360' fill='none' stroke='%23000' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M30 60q15-22 30 0t30 0 30 0'/%3E%3Cpath d='M250 40v28M236 54h28'/%3E%3Ccircle cx='170' cy='190' r='15'/%3E%3Cpath d='M300 150q15-22 30 0t30 0'/%3E%3Cpath d='M60 250v28M46 264h28'/%3E%3Cpath d='M200 300l16 28 16-28z'/%3E%3Ccircle cx='320' cy='300' r='10'/%3E%3Cpath d='M110 130l24 24M134 130l-24 24'/%3E%3C/svg%3E") 0 0 / 360px 360px repeat;
-          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360' fill='none' stroke='%23000' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M30 60q15-22 30 0t30 0 30 0'/%3E%3Cpath d='M250 40v28M236 54h28'/%3E%3Ccircle cx='170' cy='190' r='15'/%3E%3Cpath d='M300 150q15-22 30 0t30 0'/%3E%3Cpath d='M60 250v28M46 264h28'/%3E%3Cpath d='M200 300l16 28 16-28z'/%3E%3Ccircle cx='320' cy='300' r='10'/%3E%3Cpath d='M110 130l24 24M134 130l-24 24'/%3E%3C/svg%3E") 0 0 / 360px 360px repeat;
-}
-.ot-cl-memphis--fill {
-  background: var(--cl-b); opacity: 0.4;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Ccircle cx='110' cy='60' r='9'/%3E%3Ccircle cx='290' cy='110' r='7'/%3E%3Ccircle cx='60' cy='190' r='7'/%3E%3Ccircle cx='250' cy='250' r='9'/%3E%3Ccircle cx='140' cy='320' r='7'/%3E%3Cpath d='M320 20l9 16h-18z'/%3E%3Cpath d='M20 330l9 16h-18z'/%3E%3C/svg%3E") 0 0 / 360px 360px repeat;
-          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Ccircle cx='110' cy='60' r='9'/%3E%3Ccircle cx='290' cy='110' r='7'/%3E%3Ccircle cx='60' cy='190' r='7'/%3E%3Ccircle cx='250' cy='250' r='9'/%3E%3Ccircle cx='140' cy='320' r='7'/%3E%3Cpath d='M320 20l9 16h-18z'/%3E%3Cpath d='M20 330l9 16h-18z'/%3E%3C/svg%3E") 0 0 / 360px 360px repeat;
-}
-
+/* Cartoon / sticker direction: ink outlines, hard offset shadows, flat color. The hero is
+   a headline-as-sticker beside a framed picture, with no floating props. */
 .ot-campaign[data-look="daylight"] [data-block="hero"] > div:first-child { background: transparent; }
 .ot-campaign[data-look="daylight"] [data-block="hero"] :is(h1, p) { color: var(--cl-ink); }
 .ot-campaign[data-look="daylight"] [data-block="hero"] > div:first-child > div > p:first-child { color: var(--cl-brand); }
