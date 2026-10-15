@@ -57,6 +57,31 @@ export function sanitizeHex(value: string | null | undefined): string | null {
   return null
 }
 
+/** OKLCH chroma of a "#rrggbb" string (0 for greys). */
+function hexChroma(hex: string): number {
+  const lin = (i: number) => {
+    const c = parseInt(hex.slice(1 + i, 3 + i), 16) / 255
+    return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
+  }
+  const [r, g, b] = [lin(0), lin(2), lin(4)]
+  const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b)
+  const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b)
+  const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b)
+  const a = 1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s
+  const bb = 0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s
+  return Math.hypot(a, bb)
+}
+
+/**
+ * The editor's override, if it can seed a palette. A grey (#333, #999) has no hue, so
+ * every look would invent one (a clay-pink in practice); ignore it and use the site's own
+ * color instead.
+ */
+export function usableOverride(value: string | null | undefined): string | null {
+  const hex = sanitizeHex(value)
+  return hex && hexChroma(hex) >= 0.04 ? hex : null
+}
+
 /** Lightness at or above which a seed is "bright" and Poster drenches bright. */
 const POSTER_BRIGHT_AT = 0.6
 
@@ -89,7 +114,7 @@ export function resolveCampaignAppearance(input: {
   const look   = resolveLook(input.look)
   const motion = resolveMotion(input.motion)
   const seed =
-    sanitizeHex(input.accentOverride) ??
+    usableOverride(input.accentOverride) ??
     (input.siteBrand?.trim() || null) ??
     (input.siteAccent?.trim() || null) ??
     // No ThemeManager colors (e.g. a fresh localhost): defer to whatever brand color the
@@ -106,7 +131,7 @@ export function resolveCampaignAppearance(input: {
     fill  = l >= POSTER_BRIGHT_AT ? 'bright' : 'deep'
     theme = fill === 'bright' ? 'light' : 'dark'
   }
-  const override = sanitizeHex(input.accentOverride)
+  const override = usableOverride(input.accentOverride)
   // Without an override the pairing is the site's own accent (or the token default captured
   // by the frame); with an override the editor chose a one-off hue, so rotate it instead.
   const seed2    = override

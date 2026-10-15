@@ -48,8 +48,8 @@ export const OT_CampaignLandingPage = contentType({
     accentOverride: {
       type:        'string',
       maxLength:   7,
-      displayName: 'Accent Color Override',
-      description: 'Optional hex color (e.g. #e4572e) that replaces the site brand color as the seed for this look. The look keeps text readable whatever you enter. Leave blank to use the site brand color.',
+      displayName: 'Campaign Color (optional)',
+      description: 'Leave blank to use the site brand colors (recommended). To give this one campaign its own color, enter a bold, saturated hex such as #e4572e; the whole look is built from it and stays readable. Greys and near-greys (#333, #999) have no color to build from and are ignored.',
       group:       'OT_Style',
       sortOrder:   20,
     },
