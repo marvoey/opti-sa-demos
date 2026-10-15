@@ -166,6 +166,9 @@ export default async function proxy(request: NextRequest) {
   // (not the response) so it flows through to the server-side handlers.
   const headers = new Headers(request.headers)
   headers.set(LOCALE_HEADER, locale)
+  // Layouts cannot see the URL; expose the locale-stripped path so the site layout
+  // can look up the page type and drop the shell for standalone pages.
+  headers.set('x-internal-path', internalPath)
 
   // ── 3. Rewrite or pass through ────────────────────────────────────────────
   if (internalPath !== pathname) {

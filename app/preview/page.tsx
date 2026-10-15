@@ -10,6 +10,8 @@ import { resolveNavbarStyle } from '@/lib/theme-axes'
 import { CompositionRenderer } from '@/lib/CompositionRenderer'
 import { getPractitioner } from '@/lib/practitioners'
 import PractitionerHeader from '@/components/practitioner/PractitionerHeader'
+import CampaignLandingFrame from '@/components/campaign/CampaignLandingFrame'
+import type { Locale } from '@/lib/i18n/config'
 import BookingPanel from '@/components/practitioner/booking/BookingPanel'
 import Header from '@/components/layout/Header'
 import SplitHeader from '@/components/layout/SplitHeader'
@@ -281,6 +283,8 @@ async function PreviewPage({ searchParams }: Props) {
   const previewSettings    = await getSiteSettings(previewDomain, previewLocale)
   const navbarStyle        = resolveNavbarStyle(previewSettings?.navbarStyle)
   const PreviewHeader      = navbarStyle === 'split-bar' ? SplitHeader : Header
+  // Campaign landing pages are standalone: no site header or footer, the frame supplies its own.
+  const isLanding          = isExperience && content?.__typename === 'OT_CampaignLandingPage'
 
   return (
     <>
@@ -304,7 +308,7 @@ async function PreviewPage({ searchParams }: Props) {
 
       {isExperience ? (
         <>
-          <PreviewHeader />
+          {!isLanding && <PreviewHeader />}
           <main className="flex-1">
             {practitioner && (
               <>
@@ -315,9 +319,26 @@ async function PreviewPage({ searchParams }: Props) {
                 {practitioner.bookingEnabled && <BookingPanel practitioner={practitioner} />}
               </>
             )}
-            <CompositionRenderer nodes={content.composition.nodes} />
+            {isLanding ? (
+              <CampaignLandingFrame
+                locale={previewLocale as Locale}
+                look={content.campaignLook}
+                accentOverride={content.accentOverride}
+                motionLevel={content.motionLevel}
+                ctaLabel={content.ctaLabel}
+                ctaUrl={content.ctaUrl?.default ?? content.ctaUrl}
+                returnLabel={content.returnLabel}
+                footerKey={content.footerRef?.key}
+                formKey={content.formRef?.key}
+                formHeading={content.formHeading}
+              >
+                <CompositionRenderer nodes={content.composition.nodes} />
+              </CampaignLandingFrame>
+            ) : (
+              <CompositionRenderer nodes={content.composition.nodes} />
+            )}
           </main>
-          <Footer />
+          {!isLanding && <Footer />}
         </>
       ) : (
         <OptimizelyComponent content={standaloneContent} />

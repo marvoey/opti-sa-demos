@@ -92,6 +92,7 @@ import { OT_EventListingBlock }     from '@/cms/content-types/OT_EventListingBlo
 import { OT_PracticeArea }            from '@/cms/content-types/OT_PracticeArea'
 import { OT_PractitionerProfile }     from '@/cms/content-types/OT_PractitionerProfile'
 import { OT_PractitionerPage }        from '@/cms/content-types/OT_PractitionerPage'
+import { OT_CampaignLandingPage }      from '@/cms/content-types/OT_CampaignLandingPage'
 import { OT_ProductDetailTemplate }   from '@/cms/content-types/OT_ProductDetailTemplate'
 import { OT_PractitionerListingBlock } from '@/cms/content-types/OT_PractitionerListingBlock'
 import { OT_LocationProfile }            from '@/cms/content-types/OT_LocationProfile'
@@ -288,6 +289,7 @@ initContentTypeRegistry([
   OT_PracticeArea,
   OT_PractitionerProfile,
   OT_PractitionerPage,
+  OT_CampaignLandingPage,
   OT_ProductDetailTemplate,
   OT_PractitionerListingBlock,
   OT_LocationProfile,

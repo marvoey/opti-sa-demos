@@ -239,6 +239,7 @@ export default function AccordionBlock({
     <section
       className={sectionCva({ color })}
       data-theme={isDarkSurface ? 'dark' : undefined}
+      data-block="accordion"
     >
       <div className="max-w-3xl mx-auto">
 
