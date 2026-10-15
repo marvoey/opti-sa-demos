@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import type { CSSProperties } from 'react'
 import CampaignLandingFrame from '@/components/campaign/CampaignLandingFrame'
@@ -34,17 +35,21 @@ const LABELS: Record<(typeof CAMPAIGN_LOOKS)[number], string> = {
 
 function one(v: string | string[] | undefined) { return typeof v === 'string' ? v : undefined }
 
+// The same stock photos the Hero and Banner showcase demos use (showcase/blocks/hero-playground,
+// banner-playground), so the campaign demo matches the rest of the showcase.
+const HERO_IMG   = 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80&fit=crop'
+const BANNER_IMG = 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1600&q=80&fit=crop'
+
 function HeroArt() {
-  // Abstract and vertical-neutral: concentric rings and a tilted bar, all token colours.
   return (
-    <svg viewBox="0 0 400 300" className="absolute inset-0 h-full w-full" preserveAspectRatio="xMidYMid slice" aria-hidden>
-      <rect width="400" height="300" fill="var(--ot-surface)" />
-      <circle cx="270" cy="150" r="118" fill="none" stroke="var(--ot-accent)" strokeWidth="2" opacity="0.9" />
-      <circle cx="270" cy="150" r="82" fill="var(--ot-accent)" opacity="0.92" />
-      <circle cx="270" cy="150" r="46" fill="var(--ot-canvas)" />
-      <rect x="-20" y="196" width="320" height="26" fill="var(--ot-fg)" opacity="0.9" transform="rotate(-8 140 209)" />
-      <circle cx="74" cy="76" r="22" fill="none" stroke="var(--ot-fg)" strokeWidth="2" opacity="0.6" />
-    </svg>
+    <Image
+      src={HERO_IMG}
+      alt="Glass skyscrapers in a modern city financial district"
+      fill
+      unoptimized
+      sizes="(min-width: 1024px) 50vw, 100vw"
+      className="object-cover"
+    />
   )
 }
 
@@ -157,8 +162,9 @@ export default async function CampaignPreviewPage({ searchParams }: Props) {
         <BannerBlock
           heading="Seats are limited"
           eyebrow="Closes October 17"
+          bgImageSrc={BANNER_IMG}
           primaryCta={{ label: 'Request an invitation', href: '#request-information' }}
-          styleOptions={{ color: 'brand', alignment: 'center', size: 'display', treatment: 'none' }}
+          styleOptions={{ color: 'brand', alignment: 'center', size: 'display', treatment: 'scrim' }}
         />
       </CampaignLandingFrame>
     </>
