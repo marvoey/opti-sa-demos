@@ -69,6 +69,9 @@ export type CampaignAppearance = {
   fill:   'bright' | 'deep' | null
   /** The color every look derives its palette from. Valid CSS color. */
   seed:   string
+  /** Second palette color (Poster chip/pop, Daylight pairing). The site accent when the
+      editor has not overridden the seed, else the seed's hue rotated 140 degrees. */
+  seed2:  string
 }
 
 /**
@@ -103,5 +106,11 @@ export function resolveCampaignAppearance(input: {
     fill  = l >= POSTER_BRIGHT_AT ? 'bright' : 'deep'
     theme = fill === 'bright' ? 'light' : 'dark'
   }
-  return { look, motion, theme, fill, seed }
+  const override = sanitizeHex(input.accentOverride)
+  // Without an override the pairing is the site's own accent (or the token default captured
+  // by the frame); with an override the editor chose a one-off hue, so rotate it instead.
+  const seed2    = override
+    ? 'oklch(from var(--cl-seed) l c calc(h + 140))'
+    : (input.siteAccent?.trim() || 'var(--cl-site-accent)')
+  return { look, motion, theme, fill, seed, seed2 }
 }

@@ -108,7 +108,7 @@ export default async function CampaignLandingFrame({
       data-motion={appearance.motion}
       data-fill={appearance.fill ?? undefined}
       data-ot-standalone
-      style={{ '--cl-seed': appearance.seed } as CSSProperties}
+      style={{ '--cl-seed': appearance.seed, '--cl-seed-2': appearance.seed2 } as CSSProperties}
       className="ot-campaign ot-campaign-frame flex min-h-dvh flex-col overflow-x-clip bg-canvas text-fg"
     >
       <header

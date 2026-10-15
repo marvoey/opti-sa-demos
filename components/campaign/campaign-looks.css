@@ -184,16 +184,16 @@
   --cl-fill-2:     oklch(from var(--cl-seed) 0.79 clamp(0.10, c, 0.24) h);
   --cl-ink:        oklch(from var(--cl-seed) 0.16 0.03 h);
   --cl-ink-muted:  oklch(from var(--cl-seed) 0.30 0.04 h);
-  --cl-pop:        oklch(from var(--cl-seed) 0.72 0.17 calc(h + 150));
-  --cl-chip:       oklch(from var(--cl-seed) 0.34 0.09 calc(h + 55));
+  --cl-pop:        oklch(from var(--cl-seed-2) 0.72 clamp(0.10, c, 0.17) h);
+  --cl-chip:       oklch(from var(--cl-seed-2) 0.34 clamp(0.05, c, 0.09) h);
 }
 :is(.ot-campaign[data-look="poster"][data-fill="deep"], .ot-campaign[data-look="poster"][data-fill="deep"] [data-theme]) {
   --cl-fill:       oklch(from var(--cl-seed) 0.45 clamp(0.10, c, 0.24) h);
   --cl-fill-2:     oklch(from var(--cl-seed) 0.38 clamp(0.10, c, 0.24) h);
   --cl-ink:        oklch(from var(--cl-seed) 0.985 0.010 h);
   --cl-ink-muted:  oklch(from var(--cl-seed) 0.92 0.020 h);
-  --cl-pop:        oklch(from var(--cl-seed) 0.80 0.17 calc(h + 150));
-  --cl-chip:       oklch(from var(--cl-seed) 0.88 0.07 calc(h + 55));
+  --cl-pop:        oklch(from var(--cl-seed-2) 0.80 clamp(0.10, c, 0.17) h);
+  --cl-chip:       oklch(from var(--cl-seed-2) 0.88 clamp(0.04, c, 0.07) h);
 }
 :is(.ot-campaign[data-look="poster"], .ot-campaign[data-look="poster"] [data-theme]) {
   --ot-brand-text:    var(--cl-ink);
@@ -319,8 +319,8 @@
   --ot-intent-brand-fg: var(--ot-fg-on-brand);
   --cl-ink:       oklch(from var(--cl-seed) 0.20 0.030 h);
   --cl-a:         oklch(from var(--cl-seed) 0.82 clamp(0.10, c, 0.20) h);
-  --cl-b:         oklch(from var(--cl-seed) 0.83 0.150 calc(h + 140));
-  --cl-c:         oklch(from var(--cl-seed) 0.85 0.130 calc(h + 250));
+  --cl-b:         oklch(from var(--cl-seed-2) 0.83 clamp(0.09, c, 0.15) h);
+  --cl-c:         oklch(from var(--cl-seed-2) 0.85 clamp(0.08, c, 0.13) calc(h + 110));
   --cl-brand:     oklch(from var(--cl-seed) 0.46 clamp(0.09, c, 0.20) h);
   --cl-brand-2:   oklch(from var(--cl-seed) 0.38 clamp(0.09, c, 0.20) h);
 
