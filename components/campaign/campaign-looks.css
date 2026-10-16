@@ -421,13 +421,23 @@
     radial-gradient(48rem 30rem at 0% 0%, oklch(from var(--cl-n3) l c h / 0.20), transparent 70%),
     radial-gradient(48rem 30rem at 100% 12%, oklch(from var(--cl-n1) l c h / 0.18), transparent 70%);
 }
+/* The frame is the page edge: a wall-colored spread covers everything outside it, so the sticky strip,
+ * form and content all sit inside one rounded perimeter. --cl-frame-top lets a host with its own chrome
+ * above the page (the demo look switcher) push the top edge down. */
 .ot-cl-neonframe {
-  position: fixed !important; inset: 10px; z-index: 60; pointer-events: none;
+  position: fixed !important; inset: var(--cl-frame-top, 10px) 10px 10px; z-index: 60; pointer-events: none;
   border: 2px solid var(--cl-n1); border-radius: 1.75rem;
-  box-shadow: 0 0 6px var(--cl-n1), 0 0 26px oklch(from var(--cl-n1) l c h / 0.5), inset 0 0 12px oklch(from var(--cl-n1) l c h / 0.4);
+  box-shadow: 0 0 6px var(--cl-n1), 0 0 26px oklch(from var(--cl-n1) l c h / 0.5), inset 0 0 12px oklch(from var(--cl-n1) l c h / 0.4), 0 0 0 100vmax var(--cl-wall);
 }
-@media (max-width: 767px) { .ot-cl-neonframe { inset: 5px; border-radius: 1.1rem; } }
+@media (max-width: 767px) { .ot-cl-neonframe { inset: var(--cl-frame-top, 5px) 5px 5px; border-radius: 1.1rem; } }
 
+/* Strip: inset inside the frame with matching rounded top corners so the neon edge runs unbroken around the top. */
+.ot-campaign[data-look="neon"] .ot-cl-strip {
+  top: calc(var(--cl-frame-top, 10px) + 2px); margin: 12px 12px 0; border-radius: calc(1.75rem - 2px) calc(1.75rem - 2px) 0 0;
+}
+@media (max-width: 767px) {
+  .ot-campaign[data-look="neon"] .ot-cl-strip { top: calc(var(--cl-frame-top, 5px) + 2px); margin: 7px 7px 0; border-radius: calc(1.1rem - 2px) calc(1.1rem - 2px) 0 0; }
+}
 .ot-campaign[data-look="neon"] .ot-cl-strip { background: oklch(from var(--cl-wall) l c h / 0.94); border-bottom: 1px solid oklch(from var(--cl-n1) l c h / 0.55); box-shadow: 0 6px 22px oklch(from var(--cl-n1) l c h / 0.18); }
 .ot-campaign[data-look="neon"] .ot-campaign-footer { background: oklch(from var(--cl-wall) l c h / 0.94); }
 .ot-campaign[data-look="neon"] .ot-cl-form { background: transparent; }

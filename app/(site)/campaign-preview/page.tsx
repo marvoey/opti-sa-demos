@@ -94,9 +94,10 @@ export default async function CampaignPreviewPage({ searchParams }: Props) {
   const motion = one(sp.motion)
 
   return (
-    <>
+    // The look switcher is sticky demo chrome (h-12), so the neon frame is pushed below it (--cl-frame-top = 3rem + 10px).
+    <div className="contents" style={{ '--cl-frame-top': 'calc(3rem + 10px)' } as CSSProperties}>
       {/* Demo chrome only (not part of the page type): switch looks. */}
-      <nav aria-label="Switch look" className="flex flex-wrap items-center gap-sm border-b border-fg/10 bg-canvas px-md py-sm text-label text-fg-muted lg:px-xl">
+      <nav aria-label="Switch look" className="sticky top-0 z-[80] flex h-12 items-center gap-sm overflow-x-auto border-b border-fg/10 bg-canvas px-md text-label text-fg-muted lg:px-xl">
         <span className="font-semibold uppercase tracking-label">Look</span>
         {CAMPAIGN_LOOKS.map(l => (
           <Link
@@ -167,6 +168,6 @@ export default async function CampaignPreviewPage({ searchParams }: Props) {
           styleOptions={{ color: 'brand', alignment: 'center', size: 'display', treatment: 'scrim' }}
         />
       </CampaignLandingFrame>
-    </>
+    </div>
   )
 }
