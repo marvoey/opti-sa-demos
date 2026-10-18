@@ -441,21 +441,31 @@
 .ot-campaign[data-look="neon"] .ot-cl-strip { background: oklch(from var(--cl-wall) l c h / 0.94); border-bottom: 1px solid oklch(from var(--cl-n1) l c h / 0.55); box-shadow: 0 6px 22px oklch(from var(--cl-n1) l c h / 0.18); }
 .ot-campaign[data-look="neon"] .ot-campaign-footer { background: oklch(from var(--cl-wall) l c h / 0.94); }
 .ot-campaign[data-look="neon"] .ot-cl-form { background: transparent; }
-.ot-campaign[data-look="neon"] .ot-cl-form h2 { color: var(--cl-n2); font-weight: 800; text-shadow: 0 0 14px oklch(from var(--cl-n2) l c h / 0.6); }
-.ot-campaign[data-look="neon"] [data-block] h2 { text-shadow: 0 0 20px oklch(from var(--cl-n1) l c h / 0.35); }
+/* Tube headings: Orbitron, white-hot core with a tube-colored bloom (the --ot-font-neon header style).
+ * font-synthesis-weight:none keeps the single 700 cut from being faux-bolded. */
+.ot-campaign[data-look="neon"] :is([data-block] h1, [data-block] h2, .ot-cl-form h2) {
+  font-family: var(--ot-font-neon); font-weight: 700; font-synthesis-weight: none; letter-spacing: 0.03em; text-wrap: balance;
+  color: var(--ot-fg);
+  text-shadow:
+    0 0 0.04em oklch(from var(--ot-fg) l c h / 0.95),
+    0 0 0.12em oklch(from var(--cl-n1) l c h / 0.95),
+    0 0 0.30em oklch(from var(--cl-n1) l c h / 0.80),
+    0 0 0.60em oklch(from var(--cl-n1) l c h / 0.55),
+    0 0 1.10em oklch(from var(--cl-n1) l c h / 0.35);
+}
+.ot-campaign[data-look="neon"] .ot-cl-form h2 { text-shadow: 0 0 0.04em oklch(from var(--ot-fg) l c h / 0.95), 0 0 0.12em oklch(from var(--cl-n2) l c h / 0.95), 0 0 0.30em oklch(from var(--cl-n2) l c h / 0.8), 0 0 0.60em oklch(from var(--cl-n2) l c h / 0.5); }
 .ot-campaign[data-look="neon"] [data-block="hero"][class*="lg:flex-row"] > div:first-child { background: transparent; }
 .ot-campaign[data-look="neon"] [data-block="hero"][class*="lg:flex-row"] > div:first-child > div > p:first-child { color: var(--cl-n2); text-shadow: 0 0 10px oklch(from var(--cl-n2) l c h / 0.6); }
 .ot-campaign[data-look="neon"] [data-block="hero"][class*="lg:flex-row"] > div:nth-child(2) { --nc: var(--cl-n3); margin: var(--ot-space-md); overflow: hidden; }
 
-/* Tube lettering: dark fill, lit outline, three-layer glow */
+/* Hero lettering: the Orbitron tube style above at display scale. Orbitron is wide, so the size
+ * steps down from the old Poppins values to keep the same line count. */
 .ot-campaign[data-look="neon"] [data-block="hero"] h1 {
-  font-size: clamp(2.4rem, 9.5cqi, 5.5rem); line-height: 1; letter-spacing: 0.02em; font-weight: 800; text-transform: uppercase; text-wrap: balance;
-  color: var(--cl-wall); -webkit-text-stroke: 2px var(--cl-n1); paint-order: stroke fill;
-  text-shadow: 0 0 4px var(--cl-n1), 0 0 16px oklch(from var(--cl-n1) l c h / 0.85), 0 0 38px oklch(from var(--cl-n1) l c h / 0.55);
+  font-size: clamp(1.9rem, 7cqi, 4.25rem); line-height: 1.08; letter-spacing: 0.02em; text-transform: uppercase;
 }
-@media (min-width: 1024px) { .ot-campaign[data-look="neon"] [data-block="hero"] h1 { font-size: clamp(2.6rem, 4.8cqi, 5.5rem); } }
+@media (min-width: 1024px) { .ot-campaign[data-look="neon"] [data-block="hero"] h1 { font-size: clamp(2.2rem, 3.9cqi, 4.25rem); } }
 .ot-campaign[data-look="neon"] [data-block="cta"] h2,
-.ot-campaign[data-look="neon"] [data-block="cta"] h1 { font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em; text-shadow: 0 0 6px var(--cl-n3), 0 0 26px oklch(from var(--cl-n3) l c h / 0.7); }
+.ot-campaign[data-look="neon"] [data-block="cta"] h1 { text-transform: uppercase; letter-spacing: 0.02em; text-shadow: 0 0 0.04em oklch(from var(--ot-fg) l c h / 0.95), 0 0 0.12em oklch(from var(--cl-n3) l c h / 0.95), 0 0 0.30em oklch(from var(--cl-n3) l c h / 0.8), 0 0 0.60em oklch(from var(--cl-n3) l c h / 0.5); }
 .ot-campaign[data-look="neon"] [data-block="cta"] { --nc: var(--cl-n3); margin: var(--ot-space-lg) var(--ot-space-md); overflow: hidden; }
 @keyframes cl-flicker { 0%, 18%, 22%, 62%, 66%, 100% { opacity: 1; } 20% { opacity: 0.82; } 64% { opacity: 0.88; } }
 @media (prefers-reduced-motion: no-preference) {

@@ -1557,17 +1557,16 @@ body {
 /* NEON — clean single-tube neon sign. Reference: a bent-glass tube with a white-
    hot core and a single-color bloom (deliberately NOT cold cyberpunk/Web3 neon —
    the glow hue is the theme's OWN accent, re-skinning per vertical, on the tinted
-   canvas, never #000). The look comes from the FONT: Tilt Neon (--ot-font-neon) is
-   a monoline display face that reads as one continuous tube. Dark: white tube +
+   canvas, never #000). The look comes from the FONT: Orbitron (--ot-font-neon) is
+   a wide, mechanical display face that stays legible under heavy glow. Dark: white tube +
    accent glow. Light: brand tube + accent glow (a lit tube can't read on white).
-   No flicker. Best on short statement headlines. font-synthesis-weight:none stops
-   the browser faux-bolding Tilt Neon's 400-only face (a heading may request 800),
-   which would thicken the clean monoline. */
+   No flicker. Best on short statement headlines. Weight is pinned to 700
+   (font-synthesis-weight:none) so a heading's own weight never thickens the tube. */
 .ot-fx-neon {
   font-family: var(--ot-font-neon);
-  font-weight: 400;
+  font-weight: 700;
   font-synthesis-weight: none;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.03em;
   line-height: 1.15;
   color: var(--ot-fg);                                          /* white-hot tube   */
   text-shadow:
