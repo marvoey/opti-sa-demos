@@ -38,6 +38,7 @@ export const PRIMARY_FONTS = {
   plusJakarta:    { var: 'var(--font-primary-c)', label: 'Plus Jakarta Sans' },
   manrope:        { var: 'var(--font-primary-d)', label: 'Manrope'           },
   hankenGrotesk:  { var: 'var(--font-primary-e)', label: 'Hanken Grotesk'    },
+  fraunces:       { var: 'var(--font-primary-f)', label: 'Fraunces'          },
 } as const
 
 export type PrimaryFontKey = keyof typeof PRIMARY_FONTS

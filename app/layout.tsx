@@ -1,7 +1,7 @@
 import '@/lib/optimizely'
 import '@/cms/registry'
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Caveat, Geist_Mono, Hanken_Grotesk, Manrope, Poppins, Sora, Source_Serif_4, Syne, Tilt_Neon } from "next/font/google";
+import { Fraunces, Plus_Jakarta_Sans, Caveat, Geist_Mono, Hanken_Grotesk, Manrope, Poppins, Sora, Source_Serif_4, Syne, Orbitron } from "next/font/google";
 import "./globals.css";
 import { cookies, draftMode } from "next/headers";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
@@ -84,6 +84,16 @@ const hankenGrotesk = Hanken_Grotesk({
   display: "swap",
 });
 
+// Primary F — Fraunces: a "soft-serif" variable face (Old Style revival with wonk and
+// optical-size axes). Warm, characterful serif for hospitality, wellness, food, and
+// boutique editorial verticals; a second, friendlier serif beside Source Serif.
+const fraunces = Fraunces({
+  variable: "--font-primary-f",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
+});
+
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -98,14 +108,14 @@ const caveat = Caveat({
   display: "swap",
 });
 
-// Neon font — Tilt Neon 400: a clean monoline display face that reads as a single
-// bent glass tube, the foundation of the white-core / colored-glow neon sign look.
-// Single weight, display-only. Used exclusively by the PrimaryText "neon" header
-// effect (same scoped pattern as Caveat for the QuoteBlock signature).
-const tiltNeon = Tilt_Neon({
-  variable: "--font-tilt-neon",
+// Neon font — Orbitron: a wide, mechanical retro-futurist geometric that stays legible
+// under heavy glow, the foundation of the white-core / colored-glow neon sign look.
+// Display-only. Used by the PrimaryText "neon" header effect and the Neon campaign
+// look (same scoped pattern as Caveat for the QuoteBlock signature).
+const orbitron = Orbitron({
+  variable: "--font-orbitron",
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["500", "700", "800"],
   display: "swap",
 });
 
@@ -210,7 +220,7 @@ export default async function RootLayout({
       // toggle). No client-side init script needed — the correct theme is baked into
       // the SSR HTML so there is no FOUC even on first paint.
       data-theme={resolvedTheme}
-      className={`${poppins.variable} ${geistMono.variable} ${syne.variable} ${sourceSerif.variable} ${sora.variable} ${plusJakarta.variable} ${manrope.variable} ${hankenGrotesk.variable} ${caveat.variable} ${tiltNeon.variable} h-full antialiased`}
+      className={`${poppins.variable} ${geistMono.variable} ${syne.variable} ${sourceSerif.variable} ${sora.variable} ${plusJakarta.variable} ${manrope.variable} ${hankenGrotesk.variable} ${fraunces.variable} ${caveat.variable} ${orbitron.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>

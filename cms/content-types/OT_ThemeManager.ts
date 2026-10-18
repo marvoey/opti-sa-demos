@@ -143,6 +143,7 @@ export const OT_ThemeManager = contentType({
         { value: 'plusJakarta',   displayName: 'Plus Jakarta Sans — warm, modern' },
         { value: 'manrope',       displayName: 'Manrope — clean, minimal' },
         { value: 'hankenGrotesk', displayName: 'Hanken Grotesk — neo-grotesk, fashion / editorial retail' },
+        { value: 'fraunces',      displayName: 'Fraunces — soft serif, warm and characterful (serif)' },
       ],
     },
     motionIntensity: {
