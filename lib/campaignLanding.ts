@@ -15,7 +15,7 @@ const FOOTER_QUERY = `
         footerLogoInvertDark
         footerLeftMode
         description { html }
-        links { label url { default } }
+        links { label url { default base } }
       }
     }
   }

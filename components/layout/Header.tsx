@@ -14,6 +14,7 @@ import { getEnabledLanguages } from '@/lib/i18n/getEnabledLanguages'
 import { t } from '@/lib/i18n/t'
 import { localizedHref, stripLocalePrefix } from '@/lib/i18n/config'
 import type { Locale } from '@/lib/i18n/config'
+import { resolveCmsUrl } from '@/lib/resolveCmsUrl'
 
 const FALLBACK_NAV: NavItem[] = [
   { label: 'Product',  href: '#' },
@@ -81,7 +82,7 @@ export default async function Header() {
   const ctaLabel       = settings?.ctaLabel ?? 'Get Started'
   // Storefronts lead with the bag, not a CTA: hide it unless one is authored.
   const showCta        = !(commerce.enabled && !settings?.ctaLabel)
-  const ctaHref        = normalizeNavHref(settings?.ctaUrl?.default, locale, domain)
+  const ctaHref        = normalizeNavHref(resolveCmsUrl(settings?.ctaUrl, domain), locale, domain)
 
   // Container owns the sizing — image uses h-full w-auto so any asset format
   // (SVG with/without viewBox, PNG, WebP, any aspect ratio) scales correctly.
@@ -103,11 +104,11 @@ export default async function Header() {
   const navItems: NavItem[] = settings?.primaryNavigation?.length
     ? settings.primaryNavigation.map((item: any) => ({
         label:    item.menuLink?.text ?? '',
-        href:     normalizeNavHref(item.menuLink?.url?.default, locale, domain),
+        href:     normalizeNavHref(resolveCmsUrl(item.menuLink?.url, domain), locale, domain),
         children: item.subNavItems?.length
           ? item.subNavItems.map((c: any) => ({
               label:       c.menuLink?.text ?? '',
-              href:        normalizeNavHref(c.menuLink?.url?.default, locale, domain),
+              href:        normalizeNavHref(resolveCmsUrl(c.menuLink?.url, domain), locale, domain),
               description: c.description ?? undefined,
               icon:        c.icon && c.icon !== 'none' ? c.icon : undefined,
             }))

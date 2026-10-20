@@ -110,7 +110,7 @@ const THEME_QUERY = `
         logoInvertDark
         defaultMode
         ctaLabel
-        ctaUrl { default }
+        ctaUrl { default base }
         footerRef { key }
         copyright
         colorBrand
@@ -145,9 +145,9 @@ const THEME_QUERY = `
         contentRecsDeliveryId
         googleAnalyticsId
         primaryNavigation {
-          menuLink { text title target url { default } }
+          menuLink { text title target url { default base } }
           subNavItems {
-            menuLink { text title target url { default } }
+            menuLink { text title target url { default base } }
             description
             icon
           }
@@ -165,7 +165,7 @@ const THEME_QUERY = `
         description { html }
         links {
           label
-          url { default }
+          url { default base }
         }
       }
     }
