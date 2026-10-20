@@ -6,6 +6,7 @@ import { isSupportedLocale, DEFAULT_LOCALE } from '@/lib/i18n/config'
 import { resolveCornerStyle, resolvePrimaryFont, resolveMotionScale, resolveNavbarStyle, NAVBAR_STYLES, needsBrandTextLift, BRAND_TEXT_DARK_LIFT } from '@/lib/theme-axes'
 import type { Locale } from '@/lib/i18n/config'
 import { getLocale as getNextIntlLocale } from 'next-intl/server'
+import { setRequestHost } from '@/lib/resolveCmsUrl'
 
 // setContext is called per-request to tell the SDK the active locale.
 // Import lazily to avoid pulling in React server-only code at module init.
@@ -70,8 +71,10 @@ export async function getRequestLocale(): Promise<Locale> {
  */
 export async function getRequestDomain(): Promise<string> {
   try {
-    const h = await headers()
-    return h.get('host') ?? ''
+    const h    = await headers()
+    const host = h.get('host') ?? ''
+    setRequestHost(host)
+    return host
   } catch {
     return ''
   }
