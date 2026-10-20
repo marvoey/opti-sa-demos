@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { getClient, getSiteSettings, getRequestDomain, getRequestLocale } from '@/lib/optimizely'
 import { BrandMark } from '@/components/layout/BrandMark'
+import { resolveCmsUrl } from '@/lib/resolveCmsUrl'
 import {
   getFooterStyles,
   footerSurfaceAttrs,
@@ -366,7 +367,7 @@ function ColumnsFooter({ view }: { view: FooterView }) {
 const FOOTER_COLUMNS_QUERY = `
   query FooterColumns($key: String!, $locale: [Locales]) {
     OT_FooterBlock(where: { _metadata: { key: { eq: $key } } }, locale: $locale, limit: 1) {
-      items { columns { title linkItems { label url { default } } } }
+      items { columns { title linkItems { label url { default base } } } }
     }
   }
 `
@@ -380,7 +381,7 @@ async function getFooterColumns(key: string | undefined, locale: string): Promis
       .map(c => ({
         title: (c.title as string) ?? '',
         links: ((c.linkItems ?? []) as any[])
-          .map(l => ({ label: (l.label as string) ?? '', href: (l.url?.default as string) ?? '#' }))
+          .map(l => ({ label: (l.label as string) ?? '', href: resolveCmsUrl(l.url) ?? '#' }))
           .filter(l => l.label),
       }))
       .filter(c => c.links.length)
@@ -426,7 +427,7 @@ export default async function Footer({ footerBlock }: { footerBlock?: unknown } 
 
   const links: FooterLink[] = Array.isArray(footerRef?.links)
     ? (footerRef.links as any[])
-        .map(l => ({ label: (l.label as string) ?? '', href: (l.url?.default as string) ?? '#' }))
+        .map(l => ({ label: (l.label as string) ?? '', href: resolveCmsUrl(l.url) ?? '#' }))
         .filter(l => l.label)
         .slice(0, 5)
     : []

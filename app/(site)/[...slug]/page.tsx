@@ -43,6 +43,7 @@ import type { Locale }         from '@/lib/i18n/config'
 import { getCommerceSettings, currencyForLocale, getMarketCookie } from '@/lib/commerce/settings'
 import { matchPdpPath, resolvePdp, previewProductFor } from '@/lib/commerce/pdp'
 import ProductDetailPage from '@/components/pages/ProductDetailPage'
+import { resolveCmsUrl } from '@/lib/resolveCmsUrl'
 
 export const revalidate = 60
 
@@ -622,7 +623,7 @@ async function CmsPage({ params, searchParams }: Props) {
           accentOverride={landing.accentOverride}
           motionLevel={landing.motionLevel}
           ctaLabel={landing.ctaLabel}
-          ctaUrl={typeof landing.ctaUrl === 'string' ? landing.ctaUrl : landing.ctaUrl?.default}
+          ctaUrl={resolveCmsUrl(landing.ctaUrl)}
           returnLabel={landing.returnLabel}
           footerKey={landing.footerRef?.key}
           formKey={landing.formRef?.key}

@@ -10,6 +10,7 @@ import { getCommerceSettings, currencyForLocale, getMarketCookie } from '@/lib/c
 import { toCardData } from '@/lib/commerce/card'
 import { withPricing } from '@/lib/commerce/pricing'
 import type { SortKey } from '@/lib/commerce/facets'
+import { resolveCmsUrl } from '@/lib/resolveCmsUrl'
 
 type Props = {
   content:          ContentProps<typeof OT_ProductListingBlockContentType>
@@ -55,7 +56,7 @@ export default async function OT_ProductListingBlockAdapter({ content, displaySe
         heading:  content.tileHeading,
         body:     content.tileBody ?? undefined,
         ctaLabel: content.tileCtaLabel ?? undefined,
-        ctaUrl:   content.tileCtaUrl?.default ?? undefined,
+        ctaUrl:   resolveCmsUrl(content.tileCtaUrl),
       }
     : undefined
 
